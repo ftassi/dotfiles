@@ -1,6 +1,14 @@
 source ~/.config/nvim/init.vim
 source ~/.config/nvim/plugin/settings.vim
 
+
+set NERDTree
+set surround
+set commentary
+set ReplaceWithRegister
+set argtextobj
+set highlightedyank
+
 nnoremap <leader>fb :action Switcher<CR>
 nnoremap <leader>fr :action RecentFiles<CR>
 
