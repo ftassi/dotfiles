@@ -9,13 +9,27 @@ set ReplaceWithRegister
 set argtextobj
 set highlightedyank
 
+nnoremap <leader>p :action ParameterInfo<CR>
 nnoremap <leader>fb :action Switcher<CR>
 nnoremap <leader>fr :action RecentFiles<CR>
+nnoremap <leader>oi :action OptimizeImports<CR>
 
+" Refactoring
 nnoremap <leader>rr :action RenameElement<CR>
 nnoremap <leader>rei :action ExtractInterface<CR>
 nnoremap <leader>rev :action IntroduceVariable<CR>
 nnoremap <leader>rem :action ExtractMethod<CR>
 
+" Find
 nnoremap <leader>fu :action FindUsages<CR>
 nnoremap <leader>su :action ShowUsages<CR>
+
+" Copy
+nnoremap <leader>cp :action CopyContentRootPath<CR>
+nnoremap <leader>cr :action CopyReference<CR>
+
+" Run/Execute
+nnoremap <leader>t :action RunClass<CR>
+
+" nnoremap <tab><tab> :action ActivateProjectToolWindow<CR>
+" nnoremap <tab>f :action SelectIn<CR>
