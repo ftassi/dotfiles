@@ -1,4 +1,5 @@
 source ~/.config/nvim/init.vim
+source ~/.config/nvim/plugin/settings.vim
 
 nnoremap <leader>fb :action Switcher<CR>
 nnoremap <leader>fr :action RecentFiles<CR>
