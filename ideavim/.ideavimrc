@@ -3,13 +3,8 @@ source ~/.config/nvim/plugin/settings.vim
 
 
 set NERDTree
-set surround
-set commentary
-set ReplaceWithRegister
-set argtextobj
 set highlightedyank
 
-let g:highlightedyank_highlight_duration = "500"
 
 nnoremap <leader>p :action ParameterInfo<CR>
 nnoremap <leader>fb :action Switcher<CR>
