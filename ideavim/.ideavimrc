@@ -35,6 +35,10 @@ nnoremap <leader>cr :action CopyReference<CR>
 " Run/Execute
 nnoremap <leader>t :action RunClass<CR>
 
+" Windows
+nnoremap <C-v> :action MoveTabRight<CR>
+nnoremap <C-h> :action MoveTabDown<CR>
+
 " nnoremap <tab><tab> :action ActivateProjectToolWindow<CR>
 " nnoremap <tab>f :action SelectIn<CR>
 
