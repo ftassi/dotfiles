@@ -6,6 +6,11 @@ set NERDTree
 set highlightedyank
 
 
+nnoremap <C-i> :action Back<CR>
+nnoremap <C-o> :action Forward<CR>
+nnoremap [[ [m
+nnoremap ]] ]m
+
 nnoremap <leader>p :action ParameterInfo<CR>
 nnoremap <leader>fb :action Switcher<CR>
 nnoremap <leader>fr :action RecentFiles<CR>
