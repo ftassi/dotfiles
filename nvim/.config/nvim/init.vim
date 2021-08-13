@@ -13,6 +13,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'ThePrimeagen/vim-be-good'
 Plug 'liuchengxu/vim-which-key'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/ReplaceWithRegister'
@@ -21,5 +22,14 @@ Plug 'machakann/vim-highlightedyank'
 
 call plug#end()
 
+set encoding=UTF-8
+
 let mapleader=" "
+"
+" Edit vimr configuration file
+nnoremap <Leader>ve :e $MYVIMRC<CR>
+" " Reload vimr configuration file
+nnoremap <Leader>vr :source $MYVIMRC<CR>
+
+let g:highlightedyank_highlight_duration = 500
 
