@@ -1,8 +1,8 @@
 source ~/.config/nvim/init.vim
 source ~/.config/nvim/plugin/settings.vim
+source ~/.config/nvim/plugin/nerdtree.vim
 
 
-set NERDTree
 set highlightedyank
 
 
@@ -36,8 +36,3 @@ nnoremap <leader>t :action RunClass<CR>
 " nnoremap <tab><tab> :action ActivateProjectToolWindow<CR>
 " nnoremap <tab>f :action SelectIn<CR>
 
-" NERDTree
-" 
-nnoremap <C-n> :NERDTree<CR>
-nnoremap <C-t> :NERDTreeToggle<CR>
-nnoremap <C-f> :NERDTreeFind<CR>
