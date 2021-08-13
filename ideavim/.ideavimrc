@@ -26,6 +26,7 @@ nnoremap <leader>rem :action ExtractMethod<CR>
 " Find
 nnoremap <leader>fu :action FindUsages<CR>
 nnoremap <leader>su :action ShowUsages<CR>
+nnoremap <leader>gd :action GotoDeclaration<CR>
 
 " Copy
 nnoremap <leader>cp :action CopyContentRootPath<CR>
