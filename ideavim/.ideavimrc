@@ -1,6 +1,7 @@
 source ~/.config/nvim/init.vim
 source ~/.config/nvim/plugin/settings.vim
 source ~/.config/nvim/plugin/nerdtree.vim
+source ~/.config/nvim/plugin/navigation.vim
 
 
 set highlightedyank
