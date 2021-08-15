@@ -1,6 +1,5 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
-
 Plug 'neovim/nvim-lspconfig'
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
@@ -23,7 +22,6 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'airblade/vim-gitgutter'
-
 call plug#end()
 
 set encoding=UTF-8
