@@ -26,7 +26,7 @@ require('telescope').setup{
 require('telescope').load_extension('fzy_native')
 EOF
 
-nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>ff :lua require('telescope.builtin').find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <leader>fh <cmd>Telescope help_tags<cr>
