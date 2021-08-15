@@ -1,25 +1,39 @@
 " Plugins
 call plug#begin('~/.vim/plugged')
-Plug 'neovim/nvim-lspconfig'
-Plug 'preservim/nerdtree'
-Plug 'ryanoasis/vim-devicons'
-Plug 'nvim-lua/completion-nvim'
-Plug 'nvim-lua/plenary.nvim'
-Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'joshdick/onedark.vim'
-Plug 'sheerun/vim-polyglot'
-Plug 'ThePrimeagen/vim-be-good'
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+" Utility
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'machakann/vim-highlightedyank'
+
+" Aesthetic
+Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+" NerdTree related
+Plug 'preservim/nerdtree'
+Plug 'ryanoasis/vim-devicons'
+
+" Git 
+Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+
+"LSP and coding related plugin
+Plug 'neovim/nvim-lspconfig'
+Plug 'nvim-lua/completion-nvim'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'sheerun/vim-polyglot'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+
+" Fuzzy Finder
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-lua/popup.nvim'
+
+" Training and getting better
+Plug 'ThePrimeagen/vim-be-good'
+
 call plug#end()
 
 set encoding=UTF-8
