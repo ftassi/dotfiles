@@ -41,6 +41,12 @@ call plug#end()
 
 set encoding=UTF-8
 set updatetime=250
+let g:onedark_termcolors=256
+let g:airline_theme='onedark'
+let g:lightline = {'colorscheme': 'onedark',}
+
+syntax on
+colorscheme onedark
 
 let mapleader=" "
 "
@@ -51,3 +57,7 @@ nnoremap <Leader>vr :source $MYVIMRC<CR>
 nnoremap <Leader>pu :PlugInstall<CR>
 
 let g:highlightedyank_highlight_duration = 500
+let g:airline_powerline_fonts = 1
+
+let g:airline#extensions#tabline#formatter = 'unique_tail'
+let g:airline#extensions#tabline#enabled = 1
