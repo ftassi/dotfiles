@@ -45,5 +45,6 @@ let mapleader=" "
 nnoremap <Leader>ve :e $MYVIMRC<CR>
 " " Reload vimr configuration file
 nnoremap <Leader>vr :source $MYVIMRC<CR>
+nnoremap <Leader>pu :PlugInstall<CR>
 
 let g:highlightedyank_highlight_duration = 500
