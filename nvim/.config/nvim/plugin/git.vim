@@ -3,6 +3,9 @@ nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gp <Plug>(GitGutterPrevHunk)
 nmap <leader>ga <Plug>(GitGutterStageHunk)
 nmap <leader>gu <Plug>(GitGutterUndoHunk)
+nmap <leader>gl :GV<cr>
+nmap <leader>glf :GV!<cr>
+nmap <leader>glb :GV --first-parent<cr>
 
 " Use fontawesome icons as signs
 let g:gitgutter_sign_added = ''

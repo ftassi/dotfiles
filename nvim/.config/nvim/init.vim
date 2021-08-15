@@ -19,6 +19,7 @@ Plug 'ryanoasis/vim-devicons'
 " Git 
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'junegunn/gv.vim'
 
 "LSP and coding related plugin
 Plug 'neovim/nvim-lspconfig'
