@@ -10,7 +10,6 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'ThePrimeagen/vim-be-good'
-Plug 'liuchengxu/vim-which-key'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-commentary'
