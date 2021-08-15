@@ -6,6 +6,7 @@ Plug 'tpope/vim-commentary'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'machakann/vim-highlightedyank'
+Plug 'mhinz/vim-startify'
 
 " Aesthetic
 Plug 'joshdick/onedark.vim'
