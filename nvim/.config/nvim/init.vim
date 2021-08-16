@@ -29,6 +29,9 @@ Plug 'nvim-lua/completion-nvim'
 Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 
+"Coding aka where the magic happens
+Plug 'janko-m/vim-test'
+
 " Fuzzy Finder
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
