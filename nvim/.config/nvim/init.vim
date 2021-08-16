@@ -65,3 +65,5 @@ let g:airline#extensions#tabline#enabled = 1
 if executable('rg')
     set grepprg=rg\ --vimgrep
 endif
+
+set exrc
