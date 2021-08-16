@@ -7,6 +7,7 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mhinz/vim-startify'
+Plug 'jremmen/vim-ripgrep'
 
 " Aesthetic
 Plug 'joshdick/onedark.vim'
@@ -61,3 +62,6 @@ let g:airline_powerline_fonts = 1
 
 let g:airline#extensions#tabline#formatter = 'unique_tail'
 let g:airline#extensions#tabline#enabled = 1
+if executable('rg')
+    set grepprg=rg\ --vimgrep
+endif
