@@ -67,3 +67,6 @@ if executable('rg')
 endif
 
 set exrc
+
+" Autosave
+autocmd BufLeave,FocusLost * silent! wall
