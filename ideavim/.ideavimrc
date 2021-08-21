@@ -12,7 +12,7 @@ nnoremap <C-o> :action Forward<CR>
 nnoremap [[ [m
 nnoremap ]] ]m
 
-nnoremap <leader>p :action ParameterInfo<CR>
+nnoremap <leader>pi :action ParameterInfo<CR>
 nnoremap <leader>fb :action Switcher<CR>
 nnoremap <leader>fr :action RecentFiles<CR>
 nnoremap <leader>oi :action OptimizeImports<CR>
