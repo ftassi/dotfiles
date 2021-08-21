@@ -1,0 +1,38 @@
+## TODO
+
+- Code navigation
+    - [*] Fuzzy find files
+    - [*] Find in tree
+    - [ ] Fuzzy find classes
+    - [ ] Fuzzy find symbols
+    - [ ] Goto definition
+    - [ ] Goto reference
+- Refactoring
+    - [ ] Rename variable
+    - [ ] Find Usage
+    - [ ] Extract Method
+    - [ ] Extract variable
+    - [ ] Extract interface
+    - [ ] Move Class
+    - [ ] Generate fields based from constructor
+    - [ ] Some phpdoc help (don't really need much, maybe a snippet could word too)
+    - [ ] Introduce variable
+    - [ ] Introduce field
+    - [ ] Introduce parameter
+    - [ ] Introduce constant
+- Dev Workflow
+    - [ ] Local history
+    - [ ] Git history
+    - [ ] Git add/stage/remove (index management)
+    - [ ] Git pull/push/merge/rebase (remote management)
+    - [ ] Git branch management
+    - [ ] Execute tests from ide
+
+- Other stuff
+    - [*] Find/Replace by regexp in file
+    - [ ] Find/Replace by regexp in project
+    - [ ] Code formatting
+    - [ ] Copy class full namespace (copy reference in phpstorm)
+- Refactoring nice to have
+    - [ ] Move element up (move to parent class)
+    - [ ] Move element down
