@@ -23,6 +23,9 @@ nnoremap <leader>rei :action ExtractInterface<CR>
 nnoremap <leader>rev :action IntroduceVariable<CR>
 nnoremap <leader>rem :action ExtractMethod<CR>
 
+nnoremap <leader>fa :action SearchEverywhere<CR>
+nnoremap <leader>ff :action GotoFile<CR>
+nnoremap <leader>fc :action GotoClass<CR>
 " Find
 nnoremap <leader>fu :action FindUsages<CR>
 nnoremap <leader>su :action ShowUsages<CR>
