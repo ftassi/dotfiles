@@ -7,6 +7,10 @@
     - [*] Fuzzy find symbols
     - [*] Goto definition
     - [*] Goto reference
+    - [ ] prev / next diagnostic
+    - [ ] prev / next git hunk
+    - [ ] prev / next git file
+    - [ ] prev / next git change
 - Gutter
     - [ ] child / parent implementations
     - [*] Git Status
