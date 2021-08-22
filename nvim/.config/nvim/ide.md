@@ -20,13 +20,12 @@
     - [*] Rename class
     - [*] Rename method
     - [-] Find Usage //Not really find usage but find references. incoming calls and outgoing calls seems to be misssing in any php language server
-    - [ ] Extract Method
-    - [ ] Extract variable
-    - [ ] Extract interface
-    - [ ] Move Class
-    - [ ] Generate fields based from constructor
+    - [*] Extract Method
+    - [*] Extract variable
+    - [*] Extract interface //Not powerfull as phpstom one. Will extract all methods and not implement the interface in the extracted class
+    - [*] Move Class
+    - [*] Generate fields based from constructor
     - [ ] Some phpdoc help (don't really need much, maybe a snippet could word too)
-    - [ ] Introduce variable
     - [ ] Introduce field
     - [ ] Introduce parameter
     - [ ] Introduce constant
