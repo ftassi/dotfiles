@@ -1,23 +1,24 @@
 " LSP mapping
-
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <leader>a :lua require('telescope.builtin').lsp_code_actions()<cr>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <leader>rr :lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>a :lua require('telescope.builtin').lsp_code_actions()<cr>
 "
 " Find and discover code
-nnoremap <leader>fgs :lua require('telescope.builtin').lsp_workspace_symbols()<cr>
-
-nnoremap <leader>fi :lua require('telescope.builtin').lsp_implementations()<cr>
-nnoremap <leader>fu :lua require('telescope.builtin').lsp_references()<cr>
 nnoremap <leader>fs :lua require('telescope.builtin').lsp_document_symbols()<cr>
-nnoremap <leader>ts :lua require('telescope.builtin').treesitter()<cr>
+nnoremap <leader>ft :lua require('telescope.builtin').treesitter()<cr>
+nnoremap <leader>fS :lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
+nnoremap <leader>fr :lua require('telescope.builtin').lsp_references()<cr>
+" nnoremap <silent> fr <cmd>lua vim.lsp.buf.references()<CR>
+
+nnoremap <leader>gi :lua require('telescope.builtin').lsp_implementations()<cr>
+" nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <leader>gd :lua require('telescope.builtin').lsp_definitions()<cr>
+" nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+" nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 
 " autocomplete mapping 
 " Use <Tab> and <S-Tab> to navigate through popup menu
