@@ -37,6 +37,7 @@
     - [ ] Git pull/push/merge/rebase (remote management)
     - [ ] Git branch management
     - [*] Execute tests from ide
+    - [ ] Optimize imports (remove unused)
 
 - Other stuff
     - [*] Find/Replace by regexp in file
