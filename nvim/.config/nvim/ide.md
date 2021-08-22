@@ -62,4 +62,6 @@ telescope.builtin.file_browser could replace nerdtree entirely?
 
 - Improve dev workflow https://alpha2phi.medium.com/new-neovim-plugins-to-improve-development-workflow-33419d74e9ac
 - Note taking in vim https://alpha2phi.medium.com/vim-neovim-managing-notes-and-todo-list-8ae8e3db6464
-- Complete php ide setup (may be a bit outdated though) https://thevaluable.dev/vim-php-ide/ 
+- Complete php ide setup (may be a bit outdated though) https://thevaluable.dev/vim-php-ide/
+- PhpActor mapping example https://github.com/dirkkredler/dotfiles/blob/8b061067c734a3c1fed2404f6ada157de0fc79a9/.config/nvim/notes.vim
+- PhpActor mapping example https://github.com/camilledejoye/vim-config/blob/88fa66211c83f8df1a7f4c1cdf6b94ad177fe727/config/50-phpactor.vim
