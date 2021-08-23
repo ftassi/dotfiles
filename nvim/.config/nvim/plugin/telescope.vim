@@ -1,19 +1,15 @@
 lua << EOF
-local defaultPicker = {
-    theme = "ivy",
-    previewer = false,
-}
 
 require('telescope').setup{
-    defaults = {
-        layout_strategy = 'vertical',
-        layout_config = {
-            vertical = { mirror = true }
-        },
-    },
     pickers = {
-        find_files = defaultPicker,
-        buffers = defaultPicker
+        buffers = {
+            sort_lastused = true,
+            theme = "dropdown",
+            dropdown = {
+
+            mirror = true,
+            }
+        }
     },
     extensions = {
         fzy_native = {
