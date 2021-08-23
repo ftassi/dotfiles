@@ -7,6 +7,7 @@ Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'mhinz/vim-startify'
+Plug 'Asheq/close-buffers.vim'
 Plug 'jremmen/vim-ripgrep'
 
 " Aesthetic
