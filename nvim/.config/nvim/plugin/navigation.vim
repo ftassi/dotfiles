@@ -6,3 +6,4 @@ nnoremap <leader>wa :Bdelete all<CR>
 nnoremap <leader>wh :Bdelete hidden<CR>
 nnoremap <leader>w :Bdelete menu<CR>
 nnoremap <leader>ww :Bdelete this<CR>
+map <silent> <C-m> :call ToggleMaximizeCurrentWindow()<CR>

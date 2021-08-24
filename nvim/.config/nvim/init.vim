@@ -9,6 +9,7 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'mhinz/vim-startify'
 Plug 'Asheq/close-buffers.vim'
 Plug 'jremmen/vim-ripgrep'
+Plug 'pmalek/toogle-maximize.vim'
 
 " Aesthetic
 Plug 'joshdick/onedark.vim'
