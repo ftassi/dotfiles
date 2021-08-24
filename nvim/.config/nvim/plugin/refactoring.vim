@@ -6,7 +6,7 @@ augroup PhpactorMappings
     au FileType php nmap <buffer> <Leader>ua :PhpactorImportMissingClasses<CR>
     au FileType php nmap <buffer> <Leader>e :PhpactorClassExpand<CR>
     au FileType php nmap <buffer> <Leader>mm :PhpactorContextMenu<CR>
-    au FileType php nmap <buffer> <Leader>tt :PhpactorTransform<CR>
+    au FileType php nmap <buffer> <Leader>tc :PhpactorTransform<CR>
     au FileType php nmap <buffer> <Leader>cc :PhpactorClassNew<CR>
     au FileType php nmap <buffer> <Leader>ei :PhpactorClassInflect<CR>
     au FileType php nmap <buffer> <Leader>mf :PhpactorMoveFile<CR>
