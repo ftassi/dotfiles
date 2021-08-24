@@ -34,6 +34,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend upda
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
 Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
+Plug 'jiangmiao/auto-pairs'
 
 " Fuzzy Finder
 Plug 'nvim-telescope/telescope.nvim'
