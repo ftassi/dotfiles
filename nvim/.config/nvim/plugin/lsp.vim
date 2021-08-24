@@ -31,7 +31,7 @@ imap <s-tab> <Plug>(completion_smart_s_tab)
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
-set completeopt=menuone,noinsert,noselect
+set completeopt=menuone,noinsert
 autocmd FileType php set iskeyword+=$
 
 let g:completion_matching_smart_case = 1
