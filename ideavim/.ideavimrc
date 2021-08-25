@@ -3,9 +3,7 @@ source ~/.config/nvim/plugin/settings.vim
 source ~/.config/nvim/plugin/nerdtree.vim
 source ~/.config/nvim/plugin/navigation.vim
 
-
 set highlightedyank
-
 
 nnoremap <C-i> :action Back<CR>
 nnoremap <C-o> :action Forward<CR>
