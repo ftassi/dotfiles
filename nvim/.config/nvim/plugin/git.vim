@@ -4,6 +4,7 @@ nmap <leader>gp <Plug>(GitGutterPrevHunk)
 nmap <leader>gh <Plug>(GitGutterPreviewHunk)
 nmap <leader>ga <Plug>(GitGutterStageHunk)
 nmap <leader>gu <Plug>(GitGutterUndoHunk)
+" Git log
 nmap <leader>gl :GV<cr>
 nmap <leader>glf :GV!<cr>
 nmap <leader>glb :GV --first-parent<cr>
