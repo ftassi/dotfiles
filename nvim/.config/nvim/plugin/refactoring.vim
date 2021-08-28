@@ -24,3 +24,6 @@ augroup PhpactorMappings
     " au FileType php nmap <buffer> <Leader>fr :PhpactorFindReferences<CR>
     " au FileType php nmap <buffer> <Leader>cf :PhpactorCopyFile<CR>
 augroup END
+
+" Reformat code inside {} block
+nnoremap <leader>== mqvi{=`q
