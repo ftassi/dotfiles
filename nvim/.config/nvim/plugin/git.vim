@@ -1,6 +1,8 @@
 nmap <leader>gs :G<cr>
-nmap <leader>gn <Plug>(GitGutterNextHunk)
-nmap <leader>gp <Plug>(GitGutterPrevHunk)
+" nmap <leader>gn <Plug>(GitGutterNextHunk)
+" nmap <leader>gp <Plug>(GitGutterPrevHunk)
+nmap <leader>gp :Git push<CR>
+nmap <leader>gc :Git commitf<CR>
 nmap <leader>gh <Plug>(GitGutterPreviewHunk)
 nmap <leader>ga <Plug>(GitGutterStageHunk)
 nmap <leader>gu <Plug>(GitGutterUndoHunk)
