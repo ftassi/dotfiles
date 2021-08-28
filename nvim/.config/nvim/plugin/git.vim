@@ -1,6 +1,7 @@
 nmap <leader>gs :G<cr>
 nmap <leader>gn <Plug>(GitGutterNextHunk)
 nmap <leader>gp <Plug>(GitGutterPrevHunk)
+nmap <leader>gh <Plug>(GitGutterPreviewHunk)
 nmap <leader>ga <Plug>(GitGutterStageHunk)
 nmap <leader>gu <Plug>(GitGutterUndoHunk)
 nmap <leader>gl :GV<cr>
