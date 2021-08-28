@@ -27,3 +27,4 @@ augroup END
 
 " Reformat code inside {} block
 nnoremap <leader>== mqvi{=`q
+inoremap <C-c> <CR><Esc>O
