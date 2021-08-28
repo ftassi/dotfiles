@@ -15,7 +15,6 @@ Plug 'pmalek/toogle-maximize.vim'
 Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'psliwka/vim-smoothie'
 
 " NerdTree related
 Plug 'preservim/nerdtree'
