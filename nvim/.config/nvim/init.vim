@@ -48,7 +48,7 @@ Plug 'ThePrimeagen/vim-be-good'
 call plug#end()
 
 set encoding=UTF-8
-set updatetime=250
+set updatetime=500
 let g:onedark_termcolors=256
 let g:airline_theme='onedark'
 let g:lightline = {'colorscheme': 'onedark',}
