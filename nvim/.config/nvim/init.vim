@@ -27,9 +27,13 @@ Plug 'junegunn/gv.vim'
 
 "LSP and coding related plugin
 Plug 'neovim/nvim-lspconfig'
-Plug 'nvim-lua/completion-nvim'
 Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'hrsh7th/nvim-cmp' 
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'L3MON4D3/LuaSnip' 
+Plug 'rafamadriz/friendly-snippets' 
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
