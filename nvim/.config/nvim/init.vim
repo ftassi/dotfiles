@@ -76,9 +76,9 @@ nnoremap <Leader>pu :PlugInstall<CR>
 let g:highlightedyank_highlight_duration = 500
 let g:airline_powerline_fonts = 1
 
-let g:airline#extensions#tabline#formatter = 'unique_tail'
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#buffer_nr_show = 1
+" let g:airline#extensions#tabline#formatter = 'unique_tail'
+" let g:airline#extensions#tabline#enabled = 1
+" let g:airline#extensions#tabline#buffer_nr_show = 1
 
 if executable('rg')
     set grepprg=rg\ --vimgrep
