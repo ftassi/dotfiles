@@ -59,6 +59,11 @@ let g:lightline = {'colorscheme': 'onedark',}
 
 syntax on
 colorscheme onedark
+set cursorlineopt=both
+set cursorline
+
+hi CursorLine guibg=#3e454f
+hi CursorLineNR guifg=#c6c900
 
 let mapleader=" "
 "
