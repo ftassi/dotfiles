@@ -77,6 +77,13 @@ lsp.intelephense.setup{
   on_attach = on_attach,
   capabilities = capabilities,
 }
+
+lsp.psalm.setup{
+  cmd = {'backend/bin/psalm.phar', '--language-server', '-r', 'backend'},
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
 local luasnip = require'luasnip'
 require("luasnip/loaders/from_vscode").lazy_load()
 
