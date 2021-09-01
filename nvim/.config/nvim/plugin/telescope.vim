@@ -6,8 +6,7 @@ require('telescope').setup{
             sort_lastused = true,
             theme = "dropdown",
             dropdown = {
-
-            mirror = true,
+                mirror = true,
             }
         }
     },
