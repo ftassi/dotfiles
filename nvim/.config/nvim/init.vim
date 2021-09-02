@@ -26,7 +26,7 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 
 "LSP and coding related plugin
-Plug 'neovim/nvim-lspconfig'
+Plug 'ftassi/nvim-lspconfig'
 Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'hrsh7th/nvim-cmp' 
