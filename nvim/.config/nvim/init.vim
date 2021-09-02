@@ -19,6 +19,7 @@ Plug 'vim-airline/vim-airline-themes'
 " NerdTree related
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
+Plug 'kyazdani42/nvim-web-devicons'
 
 " Git 
 Plug 'tpope/vim-fugitive'

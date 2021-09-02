@@ -1,6 +1,9 @@
 lua << EOF
 
 require('telescope').setup{
+    defaults = {
+        color_devicons = true,
+    },
     pickers = {
         buffers = {
             sort_lastused = true,
