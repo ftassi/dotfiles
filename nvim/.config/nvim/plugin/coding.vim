@@ -60,6 +60,7 @@ let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
 
 lua << EOF
 local lsp = require('lspconfig')
+require "lsp_signature".setup()
 local on_attach = function(_, bufnr)
   vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
   local opts = {noremap = true, silent = true}

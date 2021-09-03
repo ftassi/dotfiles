@@ -31,6 +31,7 @@ Plug 'ftassi/nvim-lspconfig'
 Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'hrsh7th/nvim-cmp' 
+Plug 'ray-x/lsp_signature.nvim' 
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'saadparwaiz1/cmp_luasnip'
 Plug 'L3MON4D3/LuaSnip' 
