@@ -1,8 +1,20 @@
 lua << EOF
 
+--[[    
+    defaults = {
+        previewer = true,
+        layout_strategy = 'center',
+        layout_config = {
+            vertical = { mirror = true },
+            horizontal = { mirror = false },
+            center = { mirror = true, previewer = true },
+        },
+    },
+]]--
 require('telescope').setup{
     defaults = {
         color_devicons = true,
+        path_display = { "shorten", }
     },
     pickers = {
         buffers = {
