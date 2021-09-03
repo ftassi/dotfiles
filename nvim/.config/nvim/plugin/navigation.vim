@@ -14,4 +14,6 @@ nnoremap <silent> <A-k> :res +5<CR>
 nnoremap <silent> <A-j> :res -5<CR>
 nnoremap <silent> <A-h> :vertical resize -5<CR>
 nnoremap <silent> <A-l> :vertical resize +5<CR> 
+
+nnoremap <silent> <C-a> <C-^><CR>
 map <silent> <C-m> :call ToggleMaximizeCurrentWindow()<CR>
