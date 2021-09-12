@@ -13,8 +13,7 @@ Plug 'pmalek/toogle-maximize.vim'
 
 " Aesthetic
 Plug 'joshdick/onedark.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'hoob3rt/lualine.nvim'
 
 " NerdTree related
 Plug 'preservim/nerdtree'
@@ -57,8 +56,6 @@ call plug#end()
 set encoding=UTF-8
 set updatetime=500
 let g:onedark_termcolors=256
-let g:airline_theme='onedark'
-let g:lightline = {'colorscheme': 'onedark',}
 
 syntax on
 colorscheme onedark
@@ -77,11 +74,6 @@ nnoremap <Leader>vr :source $MYVIMRC<CR>
 nnoremap <Leader>pu :PlugInstall<CR>
 
 let g:highlightedyank_highlight_duration = 500
-let g:airline_powerline_fonts = 1
-
-" let g:airline#extensions#tabline#formatter = 'unique_tail'
-" let g:airline#extensions#tabline#enabled = 1
-" let g:airline#extensions#tabline#buffer_nr_show = 1
 
 if executable('rg')
     set grepprg=rg\ --vimgrep
@@ -103,3 +95,15 @@ let g:startify_lists = [
             \ { 'type': 'bookmarks', 'header': ['   Bookmarks']      },
             \ { 'type': 'commands',  'header': ['   Commands']       },
             \ ]
+
+
+lua << EOF
+require'lualine'.setup {
+    options = {
+        theme = 'onedark',
+    },
+    tabline = {
+        lualine_a = {'filename'},
+    },
+}
+EOF
