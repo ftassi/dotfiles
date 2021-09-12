@@ -96,13 +96,3 @@ let g:startify_lists = [
             \ ]
 
 
-lua << EOF
-require'lualine'.setup {
-    options = {
-        theme = 'onedark',
-    },
-    tabline = {
-        lualine_a = {'filename'},
-    },
-}
-EOF
