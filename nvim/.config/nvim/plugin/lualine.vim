@@ -1,3 +1,4 @@
+lua << EOF
 local function codeBreadCrumbs()
     local treesitter = require'nvim-treesitter'
     local ok, statusline = pcall(treesitter.statusline)
@@ -13,6 +14,7 @@ require'lualine'.setup {
         theme = 'onedark',
     },
     tabline = {
-        ualine_a = {codeBreadCrumbs},
+        lualine_a = {codeBreadCrumbs},
     },
 }
+EOF
