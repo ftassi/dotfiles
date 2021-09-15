@@ -56,13 +56,23 @@ set encoding=UTF-8
 set updatetime=500
 let g:onedark_termcolors=256
 
-syntax on
-colorscheme onedark
 set cursorlineopt=both
 set cursorline
 
-hi CursorLine guibg=#3e454f
-hi CursorLineNR guifg=#c6c900
+if (has("autocmd"))
+  augroup colorextend
+    autocmd!
+    let s:colors = onedark#GetColors()
+    let s:visual_grey = s:colors.visual_grey
+    let s:yellow = s:colors.yellow
+
+    autocmd ColorScheme * call onedark#extend_highlight("CursorLine", {"bg": s:visual_grey})
+    autocmd ColorScheme * call onedark#extend_highlight("CursorLineNr", {"fg": s:yellow})
+  augroup END
+endif
+
+syntax on
+colorscheme onedark
 
 let mapleader=" "
 "
