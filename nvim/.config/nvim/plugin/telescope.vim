@@ -13,6 +13,7 @@ require('telescope').setup{
     pickers = {
         buffers = file_picker,
         oldfiles = file_picker,
+        treesitter = { layout_strategy = 'horizontal' },
     },
     extensions = {
         fzy_native = {
