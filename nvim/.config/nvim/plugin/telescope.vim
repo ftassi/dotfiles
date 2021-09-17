@@ -7,7 +7,7 @@ require('telescope').setup{
         layout_strategy = 'vertical',
         color_devicons = true,
         layout_config = {
-            vertical = {mirror = true},
+            vertical = {mirror = false},
        },
     },
     pickers = {
