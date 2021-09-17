@@ -22,9 +22,11 @@ require('telescope').setup{
 }
 
 require('telescope').load_extension('fzy_native')
+require('telescope').load_extension('frecency')
 EOF
 
 nnoremap <C-f> :lua require('telescope.builtin').current_buffer_fuzzy_find()<cr>
+nnoremap <leader><leader> :lua require('telescope').extensions.frecency.frecency()<cr>
 nnoremap <leader>ff :lua require('telescope.builtin').find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git' }})<cr>
 nnoremap <leader>fa :lua require('telescope.builtin').find_files({ find_command = {'rg', '--files', '--hidden', '-g', '!.git', '--no-ignore-vcs'}})<cr>
 nnoremap <leader>fg <cmd>Telescope live_grep<cr>
