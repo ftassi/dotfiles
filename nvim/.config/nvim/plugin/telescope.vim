@@ -3,6 +3,7 @@ local file_picker = require'telescope.themes'.get_dropdown({previewer = false})
 
 require('telescope').setup{
     defaults = {
+        vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number',  '--column', '--smart-case', '--hidden', '-u' },
         layout_strategy = 'vertical',
         color_devicons = true,
         layout_config = {
