@@ -38,9 +38,9 @@ nnoremap <leader>rr :lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>a :lua require('telescope.builtin').lsp_code_actions()<cr>
 "
 " Find and discover code
-nnoremap <leader>fs :lua require('telescope.builtin').lsp_document_symbols()<cr>
 nnoremap <leader>ft :lua require('telescope.builtin').treesitter()<cr>
-nnoremap <leader>fS :lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
+nnoremap <leader>fs :lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
+" nnoremap <leader>fs :lua require('telescope.builtin').lsp_document_symbols()<cr>
 nnoremap <leader>fm :lua require('telescope.builtin').lsp_document_symbols({default_text=":method: " })<cr>
 nnoremap <leader>fr :lua require('telescope.builtin').lsp_references()<cr>
 " nnoremap <silent> fr <cmd>lua vim.lsp.buf.references()<CR>
