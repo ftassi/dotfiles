@@ -13,6 +13,7 @@ require('telescope').setup{
     pickers = {
         buffers = file_picker,
         oldfiles = file_picker,
+        find_files = { find_command = {'rg', '--files', '--hidden', '-g', '!.git' }},
         treesitter = { layout_strategy = 'horizontal' },
     },
     extensions = {
