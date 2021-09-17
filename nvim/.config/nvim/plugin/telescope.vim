@@ -11,6 +11,7 @@ require('telescope').setup{
     },
     pickers = {
         buffers = file_picker,
+        oldfiles = file_picker,
     },
     extensions = {
         fzy_native = {
@@ -30,6 +31,7 @@ nnoremap <leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <leader>fgg :lua require('telescope.builtin').grep_string({ search = vim.fn.expand("<cword>")})<CR>
 nnoremap <leader>fb <cmd>Telescope buffers<cr>
 nnoremap <Tab> <cmd>Telescope buffers<cr>
+nnoremap <S-Tab> <cmd>Telescope oldfiles<cr>
 nnoremap <leader>hh <cmd>Telescope help_tags<cr>
 nnoremap <leader>gb :lua require('telescope.builtin').git_branches()<cr>
 nnoremap <leader>df :lua require('ftassi.telescope').search_dotfiles()<cr>
