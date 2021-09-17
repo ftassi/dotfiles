@@ -1,29 +1,16 @@
 lua << EOF
+local file_picker = require'telescope.themes'.get_dropdown({previewer = false})
 
---[[    
-    defaults = {
-        previewer = true,
-        layout_strategy = 'center',
-        layout_config = {
-            vertical = { mirror = true },
-            horizontal = { mirror = false },
-            center = { mirror = true, previewer = true },
-        },
-    },
-]]--
 require('telescope').setup{
     defaults = {
+        layout_strategy = 'vertical',
         color_devicons = true,
-        path_display = { "shorten", }
+        layout_config = {
+            vertical = {mirror = true},
+       },
     },
     pickers = {
-        buffers = {
-            sort_lastused = true,
-            theme = "dropdown",
-            dropdown = {
-                mirror = true,
-            }
-        }
+        buffers = file_picker,
     },
     extensions = {
         fzy_native = {
