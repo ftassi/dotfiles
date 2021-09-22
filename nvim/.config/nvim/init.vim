@@ -39,7 +39,6 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
 Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
-Plug 'jiangmiao/auto-pairs'
 
 " Snippets
 Plug 'SirVer/ultisnips'
