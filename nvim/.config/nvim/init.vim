@@ -26,21 +26,24 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 
 "LSP and coding related plugin
-Plug 'ftassi/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig'
 Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'hrsh7th/nvim-cmp' 
 Plug 'ray-x/lsp_signature.nvim' 
 Plug 'hrsh7th/cmp-nvim-lsp'
-Plug 'saadparwaiz1/cmp_luasnip'
-Plug 'L3MON4D3/LuaSnip' 
-Plug 'rafamadriz/friendly-snippets' 
+" Plug 'saadparwaiz1/cmp_luasnip'
+" Plug 'L3MON4D3/LuaSnip' 
+" Plug 'rafamadriz/friendly-snippets' 
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
 Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
 Plug 'jiangmiao/auto-pairs'
 
+" Snippets
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
 " Fuzzy Finder
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
