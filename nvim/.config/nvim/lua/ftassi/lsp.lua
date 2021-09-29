@@ -50,4 +50,5 @@ require "lsp_signature".setup({
     zindex = 50,
     bind = true,
     hint_enable = false,
+    always_trigger = true,
 }, bufnr)
