@@ -7,6 +7,7 @@ require('telescope').setup{
         layout_strategy = 'vertical',
         color_devicons = true,
         layout_config = {
+            width = 0.9,
             vertical = {mirror = false},
        },
     },
