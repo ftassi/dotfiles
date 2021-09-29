@@ -54,6 +54,7 @@ Plug 'tami5/sqlite.lua'
 " Training and getting better
 Plug 'ThePrimeagen/vim-be-good'
 
+call plug#end()
 " General
 set exrc
 set nohlsearch
@@ -90,7 +91,6 @@ set shiftwidth=4
 set shiftround
 set smartindent
 
-call plug#end()
 
 set encoding=UTF-8
 set updatetime=500
