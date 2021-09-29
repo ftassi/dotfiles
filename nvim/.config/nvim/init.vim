@@ -32,6 +32,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend upda
 Plug 'hrsh7th/nvim-cmp' 
 Plug 'ray-x/lsp_signature.nvim' 
 Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'folke/trouble.nvim'
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'

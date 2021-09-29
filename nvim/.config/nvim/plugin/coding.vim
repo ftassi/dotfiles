@@ -59,6 +59,15 @@ let g:completion_matching_smart_case = 1
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
 
 runtime lua/ftassi/lsp.lua
+
+lua << EOF
+  require("trouble").setup {
+    -- your configuration comes here
+    -- or leave it empty to use the default settings
+    -- refer to the configuration section below
+  }
+EOF
+
 lua << EOF
 --[[
 local lsp = require('lspconfig')
