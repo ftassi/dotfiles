@@ -5,7 +5,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 lsp.intelephense.setup{ capabilities = capabilities }
 lsp.psalm.setup{
     capabilities = capabilities,
-    cmd = {'backend/bin/psalm.phar', '--language-server', '-r', 'backend'},
+    cmd = {'backend/bin/psalm.phar', '--language-server', '-r', 'backend', '-c', 'backend/psalm.xml'},
 }
 local cmp = require'cmp'
 cmp.setup {
