@@ -18,8 +18,7 @@ augroup PhpactorMappings
         \ :<C-u>PhpactorExtractMethod<CR>
     "
     " au FileType php nmap <buffer> <Leader>nn :PhpactorNavigate<CR>
-    " au FileType php,cucumber nmap <buffer> <Leader>o
-    "     \ :PhpactorGotoDefinition edit<CR>
+    " au FileType php,cucumber nnoremap <Leader>gd :PhpactorGotoDefinition edit<CR>
     " au FileType php nmap <buffer> <Leader>K :PhpactorHover<CR>
     " au FileType php nmap <buffer> <Leader>fr :PhpactorFindReferences<CR>
     " au FileType php nmap <buffer> <Leader>cf :PhpactorCopyFile<CR>
@@ -30,6 +29,7 @@ nnoremap <leader>== mqvi{=`q
 inoremap <C-c> <CR><Esc>O
 
 " LSP mapping
+nnoremap <leader>K <Cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap <leader>a :lua require('telescope.builtin').lsp_code_actions()<cr>
 nnoremap <silent> <leader>sh <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
@@ -40,7 +40,6 @@ nnoremap <leader>a :lua require('telescope.builtin').lsp_code_actions()<cr>
 " Find and discover code
 nnoremap <leader>ft :lua require('telescope.builtin').treesitter()<cr>
 nnoremap <leader>fs :lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
-" nnoremap <leader>fs :lua require('telescope.builtin').lsp_document_symbols()<cr>
 nnoremap <leader>fm :lua require('telescope.builtin').lsp_document_symbols({default_text=":method: " })<cr>
 nnoremap <leader>fr :lua require('telescope.builtin').lsp_references()<cr>
 " nnoremap <silent> fr <cmd>lua vim.lsp.buf.references()<CR>
@@ -49,7 +48,7 @@ nnoremap <leader>gi :lua require('telescope.builtin').lsp_implementations()<cr>
 " nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>gd :lua require('telescope.builtin').lsp_definitions()<cr>
 " nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-" nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
