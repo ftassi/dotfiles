@@ -66,28 +66,3 @@ lua << EOF
     -- refer to the configuration section below
   }
 EOF
-
-lua << EOF
---[[
-local lsp = require('lspconfig')
-
-local on_attach = function(client, bufnr)
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
-  local opts = {noremap = true, silent = true}
-
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-
-end
-
--- nvim-cmp supports additional completion capabilities
-
-lsp.psalm.setup{
-  cmd = {'backend/bin/psalm.phar', '--language-server', '-r', 'backend'},
-  -- on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-]]--
-EOF
-
-
