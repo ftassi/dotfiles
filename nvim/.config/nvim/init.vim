@@ -41,6 +41,8 @@ Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --n
 " Snippets
 Plug 'SirVer/ultisnips'
 Plug 'honza/vim-snippets'
+Plug 'kburdett/vim-nuuid'
+
 " Fuzzy Finder
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
