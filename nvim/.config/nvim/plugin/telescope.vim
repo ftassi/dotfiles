@@ -1,7 +1,7 @@
 lua << EOF
 require('telescope').setup{
     defaults = {
-        vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number',  '--column', '--smart-case', '--hidden', '-u', '-g', '!.git' },
+        vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number',  '--column', '--smart-case', '--hidden', '-g!.git' },
         color_devicons = true,
         layout_config = {
             width = 0.9,
