@@ -41,10 +41,10 @@ nnoremap <leader>a :lua require('telescope.builtin').lsp_code_actions()<cr>
 nnoremap <leader>ft :lua require('telescope.builtin').treesitter()<cr>
 nnoremap <leader>fs :lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
 nnoremap <leader>fm :lua require('telescope.builtin').lsp_document_symbols({default_text=":method: " })<cr>
-nnoremap <leader>fr :lua require('telescope.builtin').lsp_references()<cr>
+nnoremap <leader>fr :lua require('telescope.builtin').lsp_references({layout_strategy = "vertical", entry_maker = require('ftassi.telescope').file_only_entry_maker })<cr><cr>
 " nnoremap <silent> fr <cmd>lua vim.lsp.buf.references()<CR>
 
-nnoremap <leader>gi :lua require('telescope.builtin').lsp_implementations()<cr>
+nnoremap <leader>gi :lua require('telescope.builtin').lsp_implementations({layout_strategy = "vertical", entry_maker = require('ftassi.telescope').file_only_entry_maker })<cr><cr>
 " nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>gd :lua require('telescope.builtin').lsp_definitions()<cr>
 " nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
