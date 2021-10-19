@@ -35,7 +35,6 @@ nnoremap <silent> <leader>sh <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <leader>rr :lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>a :lua require('telescope.builtin').lsp_code_actions()<cr>
 "
 " Find and discover code
 nnoremap <leader>ft :lua require('telescope.builtin').treesitter()<cr>
