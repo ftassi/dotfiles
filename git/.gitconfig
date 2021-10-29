@@ -1,0 +1,10 @@
+[core]
+	excludesfile = /home/ftassi/.gitignore_global
+	editor = vim
+[user]
+	name = Francesco Tassi
+	email = tassi.francesco@gmail.com
+[rerere]
+	enabled = true
+[commit]
+	verbose = true
