@@ -39,6 +39,9 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'ray-x/lsp_signature.nvim' 
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'folke/trouble.nvim'
+Plug 'neovim/nvim-lspconfig'
+Plug 'jose-elias-alvarez/null-ls.nvim'
+Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'

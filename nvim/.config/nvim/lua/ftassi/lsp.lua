@@ -7,6 +7,9 @@ lsp.psalm.setup{
     capabilities = capabilities,
     cmd = {'backend/bin/psalm.phar', '--language-server', '-r', 'backend'},
 }
+
+lsp.tsserver.setup{ capabilities = capabilities }
+
 local cmp = require'cmp'
 cmp.setup {
     snippet = {
