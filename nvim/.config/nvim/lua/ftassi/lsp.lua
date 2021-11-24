@@ -12,6 +12,9 @@ lsp.tsserver.setup{ capabilities = capabilities }
 
 local cmp = require'cmp'
 cmp.setup {
+    formatting = {
+        format = lspkind.cmp_format({with_text = false, maxwidth = 50})
+    },
     snippet = {
         expand = function(args)
             vim.fn["UltiSnips#Anon"](args.body)
