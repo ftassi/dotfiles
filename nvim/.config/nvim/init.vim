@@ -47,6 +47,7 @@ Plug 'onsails/lspkind-nvim'
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
 Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
+Plug 'RRethy/vim-illuminate'
 
 " Snippets
 Plug 'SirVer/ultisnips'
