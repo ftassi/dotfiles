@@ -8,7 +8,14 @@ lsp.psalm.setup{
     cmd = {'backend/bin/psalm.phar', '--language-server', '-r', 'backend'},
 }
 
-lsp.tsserver.setup{ capabilities = capabilities }
+lsp.tsserver.setup {
+    before_init = function(params)
+        params.processId = vim.NIL
+    end,
+    cmd = require'lspcontainers'.command('tsserver'),
+    root_dir = lsp.util.root_pattern(".git", vim.fn.getcwd()),
+    capabilities = capabilities
+}
 
 local cmp = require'cmp'
 cmp.setup {
