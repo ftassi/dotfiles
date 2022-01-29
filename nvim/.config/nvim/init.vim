@@ -62,6 +62,8 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-telescope/telescope-frecency.nvim'
 Plug 'tami5/sqlite.lua'
 
+Plug 'ThePrimeagen/harpoon'
+
 " Training and getting better
 Plug 'ThePrimeagen/vim-be-good'
 
