@@ -1,3 +1,6 @@
+## Todo 
+Spostare i template da locale a globale
+Implementare un qualche tipo di copy reference
 ## Definition of done
 
 - Code navigation
