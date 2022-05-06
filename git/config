@@ -1,5 +1,4 @@
 [core]
-	excludesfile = /home/ftassi/.gitignore_global
 	editor = vim
 [user]
 	name = Francesco Tassi
@@ -14,3 +13,4 @@
     f = fetch -p
     st = status -sb
     a = add -p
+    last = log -1 HEAD --stat
