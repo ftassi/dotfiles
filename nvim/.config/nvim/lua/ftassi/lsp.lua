@@ -20,7 +20,9 @@ lsp.intelephense.setup{
 
 lsp.psalm.setup{
     capabilities = capabilities,
-    cmd = {'backend/bin/psalm.phar', '--language-server', '-r', 'backend'},
+    cmd = {'bin/psalm-language-server'},
+    filetypes = {"php"},
+    root_dir = lsp.util.root_pattern("psalm.xml", "psalm.xml.dist")
 }
 
 lsp.tsserver.setup {
