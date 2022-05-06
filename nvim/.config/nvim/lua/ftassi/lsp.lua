@@ -89,6 +89,8 @@ cmp.setup {
 
 require "lsp_signature".setup({
         floating_window = false,
+        bind = true,
+        always_trigger = true,
     });
 -- require "lsp_signature".setup({
 --     zindex = 50,
