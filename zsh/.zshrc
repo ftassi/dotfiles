@@ -13,9 +13,13 @@ setopt EXTENDED_HISTORY  # record command start time
 setopt PROMPT_SUBST
 
 export FZF_PATH="${HOME}/.fzf"
+
 export NVM_DIR="$HOME/.nvm"
 export NVM_LAZY_LOAD=true
 export NVM_COMPLETION=true
+
+export DOCKER_BUILDKIT=1
+export COMPOSE_DOCKER_CLI_BUILD=1
 
 export EDITOR='vim'
 export TERM='xterm-256color'
