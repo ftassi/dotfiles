@@ -25,6 +25,11 @@ lsp.psalm.setup{
     root_dir = lsp.util.root_pattern("psalm.xml", "psalm.xml.dist")
 }
 
+lsp.rust_analyzer.setup {
+    capabilities = capabilities,
+    cmd = require'lspcontainers'.command('rust_analyzer'),
+}
+
 require'lspconfig'.gopls.setup {
     capabilities = capabilities,
     cmd = require'lspcontainers'.command('gopls'),
