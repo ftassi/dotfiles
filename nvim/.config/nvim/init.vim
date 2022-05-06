@@ -16,6 +16,8 @@ Plug 'mhinz/vim-startify'
 Plug 'Asheq/close-buffers.vim'
 Plug 'BurntSushi/ripgrep'
 Plug 'pmalek/toogle-maximize.vim'
+Plug 'adelarsq/vim-matchit'
+Plug 'Yggdroot/indentLine'
 
 " Aesthetic
 Plug 'joshdick/onedark.vim'
