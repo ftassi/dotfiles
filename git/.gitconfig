@@ -8,3 +8,9 @@
 	enabled = true
 [commit]
 	verbose = true
+[alias]
+    cleanup-branches = !git remote prune origin && git branch --merged | egrep -v '(^\\*|master|main|develop)' | xargs git branch -d
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    f = fetch -p
+    st = status -sb
+    a = add -p
