@@ -34,6 +34,7 @@ lsp.tsserver.setup {
     capabilities = capabilities
 }
 
+local lspkind = require('lspkind')
 local cmp = require'cmp'
 cmp.setup {
     formatting = {
