@@ -2,8 +2,22 @@ local lsp = require('lspconfig')
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 
-lsp.intelephense.setup{ capabilities = capabilities }
 -- vim.lsp.set_log_level('debug')
+
+-- You can configure intelphense to work for a specific version of php
+-- configuring it like this:
+-- settings = {
+    -- intelephense = {
+    --     environment = {phpVersion = "7.4"},
+    -- },
+    -- logging = {enabled = false, level = 'debug', path = '/var/log/phpactor.log'},
+-- },
+-- This configuration should be done in .nvimrc file at project level as you most likely
+-- want to customize php version per project
+lsp.intelephense.setup{ 
+    capabilities = capabilities,
+}
+
 lsp.psalm.setup{
     capabilities = capabilities,
     cmd = {'backend/bin/psalm.phar', '--language-server', '-r', 'backend'},
