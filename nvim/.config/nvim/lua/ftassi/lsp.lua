@@ -25,6 +25,11 @@ lsp.psalm.setup{
     root_dir = lsp.util.root_pattern("psalm.xml", "psalm.xml.dist")
 }
 
+require'lspconfig'.gopls.setup {
+    capabilities = capabilities,
+    cmd = require'lspcontainers'.command('gopls'),
+}
+
 lsp.tsserver.setup {
     before_init = function(params)
         params.processId = vim.NIL

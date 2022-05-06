@@ -51,6 +51,7 @@ Plug 'onsails/lspkind-nvim'
 Plug 'janko-m/vim-test'
 Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
 Plug 'RRethy/vim-illuminate'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 " Snippets
 Plug 'SirVer/ultisnips'
