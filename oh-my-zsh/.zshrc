@@ -119,7 +119,6 @@ precmd() {eval "$PROMPT_COMMAND"}
 export SOISY_MEMORY=16384
 export SOISY_CPUS=4
 export TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
-export CR_PAT=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
 export COMPOSE_DOCKER_CLI_BUILD=1
 export DOCKER_BUILDKIT=1
 
