@@ -10,6 +10,7 @@ augroup PhpactorMappings
     au FileType php nmap <buffer> <Leader>cc :PhpactorClassNew<CR>
     au FileType php nmap <buffer> <Leader>ei :PhpactorClassInflect<CR>
     au FileType php nmap <buffer> <Leader>mf :PhpactorMoveFile<CR>
+    au FileType php nmap <buffer> <Leader>mf :PhpactorMoveFile<CR>
     au FileType php nmap <buffer> <Leader>cf :PhpactorCopyFile<CR>
     au FileType php vmap <buffer> <silent> <Leader>ev
         \ :<C-u>PhpactorExtractExpression<CR>
