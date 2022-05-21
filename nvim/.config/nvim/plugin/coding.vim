@@ -68,10 +68,10 @@ lua << EOF
   }
 EOF
 
-nnoremap <leader>xx <cmd>TroubleToggle<cr>
-nnoremap <leader>xw <cmd>TroubleToggle workspace_diagnostics<cr>
-nnoremap <leader>xd <cmd>TroubleToggle document_diagnostics<cr>
-nnoremap <leader>xq <cmd>TroubleToggle quickfix<cr>
-nnoremap <leader>xl <cmd>TroubleToggle loclist<cr>
-nnoremap xr <cmd>TroubleToggle lsp_references<cr>
-nnoremap xR <cmd>TroubleRefresh<cr>
+nnoremap <leader>zx <cmd>TroubleToggle<cr>
+nnoremap <leader>zw <cmd>TroubleToggle workspace_diagnostics<cr>
+nnoremap <leader>zd <cmd>TroubleToggle document_diagnostics<cr>
+nnoremap <leader>zq <cmd>TroubleToggle quickfix<cr>
+nnoremap <leader>zl <cmd>TroubleToggle loclist<cr>
+nnoremap zr <cmd>TroubleToggle lsp_references<cr>
+nnoremap zR <cmd>TroubleRefresh<cr>
