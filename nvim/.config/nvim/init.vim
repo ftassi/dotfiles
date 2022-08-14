@@ -47,6 +47,7 @@ Plug 'neovim/nvim-lspconfig'
 Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'onsails/lspkind-nvim'
+Plug 'stevearc/aerial.nvim'
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
