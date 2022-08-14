@@ -7,8 +7,8 @@ endif
 
 call plug#begin('~/.vim/plugged')
 " Utility
-Plug 'tpope/vim-surround'
-Plug 'tpope/vim-commentary'
+Plug 'kylechui/nvim-surround'
+Plug 'numToStr/Comment.nvim'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'vim-scripts/argtextobj.vim'
 Plug 'machakann/vim-highlightedyank'
@@ -168,5 +168,6 @@ let g:startify_lists = [
             \ ]
 
 lua require('neoscroll').setup()
-lua require("nvim-autopairs").setup {}
-
+lua require("nvim-autopairs").setup()
+lua require("nvim-surround").setup()
+lua require("Comment").setup()
