@@ -32,7 +32,41 @@ lsp.rust_analyzer.setup {
 
 require'lspconfig'.gopls.setup {
     capabilities = capabilities,
-    cmd = require'lspcontainers'.command('gopls'),
+    cmd = require'lspcontainers'.command('ftassigopls', {
+            image = 'lspcontainers/gopls',
+            network="bridge",
+            cmd_builder = function (runtime, workdir, image, network)
+                local volume = workdir..":"..workdir..":z"
+                local env = vim.api.nvim_eval('environ()')
+                local gopath = env.GOPATH or env.HOME.."/go"
+                local gopath_volume = gopath..":"..gopath..":z"
+
+                local group_handle = io.popen("id -g")
+                local user_handle = io.popen("id -u")
+
+                local group_id = string.gsub(group_handle:read("*a"), "%s+", "")
+                local user_id = string.gsub(user_handle:read("*a"), "%s+", "")
+
+                group_handle:close()
+                user_handle:close()
+
+                local user = user_id..":"..group_id
+
+                return {
+                    runtime,
+                    "container",
+                    "run",
+                    "--interactive",
+                    "--network="..network,
+                    "--rm",
+                    "--workdir="..workdir,
+                    "--volume="..volume,
+                    "--user="..user,
+                    image
+                }
+            end,
+        }),
+    -- cmd = require'lspcontainers'.command('gopls'),
 }
 
 lsp.tsserver.setup {
