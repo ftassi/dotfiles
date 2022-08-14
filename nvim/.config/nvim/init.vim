@@ -18,6 +18,7 @@ Plug 'BurntSushi/ripgrep'
 Plug 'pmalek/toogle-maximize.vim'
 Plug 'adelarsq/vim-matchit'
 Plug 'Yggdroot/indentLine'
+Plug 'karb94/neoscroll.nvim'
 
 " Aesthetic
 Plug 'joshdick/onedark.vim'
@@ -165,4 +166,4 @@ let g:startify_lists = [
             \ { 'type': 'commands',  'header': ['   Commands']       },
             \ ]
 
-
+lua require('neoscroll').setup()
