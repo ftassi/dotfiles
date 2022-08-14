@@ -54,6 +54,7 @@ Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --n
 Plug 'RRethy/vim-illuminate'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'github/copilot.vim'
+Plug 'windwp/nvim-autopairs'
 
 " Snippets
 Plug 'SirVer/ultisnips'
@@ -167,3 +168,5 @@ let g:startify_lists = [
             \ ]
 
 lua require('neoscroll').setup()
+lua require("nvim-autopairs").setup {}
+
