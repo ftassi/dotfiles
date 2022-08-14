@@ -28,7 +28,7 @@ local M = {}
 M.search_dotfiles = function()
     require("telescope.builtin").git_files({
         prompt_title = "< Dotfiles >",
-        cwd = "/home/ftassi/.dotfiles.stow",
+        cwd = "/home/ftassi/dotfiles",
         hidden = true,
     })
 end
