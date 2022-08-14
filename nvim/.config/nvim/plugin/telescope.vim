@@ -18,8 +18,15 @@ require('telescope').setup{
        },
     },
     pickers = {
-        find_files = { find_command = {'rg', '--files', '--hidden', '-g', '!.git' }},
+        find_files = { theme = "ivy", find_command = {'rg', '--files', '--hidden', '-g', '!.git' }},
         treesitter = { layout_strategy = 'horizontal' },
+        buffers = {theme = "ivy"},
+        git_branches = {theme = "ivy"},
+        oldfiles = {theme = "ivy"},
+        lsp_references = {theme = "ivy"},
+        lsp_implementations = {theme = "ivy"},
+        lsp_definitions = {theme = "ivy", entry_maker = require('ftassi.telescope').file_only_entry_maker },
+        lsp_document_symbols = {theme = "ivy"},
     },
     extensions = {
         fzy_native = {
@@ -54,8 +61,8 @@ nnoremap <leader>fG :lua require('telescope.builtin').find_files({ find_command 
 nnoremap <leader>fg <cmd>call SmartSearch()<cr>
 vnoremap <leader>fs "gy :lua require'telescope.builtin'.grep_string({ search=vim.fn.getreg('g') })<cr>
 nnoremap <leader>fgw :lua require('telescope.builtin').grep_string({ search = vim.fn.expand("<cword>")})<CR>
-nnoremap <Tab> :lua require('telescope.builtin').buffers(require('telescope.themes').get_dropdown({preview = false, layout_config = {width = 0.9}}))<cr>
-nnoremap <S-Tab> :lua require('telescope.builtin').oldfiles(require('telescope.themes').get_dropdown({layout_config = {width = 0.9}}))<cr>
+nnoremap <Tab> :lua require('telescope.builtin').buffers()<cr>
+nnoremap <S-Tab> :lua require('telescope.builtin').oldfiles()<cr>
 nnoremap <leader>hh <cmd>Telescope help_tags<cr>
 nnoremap <leader>gb :lua require('telescope.builtin').git_branches()<cr>
 nnoremap <leader>df :lua require('ftassi.telescope').search_dotfiles()<cr>

@@ -44,16 +44,17 @@ nnoremap <leader>rr :lua vim.lsp.buf.rename()<CR>
 "
 " Find and discover code
 nnoremap <leader>ft :lua require('telescope.builtin').treesitter()<cr>
-nnoremap <leader>fs :lua require('telescope.builtin').lsp_dynamic_workspace_symbols()<cr>
+nnoremap <leader>fs :lua require('telescope.builtin').lsp_document_symbols()<cr>
 nnoremap <leader>fm :lua require('telescope.builtin').lsp_document_symbols({default_text=":method: " })<cr>
-nnoremap <leader>fr :lua require('telescope.builtin').lsp_references()<cr><cr>
+nnoremap <leader>fr :lua require('telescope.builtin').lsp_references({entry_maker = require('ftassi.telescope').file_only_entry_maker})<cr>
+nnoremap <leader>fi :lua require('telescope.builtin').lsp_implementations({entry_maker = require('ftassi.telescope').file_only_entry_maker})<cr>
 " nnoremap <silent> fr <cmd>lua vim.lsp.buf.references()<CR>
 
-nnoremap <leader>gi :lua require('telescope.builtin').lsp_implementations({layout_strategy = "vertical", entry_maker = require('ftassi.telescope').file_only_entry_maker })<cr><cr>
+nnoremap <leader>gi :lua require('telescope.builtin').lsp_implementations({entry_maker = require('ftassi.telescope').file_only_entry_maker})<cr>
 " nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <leader>gd :lua require('telescope.builtin').lsp_definitions()<cr>
+nnoremap <leader>gd :lua require('telescope.builtin').lsp_definitions({entry_maker = require('ftassi.telescope').file_only_entry_maker})<cr>
 " nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration({entry_maker = require('ftassi.telescope').file_only_entry_maker})<CR>
 
 " Avoid showing message extra message when using completion
 set shortmess+=c
