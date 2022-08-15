@@ -19,6 +19,11 @@ lsp.intelephense.setup{
     on_attach = require("aerial").on_attach,
 }
 
+lsp.elmls.setup{ 
+    capabilities = capabilities,
+    on_attach = require("aerial").on_attach,
+}
+
 lsp.psalm.setup{
     capabilities = capabilities,
     cmd = {'bin/psalm-language-server'},
@@ -29,55 +34,19 @@ lsp.psalm.setup{
 
 lsp.rust_analyzer.setup {
     capabilities = capabilities,
-    cmd = require'lspcontainers'.command('rust_analyzer'),
     on_attach = require("aerial").on_attach,
 }
 
 require'lspconfig'.gopls.setup {
     capabilities = capabilities,
-    cmd = require'lspcontainers'.command('ftassigopls', {
-            image = 'lspcontainers/gopls',
-            network="bridge",
-            cmd_builder = function (runtime, workdir, image, network)
-                local volume = workdir..":"..workdir..":z"
-                local env = vim.api.nvim_eval('environ()')
-                local gopath = env.GOPATH or env.HOME.."/go"
-                local gopath_volume = gopath..":"..gopath..":z"
-
-                local group_handle = io.popen("id -g")
-                local user_handle = io.popen("id -u")
-
-                local group_id = string.gsub(group_handle:read("*a"), "%s+", "")
-                local user_id = string.gsub(user_handle:read("*a"), "%s+", "")
-
-                group_handle:close()
-                user_handle:close()
-
-                local user = user_id..":"..group_id
-
-                return {
-                    runtime,
-                    "container",
-                    "run",
-                    "--interactive",
-                    "--network="..network,
-                    "--rm",
-                    "--workdir="..workdir,
-                    "--volume="..volume,
-                    "--user="..user,
-                    image
-                }
-            end,
-        }),
     on_attach = require("aerial").on_attach,
-    -- cmd = require'lspcontainers'.command('gopls'),
 }
 
 lsp.tsserver.setup {
-    before_init = function(params)
-        params.processId = vim.NIL
-    end,
-    cmd = require'lspcontainers'.command('tsserver'),
+    -- before_init = function(params)
+    --     params.processId = vim.NIL
+    -- end,
+    cmd = {"typescript-language-server", "--stdio"},
     root_dir = lsp.util.root_pattern(".git", vim.fn.getcwd()),
     capabilities = capabilities,
     on_attach = require("aerial").on_attach,
@@ -137,3 +106,5 @@ require "lsp_signature".setup({
 --     hint_enable = false,
 --     always_trigger = true,
 -- }, bufnr)
+--
+

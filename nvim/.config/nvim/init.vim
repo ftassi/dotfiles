@@ -35,8 +35,9 @@ Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 
 "LSP and coding related plugin
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'lspcontainers/lspcontainers.nvim'
 Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
 Plug 'hrsh7th/nvim-cmp' 
@@ -169,6 +170,8 @@ lua << LUA
 require("auto-save").setup({
     trigger_events = {"InsertLeave", "TextChanged"},
 })
+require("mason").setup()
+require("mason-lspconfig").setup()
 require("nvim-autopairs").setup()
 require("nvim-surround").setup()
 require("Comment").setup()
