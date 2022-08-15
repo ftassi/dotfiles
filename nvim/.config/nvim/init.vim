@@ -164,12 +164,12 @@ let g:startify_lists = [
             \ { 'type': 'commands',  'header': ['   Commands']       },
             \ ]
 
-lua require("nvim-autopairs").setup()
-lua require("nvim-surround").setup()
-lua require("Comment").setup()
 lua << LUA
 
 require("auto-save").setup({
     trigger_events = {"InsertLeave", "TextChanged"},
 })
+require("nvim-autopairs").setup()
+require("nvim-surround").setup()
+require("Comment").setup()
 LUA
