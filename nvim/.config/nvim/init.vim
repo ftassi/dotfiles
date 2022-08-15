@@ -167,6 +167,14 @@ let g:startify_lists = [
 
 lua << LUA
 
+vim.api.nvim_set_keymap("n", "<leader>f", "", {
+    noremap = true,
+    callback = function()
+        vim.lsp.buf.formatting_sync()
+    end,
+    desc = "Format code",
+
+})
 require("auto-save").setup({
     trigger_events = {"InsertLeave", "TextChanged"},
 })
