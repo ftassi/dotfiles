@@ -18,7 +18,6 @@ Plug 'BurntSushi/ripgrep'
 Plug 'pmalek/toogle-maximize.vim'
 Plug 'adelarsq/vim-matchit'
 Plug 'Yggdroot/indentLine'
-Plug 'karb94/neoscroll.nvim'
 Plug 'Pocco81/auto-save.nvim'
 
 " Aesthetic
@@ -165,7 +164,6 @@ let g:startify_lists = [
             \ { 'type': 'commands',  'header': ['   Commands']       },
             \ ]
 
-lua require('neoscroll').setup()
 lua require("nvim-autopairs").setup()
 lua require("nvim-surround").setup()
 lua require("Comment").setup()
