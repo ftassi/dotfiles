@@ -19,6 +19,7 @@ Plug 'pmalek/toogle-maximize.vim'
 Plug 'adelarsq/vim-matchit'
 Plug 'Yggdroot/indentLine'
 Plug 'karb94/neoscroll.nvim'
+Plug 'Pocco81/auto-save.nvim'
 
 " Aesthetic
 Plug 'joshdick/onedark.vim'
@@ -152,9 +153,6 @@ endif
 
 set exrc
 
-" Autosave
-autocmd BufLeave,FocusLost * silent! wall
-
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
     \  Startify | execute 'NERDTree' argv()[0] | wincmd w | execute 'cd '.argv()[0] | endif
 
@@ -171,3 +169,9 @@ lua require('neoscroll').setup()
 lua require("nvim-autopairs").setup()
 lua require("nvim-surround").setup()
 lua require("Comment").setup()
+lua << LUA
+
+require("auto-save").setup({
+    trigger_events = {"InsertLeave", "TextChanged"},
+})
+LUA
