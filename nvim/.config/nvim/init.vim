@@ -48,6 +48,7 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'onsails/lspkind-nvim'
 Plug 'stevearc/aerial.nvim'
+Plug 'alx741/vim-rustfmt'
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
@@ -67,7 +68,6 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-lua/popup.nvim'
-Plug 'nvim-telescope/telescope-frecency.nvim'
 Plug 'tami5/sqlite.lua'
 
 Plug 'ThePrimeagen/harpoon'
@@ -170,7 +170,7 @@ lua << LUA
 vim.api.nvim_set_keymap("n", "<leader>f", "", {
     noremap = true,
     callback = function()
-        vim.lsp.buf.formatting_sync()
+        vim.lsp.buf.format()
     end,
     desc = "Format code",
 
