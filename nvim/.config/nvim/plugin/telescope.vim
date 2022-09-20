@@ -25,6 +25,7 @@ require('telescope').setup{
         oldfiles = {theme = "ivy"},
         lsp_references = {theme = "ivy"},
         lsp_implementations = {theme = "ivy"},
+        lsp_dynamic_workspace_symbols = {theme = "ivy", entry_maker = require('ftassi.telescope').file_only_entry_maker },
         lsp_definitions = {theme = "ivy", entry_maker = require('ftassi.telescope').file_only_entry_maker },
         lsp_document_symbols = {theme = "ivy"},
     },
