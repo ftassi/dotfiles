@@ -74,10 +74,9 @@ lua << EOF
   }
 EOF
 
-nnoremap <leader>zx <cmd>TroubleToggle<cr>
-nnoremap <leader>zw <cmd>TroubleToggle workspace_diagnostics<cr>
-nnoremap <leader>zd <cmd>TroubleToggle document_diagnostics<cr>
-nnoremap <leader>zq <cmd>TroubleToggle quickfix<cr>
-nnoremap <leader>zl <cmd>TroubleToggle loclist<cr>
-nnoremap zr <cmd>TroubleToggle lsp_references<cr>
-nnoremap zR <cmd>TroubleRefresh<cr>
+nnoremap <leader><leader>tt <cmd>TroubleToggle<cr>
+nnoremap <leader><leader>tw <cmd>TroubleToggle workspace_diagnostics<cr>
+nnoremap <leader><leader>td <cmd>TroubleToggle document_diagnostics<cr>
+nnoremap <leader><leader>tq <cmd>TroubleToggle quickfix<cr>
+nnoremap <leader><leader>tl <cmd>TroubleToggle loclist<cr>
+nnoremap <leader><leader>tr <cmd>TroubleRefresh<cr>
