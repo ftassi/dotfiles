@@ -14,6 +14,7 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- },
 -- This configuration should be done in .nvimrc file at project level as you most likely
 -- want to customize php version per project
+lsp.dockerls.setup{}
 lsp.intelephense.setup{ 
     capabilities = capabilities,
     settings = {
@@ -43,6 +44,9 @@ lsp.psalm.setup{
 
 lsp.rust_analyzer.setup {
     capabilities = capabilities,
+}
+
+require'lspconfig'.terraformls.setup {
 }
 
 require'lspconfig'.gopls.setup {
