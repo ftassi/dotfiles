@@ -52,3 +52,5 @@ timezsh() {
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 alias ll='ls -al'
+
+export PATH=~/.config/composer/vendor/bin:$PATH
