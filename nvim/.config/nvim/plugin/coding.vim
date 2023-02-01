@@ -36,7 +36,7 @@ inoremap <C-c> <CR><Esc>O
 
 " LSP mapping
 nnoremap <leader>K <Cmd>lua vim.lsp.buf.hover()<cr>
-nnoremap <leader>a :lua require('telescope.builtin').lsp_code_actions()<cr>
+nnoremap <leader>a :lua vim.lsp.buf.code_action()<cr>
 nnoremap <silent> <leader>sh <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
