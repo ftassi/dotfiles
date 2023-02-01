@@ -52,7 +52,7 @@ Plug 'alx741/vim-rustfmt'
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
-Plug 'phpactor/phpactor', {'for': 'php', 'tag': '*', 'do': 'composer install --no-dev -o'}
+Plug 'phpactor/phpactor', {'for': 'php', 'tag': '2022.11.12', 'do': 'composer install --no-dev -o'}
 Plug 'RRethy/vim-illuminate'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 Plug 'github/copilot.vim'
