@@ -16,7 +16,6 @@ capabilities = require('cmp_nvim_lsp').update_capabilities(capabilities)
 -- want to customize php version per project
 lsp.intelephense.setup{ 
     capabilities = capabilities,
-    on_attach = require("aerial").on_attach,
     settings = {
         intelephense = {
             -- debug = {enable = true},
@@ -33,7 +32,6 @@ lsp.intelephense.setup{
 
 lsp.elmls.setup{ 
     capabilities = capabilities,
-    on_attach = require("aerial").on_attach,
 }
 
 lsp.psalm.setup{
@@ -41,17 +39,14 @@ lsp.psalm.setup{
     cmd = {'bin/psalm-language-server'},
     filetypes = {"php"},
     root_dir = lsp.util.root_pattern("psalm.xml", "psalm.xml.dist"),
-    on_attach = require("aerial").on_attach,
 }
 
 lsp.rust_analyzer.setup {
     capabilities = capabilities,
-    on_attach = require("aerial").on_attach,
 }
 
 require'lspconfig'.gopls.setup {
     capabilities = capabilities,
-    on_attach = require("aerial").on_attach,
 }
 
 lsp.tsserver.setup {
@@ -61,7 +56,6 @@ lsp.tsserver.setup {
     cmd = {"typescript-language-server", "--stdio"},
     root_dir = lsp.util.root_pattern(".git", vim.fn.getcwd()),
     capabilities = capabilities,
-    on_attach = require("aerial").on_attach,
 }
 
 local lspkind = require('lspkind')
