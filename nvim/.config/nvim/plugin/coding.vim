@@ -50,7 +50,6 @@ nnoremap <leader>fr :lua require('telescope.builtin').lsp_references({entry_make
 nnoremap <leader>fi :lua require('telescope.builtin').lsp_implementations({entry_maker = require('ftassi.telescope').file_only_entry_maker})<cr>
 " nnoremap <silent> fr <cmd>lua vim.lsp.buf.references()<CR>
 
-nnoremap <leader>gi :lua require('telescope.builtin').lsp_implementations({entry_maker = require('ftassi.telescope').file_only_entry_maker})<cr>
 " nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>gd :lua require('telescope.builtin').lsp_definitions({entry_maker = require('ftassi.telescope').file_only_entry_maker})<cr>
 " nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
