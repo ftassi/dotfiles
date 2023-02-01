@@ -126,11 +126,11 @@ if (has("autocmd"))
     let s:colors = onedark#GetColors()
     let s:visual_grey = s:colors.visual_grey
     let s:yellow = s:colors.yellow
-    let s:white = s:colors.yellow
 
     autocmd ColorScheme * call onedark#extend_highlight("CursorLine", {"bg": s:visual_grey})
     autocmd ColorScheme * call onedark#extend_highlight("CursorLineNr", {"fg": s:yellow})
-    autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg": s:white })
+    autocmd ColorScheme * call onedark#extend_highlight("LineNr", {"fg": s:colors.white})
+    autocmd ColorScheme * call onedark#extend_highlight("Comment", { "fg": s:yellow })
   augroup END
 endif
 
