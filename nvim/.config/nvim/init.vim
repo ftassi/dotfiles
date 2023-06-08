@@ -165,6 +165,8 @@ let g:startify_lists = [
             \ { 'type': 'commands',  'header': ['   Commands']       },
             \ ]
 
+let g:rustfmt_on_save = 0
+
 lua << LUA
 
 vim.api.nvim_set_keymap("n", "<leader>f", "", {
