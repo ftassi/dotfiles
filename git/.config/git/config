@@ -14,3 +14,6 @@
     st = status -sb
     a = add -p
     last = log -1 HEAD --stat
+    latest-tag = describe --abbrev=0 --tags
+[push]
+	autoSetupRemote = true
