@@ -169,7 +169,7 @@ let g:startify_lists = [
             \ { 'type': 'commands',  'header': ['   Commands']       },
             \ ]
 
-let g:rustfmt_on_save = 0
+let g:rustfmt_on_save = 1
 
 lua << LUA
 
@@ -182,7 +182,7 @@ vim.api.nvim_set_keymap("n", "<leader>f", "", {
 
 })
 require("auto-save").setup({
-    trigger_events = {"InsertLeave", "TextChanged"},
+    trigger_events = {"InsertLeave", "BufLeave", "FocusLost", "TextChanged"},
 })
 require("mason").setup()
 require("mason-lspconfig").setup()
