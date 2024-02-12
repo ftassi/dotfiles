@@ -106,6 +106,7 @@ set ruler
 set signcolumn=yes
 set colorcolumn=120
 set scrolloff=6
+set conceallevel=0
 
 " Tabs & Indent
 set autoindent
