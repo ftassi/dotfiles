@@ -24,7 +24,7 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 export EDITOR='vim'
 export TERM='xterm-256color'
 
-export PATH=$HOME/.cargo/bin:$HOME/bin:/usr/local/bin:/usr/local/go/bin:/opt/bin:$HOME/go/bin:$PATH
+export PATH=$HOME/.cargo/bin:$HOME/opt/bin:$HOME/bin:/usr/local/bin:/usr/local/go/bin:/opt/bin:$HOME/go/bin:$PATH
 
 [ -f ~/.secrets.zsh ] && source ~/.secrets.zsh
 [ -f ~/antigen.zsh ] && source ~/antigen.zsh
