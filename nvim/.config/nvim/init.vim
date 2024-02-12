@@ -50,6 +50,7 @@ Plug 'jose-elias-alvarez/null-ls.nvim'
 Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'onsails/lspkind-nvim'
 Plug 'stevearc/aerial.nvim'
+Plug 'AndrewRadev/tagalong.vim'
 Plug 'alx741/vim-rustfmt'
 
 "Coding aka where the magic happens
