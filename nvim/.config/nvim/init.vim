@@ -19,6 +19,8 @@ Plug 'pmalek/toogle-maximize.vim'
 Plug 'adelarsq/vim-matchit'
 Plug 'Yggdroot/indentLine'
 Plug 'Pocco81/auto-save.nvim'
+Plug 'tpope/vim-abolish'
+
 
 " Aesthetic
 Plug 'joshdick/onedark.vim'
