@@ -55,6 +55,9 @@ nnoremap <leader>gd :lua require('telescope.builtin').lsp_definitions({entry_mak
 " nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration({entry_maker = require('ftassi.telescope').file_only_entry_maker})<CR>
 
+" general navigation mappings
+nnoremap <A-Tab> :SymbolsOutline<cr>
+
 " Avoid showing message extra message when using completion
 set shortmess+=c
 autocmd FileType php set iskeyword+=$

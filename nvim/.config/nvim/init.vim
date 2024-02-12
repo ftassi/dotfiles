@@ -51,6 +51,7 @@ Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'onsails/lspkind-nvim'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'alx741/vim-rustfmt'
+Plug 'simrat39/symbols-outline.nvim'
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
@@ -187,4 +188,5 @@ require("mason-lspconfig").setup()
 require("nvim-autopairs").setup()
 require("nvim-surround").setup()
 require("Comment").setup()
+require("symbols-outline").setup()
 LUA
