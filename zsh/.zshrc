@@ -49,7 +49,6 @@ timezsh() {
   shell=${1-$SHELL}
   for i in $(seq 1 10); do /usr/bin/time -p $shell -i -c exit; done
 }
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
 alias ll='ls -al'
 
