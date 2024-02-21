@@ -50,7 +50,7 @@ timezsh() {
   for i in $(seq 1 10); do /usr/bin/time -p $shell -i -c exit; done
 }
 
-alias ll='ls -al'
+alias ll='exa -al'
 
 export PATH=~/.config/composer/vendor/bin:$PATH
 source /home/ftassi/.config/op/plugins.sh
