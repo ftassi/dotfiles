@@ -134,4 +134,4 @@ require "lsp_signature".setup({
 --     always_trigger = true,
 -- }, bufnr)
 --
-
+require'lspconfig'.docker_compose_language_service.setup{}
