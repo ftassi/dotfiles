@@ -44,3 +44,8 @@ Thumbs.db
 # DotEnv
 ########
 .env
+
+# AI related stuff
+gpt-persistent-session
+*.aichat
+>>> AI chat 
