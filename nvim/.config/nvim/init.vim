@@ -76,6 +76,10 @@ Plug 'tami5/sqlite.lua'
 
 Plug 'ThePrimeagen/harpoon'
 
+" AI stuff
+" Plug 'CoderCookE/vim-chatgpt'
+Plug 'madox2/vim-ai'
+
 " Training and getting better
 Plug 'ThePrimeagen/vim-be-good'
 
@@ -171,6 +175,34 @@ let g:startify_lists = [
             \ ]
 
 let g:rustfmt_on_save = 1
+
+" CoderCookE/vim-chatgpt settings
+"
+" let g:chat_gpt_max_tokens=4000
+" let g:chat_gpt_model='gpt-4-turbo-preview'
+" let g:chat_gpt_session_mode=1
+" let g:chat_gpt_temperature = 0.5
+" let g:chat_gpt_lang = 'Italian'
+" let g:chat_gpt_split_direction = 'vertical'
+" let g:chat_gpt_custom_prompts = {'ask': ''}
+
+" madox2/vim-ai settings
+
+let g:vim_ai_chat = {
+\  "options": {
+\       "model": "gpt-4-turbo-preview",
+\       "temperature": 0.2
+\   },
+\  "ui": {
+\    "code_syntax_enabled": 1,
+\    "populate_options": 0,
+\    "open_chat_command": "preset_below",
+\    "scratch_buffer_keep_open": 1,
+\    "paste_mode": 1,
+\  },
+\ }
+
+let g:vim_ai_roles_config_file = stdpath('config') . '/ai-prompts.ini'
 
 lua << LUA
 
