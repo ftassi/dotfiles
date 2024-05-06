@@ -7,6 +7,7 @@ nmap <silent> <leader>tg :w<CR> :TestVisit<CR>
 
 let test#strategy = 'neovim'
 let test#neovim#term_position = "vert botright"
+let test#rust#cargotest#test_options = '-- --nocapture'
 
 if has('nvim')
   tmap <C-o> <C-\><C-n>
