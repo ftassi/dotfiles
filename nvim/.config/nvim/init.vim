@@ -52,6 +52,7 @@ Plug 'onsails/lspkind-nvim'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'alx741/vim-rustfmt'
 Plug 'simrat39/symbols-outline.nvim'
+Plug 'j-hui/fidget.nvim'
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
@@ -190,4 +191,8 @@ require("nvim-autopairs").setup()
 require("nvim-surround").setup()
 require("Comment").setup()
 require("symbols-outline").setup()
+require("fidget").setup {
+  -- options
+}
+
 LUA
