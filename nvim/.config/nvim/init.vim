@@ -17,7 +17,7 @@ Plug 'Asheq/close-buffers.vim'
 Plug 'BurntSushi/ripgrep'
 Plug 'pmalek/toogle-maximize.vim'
 Plug 'adelarsq/vim-matchit'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 Plug 'Pocco81/auto-save.nvim'
 Plug 'tpope/vim-abolish'
 
