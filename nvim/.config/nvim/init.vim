@@ -213,7 +213,7 @@ vim.api.nvim_set_keymap("n", "<leader>f", "", {
 
 })
 require("auto-save").setup({
-    trigger_events = {"InsertLeave", "BufLeave", "FocusLost", "TextChanged"},
+    trigger_events = {"BufLeave", "FocusLost"}
 })
 require("mason").setup()
 require("mason-lspconfig").setup()
