@@ -160,8 +160,6 @@ if executable('rg')
     set grepprg=rg\ --vimgrep
 endif
 
-set exrc
-
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
     \  Startify | execute 'NERDTree' argv()[0] | wincmd w | execute 'cd '.argv()[0] | endif
 
