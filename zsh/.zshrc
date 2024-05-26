@@ -39,6 +39,7 @@ antigen bundle lukechilds/zsh-nvm
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle unixorn/fzf-zsh-plugin@main
+antigen bundle ptavares/zsh-direnv
 
 antigen theme agnoster/agnoster-zsh-theme
 antigen apply
@@ -54,3 +55,5 @@ alias ll='exa -al'
 
 export PATH=~/.config/composer/vendor/bin:$PATH
 source /home/ftassi/.config/op/plugins.sh
+
+eval "$(direnv hook zsh)"
