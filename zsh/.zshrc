@@ -28,7 +28,7 @@ export PATH=$HOME/.cargo/bin:$HOME/opt/bin:$HOME/bin:/usr/local/bin:/usr/local/g
 
 [ -f ~/.secrets.zsh ] && source ~/.secrets.zsh
 [ -f ~/antigen.zsh ] && source ~/antigen.zsh
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+[ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
 
 export PROMPT_COMMAND="pwd > /tmp/whereami"
 precmd() {eval "$PROMPT_COMMAND"}
