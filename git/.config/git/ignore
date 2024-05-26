@@ -43,4 +43,10 @@ Thumbs.db
 .phpactor.json
 # DotEnv
 ########
-.env
+# .env
+.envrc
+
+# AI related stuff
+gpt-persistent-session
+*.aichat
+>>> AI chat 

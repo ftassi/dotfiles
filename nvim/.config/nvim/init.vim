@@ -5,7 +5,7 @@ if empty(glob(data_dir . '/autoload/plug.vim'))
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 
-call plug#begin(has('nvim') ? stdpath('data') . '/plugged' : '~/.vim/plugged')
+call plug#begin('~/.vim/plugged')
 " Utility
 Plug 'kylechui/nvim-surround'
 Plug 'numToStr/Comment.nvim'
@@ -17,7 +17,7 @@ Plug 'Asheq/close-buffers.vim'
 Plug 'BurntSushi/ripgrep'
 Plug 'pmalek/toogle-maximize.vim'
 Plug 'adelarsq/vim-matchit'
-Plug 'Yggdroot/indentLine'
+" Plug 'Yggdroot/indentLine'
 Plug 'Pocco81/auto-save.nvim'
 Plug 'tpope/vim-abolish'
 
@@ -52,6 +52,7 @@ Plug 'onsails/lspkind-nvim'
 Plug 'AndrewRadev/tagalong.vim'
 Plug 'alx741/vim-rustfmt'
 Plug 'simrat39/symbols-outline.nvim'
+Plug 'j-hui/fidget.nvim'
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
@@ -74,6 +75,10 @@ Plug 'nvim-lua/popup.nvim'
 Plug 'tami5/sqlite.lua'
 
 Plug 'ThePrimeagen/harpoon'
+
+" AI stuff
+" Plug 'CoderCookE/vim-chatgpt'
+Plug 'madox2/vim-ai'
 
 " Training and getting better
 Plug 'ThePrimeagen/vim-be-good'
@@ -155,8 +160,6 @@ if executable('rg')
     set grepprg=rg\ --vimgrep
 endif
 
-set exrc
-
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists('s:std_in') |
     \  Startify | execute 'NERDTree' argv()[0] | wincmd w | execute 'cd '.argv()[0] | endif
 
@@ -171,6 +174,35 @@ let g:startify_lists = [
 
 let g:rustfmt_on_save = 1
 
+" CoderCookE/vim-chatgpt settings
+"
+" let g:chat_gpt_max_tokens=4000
+" let g:chat_gpt_model='gpt-4-turbo-preview'
+" let g:chat_gpt_session_mode=1
+" let g:chat_gpt_temperature = 0.5
+" let g:chat_gpt_lang = 'Italian'
+" let g:chat_gpt_split_direction = 'vertical'
+" let g:chat_gpt_custom_prompts = {'ask': ''}
+
+" madox2/vim-ai settings
+
+let g:vim_ai_chat = {
+\  "options": {
+\       "model": "gpt-4o",
+\       "temperature": 0.2,
+\   },
+\  "ui": {
+\    "code_syntax_enabled": 1,
+\    "populate_options": 0,
+\    "max_tokens": 0,
+\    "open_chat_command": "preset_below",
+\    "scratch_buffer_keep_open": 1,
+\    "paste_mode": 1,
+\  },
+\ }
+
+let g:vim_ai_roles_config_file = stdpath('config') . '/ai-prompts.ini'
+
 lua << LUA
 
 vim.api.nvim_set_keymap("n", "<leader>f", "", {
@@ -182,7 +214,7 @@ vim.api.nvim_set_keymap("n", "<leader>f", "", {
 
 })
 require("auto-save").setup({
-    trigger_events = {"InsertLeave", "BufLeave", "FocusLost", "TextChanged"},
+    trigger_events = {"BufLeave", "FocusLost"}
 })
 require("mason").setup()
 require("mason-lspconfig").setup()
@@ -190,4 +222,8 @@ require("nvim-autopairs").setup()
 require("nvim-surround").setup()
 require("Comment").setup()
 require("symbols-outline").setup()
+require("fidget").setup {
+  -- options
+}
+
 LUA

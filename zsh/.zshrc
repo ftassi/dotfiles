@@ -38,6 +38,7 @@ antigen bundle lukechilds/zsh-nvm
 antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle unixorn/fzf-zsh-plugin@main
+antigen bundle ptavares/zsh-direnv
 
 antigen theme romkatv/powerlevel10k
 antigen apply
@@ -50,9 +51,12 @@ timezsh() {
   for i in $(seq 1 10); do /usr/bin/time -p $shell -i -c exit; done
 }
 
+eval "$(direnv hook zsh)"
+
 alias ll='exa -al'
 
 export PATH=~/.config/composer/vendor/bin:$PATH
+
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/.p10k.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/.p10k.zsh
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/op/plugins.sh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/op/plugins.sh
 [ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
