@@ -1,0 +1,19 @@
+[window]
+opacity = 0.9
+[font]
+size = 12.0
+
+[font.normal]
+family = "MesloLGS NF"
+
+[font.bold]
+family = "MesloLGS NF"
+style = "Bold"
+
+[font.italic]
+family = "MesloLGS NF"
+style = "Italic"
+
+[font.bold_italic]
+family = "MesloLGS NF"
+style = "Bold Italic"
