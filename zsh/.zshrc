@@ -40,7 +40,7 @@ antigen bundle zsh-users/zsh-syntax-highlighting
 antigen bundle zsh-users/zsh-autosuggestions
 antigen bundle unixorn/fzf-zsh-plugin@main
 
-antigen theme agnoster/agnoster-zsh-theme
+antigen theme romkatv/powerlevel10k
 antigen apply
 
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#757575'
@@ -54,3 +54,4 @@ alias ll='exa -al'
 
 export PATH=~/.config/composer/vendor/bin:$PATH
 source /home/ftassi/.config/op/plugins.sh
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/.p10k.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/.p10k.zsh
