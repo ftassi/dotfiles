@@ -188,12 +188,13 @@ let g:rustfmt_on_save = 1
 
 let g:vim_ai_chat = {
 \  "options": {
-\       "model": "gpt-4-turbo-preview",
-\       "temperature": 0.2
+\       "model": "gpt-4o",
+\       "temperature": 0.2,
 \   },
 \  "ui": {
 \    "code_syntax_enabled": 1,
 \    "populate_options": 0,
+\    "max_tokens": 0,
 \    "open_chat_command": "preset_below",
 \    "scratch_buffer_keep_open": 1,
 \    "paste_mode": 1,
