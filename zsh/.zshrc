@@ -28,7 +28,6 @@ export PATH=$HOME/.cargo/bin:$HOME/opt/bin:$HOME/bin:/usr/local/bin:/usr/local/g
 
 [ -f ~/.secrets.zsh ] && source ~/.secrets.zsh
 [ -f ~/antigen.zsh ] && source ~/antigen.zsh
-[ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
 
 export PROMPT_COMMAND="pwd > /tmp/whereami"
 precmd() {eval "$PROMPT_COMMAND"}
@@ -43,6 +42,7 @@ antigen bundle unixorn/fzf-zsh-plugin@main
 antigen theme romkatv/powerlevel10k
 antigen apply
 
+
 export ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE='fg=#757575'
 
 timezsh() {
@@ -53,5 +53,9 @@ timezsh() {
 alias ll='exa -al'
 
 export PATH=~/.config/composer/vendor/bin:$PATH
-source /home/ftassi/.config/op/plugins.sh
 [ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/.p10k.zsh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/zsh/.p10k.zsh
+[ -f "${XDG_CONFIG_HOME:-$HOME/.config}"/op/plugins.sh ] && source "${XDG_CONFIG_HOME:-$HOME/.config}"/op/plugins.sh
+[ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
+
+# Source every zsh.d file
+for config_file (${XDG_CONFIG_HOME:-$HOME/config}/zsh/zsh.d/*.zsh) source $config_file
