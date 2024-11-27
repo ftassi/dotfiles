@@ -53,7 +53,7 @@ require'lspconfig'.gopls.setup {
     capabilities = capabilities,
 }
 
-lsp.tsserver.setup {
+lsp.ts_ls.setup {
     -- before_init = function(params)
     --     params.processId = vim.NIL
     -- end,
