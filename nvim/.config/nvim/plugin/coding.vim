@@ -63,6 +63,8 @@ nnoremap <A-Tab> :SymbolsOutline<cr>
 set shortmess+=c
 autocmd FileType php set iskeyword+=$
 
+autocmd FileType html,htmldjango set shiftwidth=2
+
 let g:completion_matching_smart_case = 1
 let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
 
