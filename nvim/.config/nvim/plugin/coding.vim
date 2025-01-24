@@ -35,7 +35,7 @@ nnoremap <leader>== mqvi{=`q
 inoremap <C-c> <CR><Esc>O
 
 " LSP mapping
-nnoremap <leader>K <Cmd>lua vim.lsp.buf.hover()<cr>
+" nnoremap <leader>K <Cmd>lua vim.lsp.buf.hover()<cr>
 nnoremap <leader>a :lua vim.lsp.buf.code_action()<cr>
 nnoremap <silent> <leader>sh <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
@@ -78,6 +78,12 @@ runtime lua/ftassi/lsp.lua
 "     -- refer to the configuration section below
 "   }
 " EOF
+
+nnoremap <leader>dn :Lspsaga diagnostic_jump_next<CR>
+nnoremap <leader>dp :Lspsaga diagnostic_jump_prev<CR>
+nnoremap <leader>sld :Lspsaga show_line_diagnostics<CR>
+nnoremap <leader>swd :Lspsaga show_workspace_diagnostics<CR>
+
 
 " nnoremap <leader><leader>tt <cmd>TroubleToggle<cr>
 " nnoremap <leader><leader>tw <cmd>TroubleToggle workspace_diagnostics<cr>

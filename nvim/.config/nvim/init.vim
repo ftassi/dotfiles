@@ -39,6 +39,7 @@ Plug 'junegunn/gv.vim'
 "LSP and coding related plugin
 Plug 'williamboman/mason.nvim'
 Plug 'williamboman/mason-lspconfig.nvim'
+Plug 'nvimdev/lspsaga.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'sheerun/vim-polyglot'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
@@ -218,6 +219,7 @@ require("auto-save").setup({
 })
 require("mason").setup()
 require("mason-lspconfig").setup()
+require("lspsaga").setup()
 require("nvim-autopairs").setup()
 require("nvim-surround").setup()
 require("Comment").setup()
