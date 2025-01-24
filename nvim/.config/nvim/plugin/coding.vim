@@ -70,21 +70,21 @@ let g:completion_matching_strategy_list = ['exact', 'substring', 'fuzzy', 'all']
 
 runtime lua/ftassi/lsp.lua
 
-lua << EOF
-  require("trouble").setup {
-      auto_preview = false,
-    -- your configuration comes here
-    -- or leave it empty to use the default settings
-    -- refer to the configuration section below
-  }
-EOF
+" lua << EOF
+"   require("trouble").setup {
+"       auto_preview = false,
+"     -- your configuration comes here
+"     -- or leave it empty to use the default settings
+"     -- refer to the configuration section below
+"   }
+" EOF
 
-nnoremap <leader><leader>tt <cmd>TroubleToggle<cr>
-nnoremap <leader><leader>tw <cmd>TroubleToggle workspace_diagnostics<cr>
-nnoremap <leader><leader>td <cmd>TroubleToggle document_diagnostics<cr>
-nnoremap <leader><leader>tq <cmd>TroubleToggle quickfix<cr>
-nnoremap <leader><leader>tl <cmd>TroubleToggle loclist<cr>
-nnoremap <leader><leader>tr <cmd>TroubleRefresh<cr>
+" nnoremap <leader><leader>tt <cmd>TroubleToggle<cr>
+" nnoremap <leader><leader>tw <cmd>TroubleToggle workspace_diagnostics<cr>
+" nnoremap <leader><leader>td <cmd>TroubleToggle document_diagnostics<cr>
+" nnoremap <leader><leader>tq <cmd>TroubleToggle quickfix<cr>
+" nnoremap <leader><leader>tl <cmd>TroubleToggle loclist<cr>
+" nnoremap <leader><leader>tr <cmd>TroubleRefresh<cr>
 
 nnoremap <silent> <leader>d :lua vim.diagnostic.open_float()<cr>
 nnoremap <silent> [d :lua vim.diagnostic.goto_prev()<cr>
