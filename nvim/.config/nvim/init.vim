@@ -190,8 +190,8 @@ let g:rustfmt_on_save = 1
 
 let g:vim_ai_chat = {
 \  "options": {
-\       "model": "gpt-4o",
-\       "temperature": 0.2,
+\       "model": "o3-mini",
+\       "temperature": 0.0,
 \   },
 \  "ui": {
 \    "code_syntax_enabled": 1,
