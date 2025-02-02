@@ -84,8 +84,9 @@ runtime lua/ftassi/lsp.lua
 
 nnoremap <leader>dn :Lspsaga diagnostic_jump_next<CR>
 nnoremap <leader>dp :Lspsaga diagnostic_jump_prev<CR>
-nnoremap <leader>sld :Lspsaga show_line_diagnostics<CR>
-nnoremap <leader>swd :Lspsaga show_workspace_diagnostics<CR>
+nnoremap <leader>ld :Lspsaga show_line_diagnostics<CR>
+nnoremap <leader>wd :Lspsaga show_workspace_diagnostics<CR>
+" nnoremap <leader>a :Lspsag code_action<CR>
 
 
 " nnoremap <leader><leader>tt <cmd>TroubleToggle<cr>
