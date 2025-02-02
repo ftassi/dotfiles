@@ -29,7 +29,6 @@ Plug 'hoob3rt/lualine.nvim'
 " NerdTree related
 Plug 'preservim/nerdtree'
 Plug 'ryanoasis/vim-devicons'
-Plug 'kyazdani42/nvim-web-devicons'
 
 " Git 
 Plug 'tpope/vim-fugitive'
@@ -81,6 +80,22 @@ Plug 'ThePrimeagen/harpoon'
 " AI stuff
 " Plug 'CoderCookE/vim-chatgpt'
 Plug 'madox2/vim-ai'
+" Avante
+" Avante Deps
+Plug 'stevearc/dressing.nvim'
+Plug 'MunifTanjim/nui.nvim'
+
+" Optional deps
+Plug 'nvim-tree/nvim-web-devicons' "or Plug 'echasnovski/mini.icons'
+Plug 'HakonHarnes/img-clip.nvim'
+
+" Yay, pass source=true if you want to build from source
+" Installa il plugin con vim-plug
+Plug 'yetone/avante.nvim', { 'branch': 'main', 'do': 'make' }
+
+" Dopo l'installazione, carica la configurazione corretta
+" Forza il caricamento al momento giusto
+autocmd VimEnter * lua require("ftassi.avante")
 
 " Training and getting better
 Plug 'ThePrimeagen/vim-be-good'
@@ -105,7 +120,7 @@ set undofile
 
 " Display
 set display=lastline
-set laststatus=2
+set laststatus=3
 set background
 set relativenumber
 set number
