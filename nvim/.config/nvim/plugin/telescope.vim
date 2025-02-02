@@ -29,6 +29,7 @@ require('telescope').setup{
         lsp_definitions = {theme = "ivy", entry_maker = require('ftassi.telescope').file_only_entry_maker },
         lsp_document_symbols = {theme = "ivy"},
         lsp_workspace_symbols = {theme = "ivy"},
+        lsp_dynamic_workspace_symbols = {theme = "ivy"},
     },
     extensions = {
         fzy_native = {
