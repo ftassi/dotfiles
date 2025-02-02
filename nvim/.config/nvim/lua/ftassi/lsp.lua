@@ -102,6 +102,7 @@ cmp.setup {
     },
     sources  = {
         { name = 'nvim_lsp' },
+        { name = 'copilot'},
     }
 }
 
@@ -136,3 +137,4 @@ require "lsp_signature".setup({
 -- }, bufnr)
 --
 require'lspconfig'.docker_compose_language_service.setup{}
+require("ftassi.copilot")

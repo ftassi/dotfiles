@@ -1,13 +1,5 @@
 let g:phpactorActivateOverlapingMappings = v:true
 
-lua << EOF
-vim.g.copilot_no_tab_map = true
-vim.api.nvim_set_keymap("i", "<C-j>", 'copilot#Accept("<CR>")', { silent = true, expr = true })
-vim.api.nvim_set_keymap("i", "<C-k>", '<Plug>(copilot-accept-word)', {})
-vim.api.nvim_set_keymap("i", "<C-l>", '<Plug>(copilot-next)', {})
-vim.api.nvim_set_keymap("i", "<C-h>",  '<Plug>(copilot-previous)', {})
-vim.api.nvim_set_keymap("i", "<C-f>", '<Plug>(copilot-suggest)', {})
-EOF
 augroup PhpactorMappings
     au!
     au FileType php nmap <buffer> <Leader>u :PhpactorImportClass<CR>

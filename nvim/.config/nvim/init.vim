@@ -60,7 +60,8 @@ Plug 'janko-m/vim-test'
 Plug 'phpactor/phpactor', {'for': 'php', 'tag': '2022.11.12', 'do': 'composer install --no-dev -o'}
 Plug 'RRethy/vim-illuminate'
 Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
-Plug 'github/copilot.vim'
+Plug 'zbirenbaum/copilot.lua'
+Plug 'zbirenbaum/copilot-cmp'
 Plug 'windwp/nvim-autopairs'
 
 " Snippets
