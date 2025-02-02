@@ -62,4 +62,9 @@ export PATH=~/.config/composer/vendor/bin:$PATH
 [ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
 
 # Source every zsh.d file
-for config_file (${XDG_CONFIG_HOME:-$HOME/config}/zsh/zsh.d/*.zsh) source $config_file
+config_dir="${XDG_CONFIG_HOME:-$HOME/.config}/zsh/zsh.d"
+if [[ -d $config_dir && -n $(ls $config_dir/*.zsh 2>/dev/null) ]]; then
+  for config_file ($config_dir/*.zsh); do
+    source $config_file
+  done
+fi
