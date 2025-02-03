@@ -229,3 +229,18 @@ require("fidget").setup {
 }
 
 LUA
+
+if has('clipboard')
+  let g:clipboard = {
+        \ 'name': 'xsel',
+        \ 'copy': {
+        \   '+': 'xsel --clipboard --input',
+        \   '*': 'xsel --primary --input',
+        \ },
+        \ 'paste': {
+        \   '+': 'xsel --clipboard --output',
+        \   '*': 'xsel --primary --output',
+        \ },
+        \ 'cache_enabled': 1,
+        \ }
+endif
