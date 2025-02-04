@@ -6,7 +6,7 @@ copilot.setup({
         enabled = true, 
         auto_trigger = true,  -- Mostra il ghost text automaticamente
         keymap = {
-            accept = "<Tab>",          -- Accetta il suggerimento con Tab
+            accept = "<C-j>",          -- Accetta il suggerimento con Tab
             accept_word = "<C-k>",     -- Accetta una parola alla volta
             accept_line = "<C-l>",     -- Accetta una riga alla volta
             next = "<C-n>",            -- Vai al suggerimento successivo
