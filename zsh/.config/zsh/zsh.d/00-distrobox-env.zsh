@@ -2,7 +2,7 @@
 if [[ "$CONTAINER_ID" == "$CONTAINER_ID" ]]; then
     # Se esiste il file di configurazione di Cargo, esegui il sourcing
     export CARGO_HOME="$HOME/distroboxes/$CONTAINER_ID/cargo"
-    export CARGO_HOME="$HOME/distroboxes/$CONTAINER_ID/rustup"
+    export RUSTUP_HOME="$HOME/distroboxes/$CONTAINER_ID/rustup"
 
     if [[ -f "$CARGO_HOME/env" ]]; then
         source "$CARGO_HOME/env"
