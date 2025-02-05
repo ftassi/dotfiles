@@ -1,5 +1,5 @@
 # Se siamo dentro la distrobox "nvim", regola l'ambiente
-if [[ "$CONTAINER_ID" == "$CONTAINER_ID" ]]; then
+if [[ "$CONTAINER_ID" == "nvim" ]]; then
     # Se esiste il file di configurazione di Cargo, esegui il sourcing
     export CARGO_HOME="$HOME/distroboxes/$CONTAINER_ID/cargo"
     export RUSTUP_HOME="$HOME/distroboxes/$CONTAINER_ID/rustup"
