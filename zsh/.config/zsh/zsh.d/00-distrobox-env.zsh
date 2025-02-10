@@ -15,7 +15,8 @@ if [[ "$CONTAINER_ID" == "nvim" ]]; then
     fi
 
     # Aggiungi alla PATH la directory dei binari specifica per la distrobox
-    export PATH="$HOME/.local/distroboxes/$CONTAINER_ID/bin:$PATH"
+
+    for d in $HOME/distroboxes/$CONTAINER_ID/*; do PATH="$PATH:$d/bin"; done
 
     # Se nvm è disponibile, aggiungi alla PATH i binari di Node.js installati tramite nvm
     if command -v nvm >/dev/null; then
