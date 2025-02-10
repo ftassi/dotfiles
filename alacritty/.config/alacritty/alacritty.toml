@@ -1,19 +1,21 @@
+[general]
+live_config_reload = true
 [window]
 opacity = 0.9
 [font]
-size = 12.0
+size = 14.0
 
 [font.normal]
-family = "MesloLGS NF"
+family = "FiraCode Nerd Font Mono"
 
 [font.bold]
-family = "MesloLGS NF"
+family = "FiraCode Nerd Font Mono"
 style = "Bold"
 
 [font.italic]
-family = "MesloLGS NF"
+family = "FiraCode Nerd Font Mono"
 style = "Italic"
 
 [font.bold_italic]
-family = "MesloLGS NF"
+family = "FiraCode Nerd Font Mono"
 style = "Bold Italic"
