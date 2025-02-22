@@ -7,34 +7,34 @@ endif
 
 call plug#begin('~/.vim/plugged')
 " Utility
-Plug 'kylechui/nvim-surround'
-Plug 'numToStr/Comment.nvim'
-Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'vim-scripts/argtextobj.vim'
-Plug 'machakann/vim-highlightedyank'
-Plug 'mhinz/vim-startify'
-Plug 'Asheq/close-buffers.vim'
-Plug 'BurntSushi/ripgrep'
-Plug 'pmalek/toogle-maximize.vim'
-Plug 'adelarsq/vim-matchit'
+Plug 'kylechui/nvim-surround' //replaced by mini.surround
+Plug 'numToStr/Comment.nvim' //check
+Plug 'vim-scripts/ReplaceWithRegister' //check
+Plug 'vim-scripts/argtextobj.vim' //never really used, skipping
+Plug 'machakann/vim-highlightedyank' //replaced by autocmd
+Plug 'mhinz/vim-startify' //check
+Plug 'Asheq/close-buffers.vim' //check
+Plug 'BurntSushi/ripgrep' //not sure if needed
+Plug 'pmalek/toogle-maximize.vim' //never really used, skipping
+Plug 'adelarsq/vim-matchit' //check
 " Plug 'Yggdroot/indentLine'
-Plug 'Pocco81/auto-save.nvim'
-Plug 'tpope/vim-abolish'
+Plug 'Pocco81/auto-save.nvim' //check
+Plug 'tpope/vim-abolish' //check
 
 
 " Aesthetic
-Plug 'joshdick/onedark.vim'
-Plug 'hoob3rt/lualine.nvim'
+Plug 'joshdick/onedark.vim' //check
+Plug 'hoob3rt/lualine.nvim'//check
 
 " NerdTree related
-Plug 'preservim/nerdtree'
-Plug 'ryanoasis/vim-devicons'
-Plug 'kyazdani42/nvim-web-devicons'
+Plug 'preservim/nerdtree' //replaced by neo_tree
+Plug 'ryanoasis/vim-devicons' // check
+Plug 'kyazdani42/nvim-web-devicons' //check
 
 " Git 
-Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-Plug 'junegunn/gv.vim'
+Plug 'tpope/vim-fugitive' //check
+Plug 'airblade/vim-gitgutter' //check
+Plug 'junegunn/gv.vim' //check
 
 "LSP and coding related plugin
 Plug 'williamboman/mason.nvim'

@@ -33,7 +33,7 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
 require 'options'
-require 'keymaps'
+require ('keymaps').defaults()
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
