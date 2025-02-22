@@ -68,3 +68,9 @@ if [[ -d $config_dir && -n $(ls $config_dir/*.zsh 2>/dev/null) ]]; then
     source $config_file
   done
 fi
+
+export NVM_DIR="$HOME/.local/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+ 
+for d in $HOME/.local/*; do PATH="$PATH:$d/bin"; done
