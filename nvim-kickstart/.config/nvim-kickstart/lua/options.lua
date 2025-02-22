@@ -7,7 +7,7 @@
 vim.opt.number = true
 -- You can also add relative line numbers, to help with jumping.
 --  Experiment for yourself to see if you like it!
--- vim.opt.relativenumber = true
+vim.opt.relativenumber = true
 
 -- Enable mouse mode, can be useful for resizing splits for example!
 vim.opt.mouse = 'a'
@@ -25,6 +25,7 @@ vim.opt.breakindent = true
 
 -- Save undo history
 vim.opt.undofile = true
+vim.opt.undodir = vim.fn.stdpath 'data' .. '/undodir'
 
 -- Case-insensitive searching UNLESS \C or one or more capital letters in the search term
 vim.opt.ignorecase = true
@@ -50,9 +51,6 @@ vim.opt.splitbelow = true
 vim.opt.list = true
 vim.opt.listchars = { tab = '» ', trail = '·', nbsp = '␣' }
 
--- Preview substitutions live, as you type!
-vim.opt.inccommand = 'split'
-
 -- Show which line your cursor is on
 vim.opt.cursorline = true
 
@@ -65,9 +63,44 @@ vim.opt.scrolloff = 10
 -- Set highlight on search, but clear on pressing <Esc> in normal mode
 vim.opt.hlsearch = true
 
+-- Clear the search buffer only after you press <Esc>
+vim.opt.incsearch = true
+
+-- Preview substitutions live, as you type!
+vim.opt.inccommand = 'nosplit'
+
+
 vim.opt.backup = false
 vim.opt.swapfile = false
-vim.opt.relativenumber = true
+
+-- Highlight column 120
+vim.opt.colorcolumn = '120'
+
+-- Avoid conceiling characters. Very important for markdown files
+vim.opt.conceallevel = 0
+
+-- Set some tab and indentation settings
+-- This may be default values by I prefer having them explicitly set
+vim.opt.autoindent = true
+vim.opt.smartindent = true
+vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.shiftround = true
+
+-- Allow for local vimrc files
+vim.opt.exrc = true
+
+-- Enable hidden buffers
+vim.opt.hidden = true
+
+-- Disable line wrapping
+vim.opt.wrap = false
+
+-- Set default file encoding to UTF-8
+vim.opt.encoding = 'utf-8'
+
 -- Configure ripgrep to use a vim friendly from
 -- Telescope will have its own ripgrep setting
 if vim.fn.exepath 'rg' == 1 then
