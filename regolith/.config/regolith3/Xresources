@@ -1,0 +1,13 @@
+!regolith.wallpaper.file: /usr/share/desktop-base/joy-inksplat-theme/wallpaper/gnome-background.xml
+!regolith.lockscreen.wallpaper.file: /usr/share/desktop-base/joy-inksplat-theme/wallpaper/gnome-background.xml
+regolith.wallpaper.file: /usr/share/desktop-base/joy-inksplat-theme/wallpaper/gnome-background.xml
+regolith.lockscreen.wallpaper.file: /usr/share/desktop-base/joy-inksplat-theme/wallpaper/gnome-background.xml
+!regolith.look.path: /usr/share/regolith-look/solarized-dark
+regolith.look.path: /usr/share/regolith-look/nord
+
+wm.gaps.inner.size: 10
+wm.gaps.outer.size: 0
+wm.gaps.smart: 0
+wm.client.focused.color.border: #990033
+wm.client.focused.color.child_border: #990033
+wm.window.border.size: 3
