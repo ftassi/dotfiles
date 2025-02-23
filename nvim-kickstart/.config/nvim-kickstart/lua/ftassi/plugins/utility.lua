@@ -14,7 +14,7 @@ return {
           },
       },
       config = function()
-          require('keymaps').harpoon()
+          require('ftassi.keymaps').harpoon()
       end,
   },
 }

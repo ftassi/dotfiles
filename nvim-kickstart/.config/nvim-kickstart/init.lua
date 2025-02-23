@@ -32,8 +32,8 @@ vim.g.maplocalleader = ' '
 -- Set to true if you have a Nerd Font installed
 vim.g.have_nerd_font = true
 
-require 'options'
-require ('keymaps').defaults()
+require 'ftassi.options'
+require 'ftassi.keymaps'.defaults()
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`

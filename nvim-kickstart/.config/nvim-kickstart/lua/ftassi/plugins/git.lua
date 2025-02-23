@@ -2,7 +2,7 @@ return {
   {
     'tpope/vim-fugitive',
     config = function()
-        require('keymaps').fugitive()
+        require('ftassi.keymaps').fugitive()
     end,
   },
   -- TODO: This could be removed mapping fugitive git log with the right format
@@ -14,7 +14,7 @@ return {
       'tpope/vim-fugitive',
     },
     config = function()
-        require('keymaps').gv()
+        require('ftassi.keymaps').gv()
     end,
   },
   {
@@ -31,7 +31,7 @@ return {
       current_line_blame = false,
       on_attach = function(bufnr)
         local gitsigns = require 'gitsigns'
-        require('keymaps').gitsigns(bufnr)
+        require('ftassi.keymaps').gitsigns(bufnr)
       end,
     },
   },

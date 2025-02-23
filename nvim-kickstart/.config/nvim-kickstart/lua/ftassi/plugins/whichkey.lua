@@ -20,6 +20,6 @@ return { -- Useful plugin to show you pending keybinds.
     require('which-key').setup()
 
     -- Document existing key chains
-    require('which-key').register(require('keymaps').which_key())
+    require('which-key').register(require('ftassi.keymaps').which_key())
   end,
 }

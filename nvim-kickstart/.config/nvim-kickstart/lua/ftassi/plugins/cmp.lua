@@ -8,7 +8,7 @@ return { -- Autocompletion
   config = function()
     -- See `:help cmp`
     local cmp = require 'cmp'
-    local mappings = require 'keymaps'.cmp(cmp)
+    local mappings = require 'ftassi.keymaps'.cmp(cmp)
 
     cmp.setup {
       snippet = {},

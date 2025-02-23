@@ -25,7 +25,7 @@ return { -- LSP Configuration & Plugins
         local map = function(keys, func, desc)
           vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
-        require 'keymaps'.lsp(event.buf)
+        require 'ftassi.keymaps'.lsp(event.buf)
 
         -- The following two autocommands are used to highlight references of the
         -- word under your cursor when your cursor rests there for a little while.

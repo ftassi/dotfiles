@@ -8,6 +8,6 @@ return {
   },
   config = function()
     require('neo-tree').setup {}
-    require('keymaps').neo_tree()
+    require('ftassi.keymaps').neo_tree()
   end,
 }
