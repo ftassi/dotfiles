@@ -7,8 +7,8 @@ function M.defaults()
     vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
     -- Diagnostic keymaps
-    vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-    vim.keymap.set('n', ']d', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+    vim.keymap.set('n', '((', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+    vim.keymap.set('n', '))', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
     vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
     vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -97,6 +97,91 @@ function M.gitsigns(bufnr)
     --   gitsigns.diffthis '~'
     -- end)
     -- map('n', '<leader>td', gitsigns.toggle_deleted)
+end
+
+function M.harpoon()
+    vim.keymap.set('n', '<leader>j', function()
+      require('harpoon.mark').add_file()
+    end, { desc = 'Add file to Harpoon' })
+    vim.keymap.set('n', '<leader><Tab>', function()
+      require('harpoon.ui').toggle_quick_menu()
+    end, { desc = 'Toggle Harpoon Quick Menu' })
+    vim.keymap.set('n', '<leader><leader>f', function()
+      require('harpoon.ui').nav_file(1)
+    end, { desc = 'Navigate to Harpoon file 1' })
+    vim.keymap.set('n', '<leader><leader>d', function()
+      require('harpoon.ui').nav_file(2)
+    end, { desc = 'Navigate to Harpoon file 2' })
+    vim.keymap.set('n', '<leader><leader>s', function()
+      require('harpoon.ui').nav_file(3)
+    end, { desc = 'Navigate to Harpoon file 3' })
+    vim.keymap.set('n', '<leader><leader>a', function()
+      require('harpoon.ui').nav_file(4)
+    end, { desc = 'Navigate to Harpoon file 4' }) -- Mapping dei comandi Harpoon con descrizioni
+end
+
+function M.cmp(cmp)
+    -- For an understanding of why these mappings were
+    -- chosen, you will need to read `:help ins-completion`
+    --
+    -- No, but seriously. Please read `:help ins-completion`, it is really good!
+    return {
+        ['<C-p>'] = cmp.mapping.select_prev_item(),
+        ['<C-n>'] = cmp.mapping.select_next_item(),
+        ['<C-j>'] = cmp.mapping.scroll_docs(-4),
+        ['<C-k>'] = cmp.mapping.scroll_docs(4),
+
+        ['<C-Space>'] = cmp.mapping.complete {},
+        ['<C-y>'] = cmp.mapping.confirm { select = true },
+        ['<C-e>'] = cmp.mapping.close(),
+        ['<CR>'] = cmp.mapping.confirm {
+            behavior = cmp.ConfirmBehavior.Replace,
+            select = true,
+            },
+        ['<Tab>'] = function(fallback)
+            if vim.fn.pumvisible() == 1 then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-n>', true, true, true), 'n')
+            else
+                fallback()
+            end
+        end,
+        ['<S-Tab>'] = function(fallback)
+            if vim.fn.pumvisible() == 1 then
+                vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<C-p>', true, true, true), 'n')
+            else
+                fallback()
+            end
+        end,
+    }
+end
+
+function M.lsp(bufnr)
+    local map = function(keys, func, desc, opts)
+        opts = opts or {}
+        opts.buffer = bufnr
+        opts.desc = 'LSP: ' .. desc
+        vim.keymap.set('n', keys, func, opts)
+    end
+
+    map('((', vim.lsp.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+    map('))', vim.lsp.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
+    map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
+    map('<leader>sh', vim.lsp.buf.signature_help, '[S]ignature [H]elp', { silent = true })
+    map('<leader>rr', vim.lsp.buf.rename, '[R]e[n]ame')
+
+    map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Find [W]orkspace [S]ymbols')
+    map('<leader>ds', require('telescope.builtin').lsp_document_symbol, 'Find [D]ocument [S]ymbols')
+
+    -- Nuovi mapping per navigare i riferimenti al codice (tutti in minuscolo)
+    map('<leader>fd', require('telescope.builtin').lsp_definitions, '[F]ind [D]efinition')
+    map('<leader>fc', require('telescope.builtin').lsp_declarations, '[F]ind De[C]laration')
+    map('<leader>fi', require('telescope.builtin').lsp_implementations, '[F]ind [I]mplementation')
+    map('<leader>fr', require('telescope.builtin').lsp_references, '[F]ind [R]eferences')
+    map('<leader>ft', require('telescope.builtin').lsp_type_definitions, '[F]ind [T]ype definition')
+
+    -- Opens a popup that displays documentation about the word under your cursor
+    --  See `:help K` for why this keymap.
+    map('K', vim.lsp.buf.hover, 'Hover Documentation')
 end
 
 return M
