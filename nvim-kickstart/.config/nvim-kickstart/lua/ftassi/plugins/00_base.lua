@@ -12,7 +12,6 @@ return {
     },
   },
   { 'zbirenbaum/copilot.lua' },
-  { 'janko-m/vim-test' },
   { 'alx741/vim-rustfmt' },
   { 'AndrewRadev/tagalong.vim' },
   { 'numToStr/Comment.nvim', opts = {} },

@@ -286,6 +286,15 @@ function M.symbol_outlines()
 end
 
 
+function M.test()
+    vim.keymap.set("n", "<leader>tt", ":w<CR>:TestNearest<CR>", { silent = true, desc = "[T]est nearest test" })
+    vim.keymap.set("n", "<leader>tf", ":w<CR>:TestFile<CR>", { silent = true , desc = "[T]est [F]ile" })
+    vim.keymap.set("n", "<leader>tl", ":w<CR>:TestLast<CR>", { silent = true, desc = "[T]est [L]ast" })
+    vim.keymap.set("n", "<leader>ta", ":w<CR>:TestSuite<CR>", { silent = true, desc = "[T]est [A]ll" })
+    vim.keymap.set("n", "<leader>tg", ":w<CR>:TestVisit<CR>", { silent = true, desc = "[T]est and [G]oto test or SUT" })
+end
+
+return M
 
 return M
 
