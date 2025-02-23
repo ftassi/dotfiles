@@ -8,6 +8,6 @@ return {
     vim.g["test#rust#cargotest#test_options"] = "-- --nocapture"
     
     -- Richiama il modulo dei keymaps per vim-test
-    require("ftassi.keymaps.test").test()
+    require("ftassi.keymaps").test()
   end,
 }
