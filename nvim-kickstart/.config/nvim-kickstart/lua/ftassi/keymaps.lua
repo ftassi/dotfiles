@@ -1,4 +1,3 @@
-
 local M = {}
 
 function M.which_key()
@@ -67,6 +66,41 @@ function M.defaults()
     vim.keymap.set('n', '<A-l>', ':vertical resize +5<CR>', { silent = true })
     --
     -- nnoremap <silent> <C-a> <C-^>
+end
+
+function M.telescope()
+    -- See `:help telescope.builtin`
+    local builtin = require 'telescope.builtin'
+    vim.keymap.set('n', '<leader>ts', builtin.builtin, { desc = '[T]elescop [S]earch builtin' })
+    vim.keymap.set('n', '<leader>sh', builtin.help_tags, { desc = '[S]earch [H]elp' })
+    vim.keymap.set('n', '<leader>sk', builtin.keymaps, { desc = '[S]earch [K]eymaps' })
+    vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]ind [F]iles' })
+    vim.keymap.set('n', '<leader>fh', function()
+      builtin.find_files { find_command = { 'rg', '--files', '--hidden', '-g!.git', '--no-ignore-vcs' } }
+    end, { desc = '[F]ind [H]idden files even vcs ignored' })
+    vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[F]ind current [W]ord' })
+    vim.keymap.set('v', '<leader>fg', function()
+      vim.cmd 'normal! "gy'
+      require('telescope.builtin').grep_string { search = vim.fn.getreg 'g' }
+    end, { desc = '[F]ind by [G]rep' })
+    vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })
+    vim.keymap.set('n', '<leader>fr', builtin.resume, { desc = '[F]ind [R]esume' })
+
+    vim.keymap.set('n', '<Tab>', builtin.buffers, { desc = '[ ] Find existing buffers' })
+    vim.keymap.set('n', '<S-Tab>', builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
+
+    vim.keymap.set('n', '<leader>/', builtin.current_buffer_fuzzy_find, { desc = '[/] Fuzzily search in current buffer' })
+    vim.keymap.set('n', '<leader>s/', function()
+      builtin.live_grep {
+        grep_open_files = true,
+        prompt_title = 'Live Grep in Open Files',
+      }
+    end, { desc = '[S]earch [/] in Open Files' })
+
+    -- Shortcut for searching your Neovim configuration files
+    vim.keymap.set('n', '<leader>df', function()
+      builtin.git_files { prompt_tile = "< Dotfiles >", cwd = "/home/ftassi/dotfiles", hidden = true }
+    end, { desc = '[S]earch [D]otfiles' })
 end
 
 function M.neo_tree()
