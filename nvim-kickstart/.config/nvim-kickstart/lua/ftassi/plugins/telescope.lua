@@ -81,16 +81,46 @@ return { -- Fuzzy Finder (files, lsp, etc)
       -- },
       -- pickers = {}
       extensions = {
-        ['ui-select'] = {
-          require('telescope.themes').get_dropdown(),
+        defaults = {
+            mappings = {
+                n = {
+                    ['<M-p>'] = action_layout.toggle_preview
+                }, 
+                i = {
+                    ['<M-p>'] = action_layout.toggle_preview
+                }, 
+            },
+            vimgrep_arguments = { 'rg', '--color=never', '--no-heading', '--with-filename', '--line-number',  '--column', '--smart-case', '--hidden', '-g!.git' },
+            color_devicons = true,
+            layout_config = {
+                width = 0.9,
+                vertical = {mirror = false},
         },
-      },
-      -- extensions = {
-      --   fzy_native = {
-      --     override_generic_sorter = false,
-      --     override_file_sorter = true,
-      --   },
-      -- },
+        },
+        pickers = {
+            find_files = { theme = "ivy", find_command = {'rg', '--files', '--hidden', '-g', '!.git' }},
+            treesitter = { layout_strategy = 'horizontal' },
+            buffers = {theme = "ivy"},
+            git_branches = {theme = "ivy"},
+            oldfiles = {theme = "ivy"},
+            lsp_references = {theme = "ivy"},
+            lsp_implementations = {theme = "ivy"},
+            lsp_dynamic_workspace_symbols = {theme = "ivy", entry_maker = require('ftassi.telescope').file_only_entry_maker },
+            lsp_definitions = {theme = "ivy", entry_maker = require('ftassi.telescope').file_only_entry_maker },
+            lsp_document_symbols = {theme = "ivy"},
+            lsp_workspace_symbols = {theme = "ivy"},
+            lsp_dynamic_workspace_symbols = {theme = "ivy"},
+        },
+        extensions = {
+            fzy_native = {
+                override_generic_sorter = false,
+                override_file_sorter = true,
+            },
+            ['ui-select'] = {
+            require('telescope.themes').get_dropdown(),
+            },
+        }
+    },
       defaults = vim.tbl_extend('force', require('telescope.themes').get_ivy(), {
         mappings = {
           n = {
