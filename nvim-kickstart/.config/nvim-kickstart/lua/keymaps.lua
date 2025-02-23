@@ -184,5 +184,10 @@ function M.lsp(bufnr)
     map('K', vim.lsp.buf.hover, 'Hover Documentation')
 end
 
+
+function M.symbol_outlines()
+    vim.keymap.set('n', '<A-Tab>', '<cmd>SymbolsOutline<CR>', { desc = 'Open Symbols Outline' })
+end
+
 return M
 
