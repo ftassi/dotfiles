@@ -50,6 +50,23 @@ function M.defaults()
     vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to the right window' })
     vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower window' })
     vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
+    
+    -- Chiude il buffer corrente
+    vim.keymap.set('n', 'Q', ':q<CR>')
+
+    -- Mappature per Bdelete (gestione dei buffer)
+    vim.keymap.set('n', '<leader>wo', ':Bdelete other<CR>', {desc = 'Close all other buffers'})
+    vim.keymap.set('n', '<leader>wa', ':Bdelete all<CR>', {desc = 'Close all buffers'})
+    vim.keymap.set('n', '<leader>wh', ':Bdelete hidden<CR>', {desc = 'Close all hidden buffers'})
+    vim.keymap.set('n', '<leader>w',  ':Bdelete menu<CR>', {desc = 'Close buffer menu'})
+
+    -- Ridimensionamento delle finestre
+    vim.keymap.set('n', '<A-k>', ':res +5<CR>',           { silent = true })
+    vim.keymap.set('n', '<A-j>', ':res -5<CR>',           { silent = true })
+    vim.keymap.set('n', '<A-h>', ':vertical resize -5<CR>', { silent = true })
+    vim.keymap.set('n', '<A-l>', ':vertical resize +5<CR>', { silent = true })
+    --
+    -- nnoremap <silent> <C-a> <C-^>
 end
 
 function M.neo_tree()
