@@ -194,6 +194,12 @@ function M.lsp(bufnr)
         end
     end
 
+    local function cmd(cmd)
+        return function()
+            vim.cmd(cmd)
+        end
+    end
+
     local builtin = require('telescope.builtin')
 
     map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
@@ -210,15 +216,25 @@ function M.lsp(bufnr)
     map('<leader>fr', telescope_file_only(builtin.lsp_references), '[F]ind [R]eferences')
     map('<leader>ft', telescope_file_only(builtin.lsp_type_definitions), '[F]ind [T]ype definition')
 
-    -- -- Opens a popup that displays documentation about the word under your cursor
-    -- --  See `:help K` for why this keymap.
-    map('K', vim.lsp.buf.hover, 'Hover Documentation')
-end
+    -- format code
+    map('<leader>==', vim.lsp.buf.format, 'Format code')
 
+    local lsp_saga_installed, lspsaga = pcall(require, 'lspsaga')
+    if lsp_saga_installed then
+        map('((', cmd('Lspsaga diagnostic_jump_prev'), 'Go to previous Diagnostic message')
+        map('))', cmd('Lspsaga diagnostic_jump_next'), 'Go to next Diagnostic message')
+        map('<leader>ld', cmd('Lspsaga show_line_diagnostics'), 'Show line diagnostics')
+        map('<leader>wd', cmd('Lspsaga show_workspace_diagnostics'), 'Show workspace diagnostics')
+
+        map('K', cmd('Lspsaga hover_doc'), 'Hover Documentation')
+    end
+end
 
 function M.symbol_outlines()
     vim.keymap.set('n', '<A-Tab>', '<cmd>SymbolsOutline<CR>', { desc = 'Open Symbols Outline' })
 end
+
+
 
 return M
 

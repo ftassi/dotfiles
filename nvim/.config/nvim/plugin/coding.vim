@@ -22,7 +22,9 @@ augroup PhpactorMappings
     " au FileType php nmap <buffer> <Leader>nn :PhpactorNavigate<CR>
     " au FileType php,cucumber nnoremap <Leader>gd :PhpactorGotoDefinition edit<CR>
     " au FileType php nmap <buffer> <Leader>K :PhpactorHover<CR>
-    " au FileType php nmap <buffer> <Leader>fr :PhpactorFindReferences<CR>
+    " au FileType php nmap <buffer> <Leader>fr :PhpactorFindReferences<CR
+    "
+    " >
 augroup END
 
 " Reformat code inside {} block
