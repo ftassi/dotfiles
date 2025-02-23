@@ -7,43 +7,43 @@ endif
 
 call plug#begin('~/.vim/plugged')
 " Utility
-Plug 'kylechui/nvim-surround' "replaced by mini.surround
-Plug 'numToStr/Comment.nvim' "check
-Plug 'vim-scripts/ReplaceWithRegister' "check
-Plug 'vim-scripts/argtextobj.vim' "never really used, skipping
-Plug 'machakann/vim-highlightedyank' "replaced by autocmd
-Plug 'mhinz/vim-startify' "check
-Plug 'Asheq/close-buffers.vim' "check
-Plug 'BurntSushi/ripgrep' "not sure if needed
-Plug 'pmalek/toogle-maximize.vim' "never really used, skipping
-Plug 'adelarsq/vim-matchit' "check
+Plug 'kylechui/nvim-surround' //replaced by mini.surround
+Plug 'numToStr/Comment.nvim' //check
+Plug 'vim-scripts/ReplaceWithRegister' //check
+Plug 'vim-scripts/argtextobj.vim' //never really used, skipping
+Plug 'machakann/vim-highlightedyank' //replaced by autocmd
+Plug 'mhinz/vim-startify' //check
+Plug 'Asheq/close-buffers.vim' //check
+Plug 'BurntSushi/ripgrep' //not sure if needed
+Plug 'pmalek/toogle-maximize.vim' //never really used, skipping
+Plug 'adelarsq/vim-matchit' //check
 " Plug 'Yggdroot/indentLine'
-Plug 'Pocco81/auto-save.nvim' "check
-Plug 'tpope/vim-abolish' "check
+Plug 'Pocco81/auto-save.nvim' //check
+Plug 'tpope/vim-abolish' //check
 
 
 " Aesthetic
-Plug 'joshdick/onedark.vim' "check
-Plug 'hoob3rt/lualine.nvim'"check
+Plug 'joshdick/onedark.vim' //check
+Plug 'hoob3rt/lualine.nvim'//check
 
 " NerdTree related
-Plug 'preservim/nerdtree' "replaced by neo_tree
-Plug 'ryanoasis/vim-devicons' " check
-Plug 'kyazdani42/nvim-web-devicons' "check
+Plug 'preservim/nerdtree' //replaced by neo_tree
+Plug 'ryanoasis/vim-devicons' // check
+Plug 'kyazdani42/nvim-web-devicons' //check
 
 " Git 
-Plug 'tpope/vim-fugitive' "check
-Plug 'airblade/vim-gitgutter' "check
-Plug 'junegunn/gv.vim' "check
+Plug 'tpope/vim-fugitive' //check
+Plug 'airblade/vim-gitgutter' //check
+Plug 'junegunn/gv.vim' //check
 
 "LSP and coding related plugin
-Plug 'williamboman/mason.nvim' "check 
-Plug 'williamboman/mason-lspconfig.nvim' "check
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'nvimdev/lspsaga.nvim'
 Plug 'neovim/nvim-lspconfig'
-Plug 'sheerun/vim-polyglot' "check
-Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update check
-Plug 'hrsh7th/nvim-cmp' " check
+Plug 'sheerun/vim-polyglot'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}  " We recommend updating the parsers on update
+Plug 'hrsh7th/nvim-cmp' 
 Plug 'ray-x/lsp_signature.nvim' 
 Plug 'hrsh7th/cmp-nvim-lsp'
 " Plug 'folke/trouble.nvim'
@@ -52,8 +52,8 @@ Plug 'jose-elias-alvarez/nvim-lsp-ts-utils'
 Plug 'onsails/lspkind-nvim'
 " Plug 'AndrewRadev/tagalong.vim'
 Plug 'alx741/vim-rustfmt'
-Plug 'simrat39/symbols-outline.nvim' " check
-Plug 'j-hui/fidget.nvim' "check
+Plug 'simrat39/symbols-outline.nvim'
+Plug 'j-hui/fidget.nvim'
 
 "Coding aka where the magic happens
 Plug 'janko-m/vim-test'
