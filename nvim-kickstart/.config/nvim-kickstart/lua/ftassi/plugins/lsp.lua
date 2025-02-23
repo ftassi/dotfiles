@@ -64,6 +64,24 @@ return { -- LSP Configuration & Plugins
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
+        emmet_language_server = {},
+        rust_analyzer = {},
+        terraformls = {},
+        ts_ls = {},
+        dockerls = {},
+        docker_compose_language_service = {},
+        intelephense = {
+            settings = {
+                intelephense = {
+                    files = {maxSize = 5000000},
+                    stubs = {
+                    "bcmath", "bz2", "calendar", "Core", "curl", "date", "dba", "dom", "enchant", "fileinfo", "filter", "ftp", "gd", "gettext", "hash", "iconv", "imap", "intl", "json", "ldap", "libxml", "mbstring", "mcrypt", "mysql", "mysqli", "mongo", "mongodb", "password", "pcntl", "pcre", "PDO", "pdo_mysql", "Phar", "readline", "recode", "Reflection", "regex", "session", "SimpleXML", "soap", "sockets", "sodium", "SPL", "standard", "superglobals", "sysvsem", "sysvshm", "tokenizer", "xml", "xdebug", "xmlreader", "xmlwriter", "yaml", "zip", "zlib", "wordpress", "woocommerce", "acf-pro", "wordpress-globals", "wp-cli", "genesis", "polylang",
+                    },
+                }
+            }
+        },
+        psalm = {},
+        elmls = {},
       -- clangd = {},
       -- gopls = {},
       -- pyright = {},
