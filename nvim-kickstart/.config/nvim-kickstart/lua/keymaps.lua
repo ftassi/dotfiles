@@ -1,6 +1,16 @@
 
 local M = {}
 
+function M.which_key()
+   return   {
+    { "", group = "[C]ode" },
+    { "", group = "[R]ename" },
+    { "", group = "[D]ocument" },
+    { "", group = "[W]orkspace" },
+    { "", group = "[S]earch" },
+    { "", desc = "", hidden = true, mode = { "n", "n", "n", "n", "n" } },
+  }
+end
 
 function M.defaults()
     -- Remove search highlighting with <Esc>
