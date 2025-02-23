@@ -4,7 +4,19 @@ return {
   { 'adelarsq/vim-matchit' },
   { 'kburdett/vim-nuuid' },
   { 'ThePrimeagen/vim-be-good' },
-  { 'mhinz/vim-startify' },
+  { 
+        'mhinz/vim-startify', 
+        init = function() 
+            vim.g.startify_change_to_dir = 0
+            vim.g.startify_lists = {
+                { type = 'dir',       header = { '   MRU ' .. vim.fn.getcwd() } },
+                { type = 'files',     header = { '   MRU' } },
+                { type = 'sessions',  header = { '   Sessions' } },
+                { type = 'bookmarks', header = { '   Bookmarks' } },
+                { type = 'commands',  header = { '   Commands' } },
+            }
+        end 
+},
   { 'Asheq/close-buffers.vim' },
   {
       'ThePrimeagen/harpoon',
