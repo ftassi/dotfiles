@@ -121,6 +121,12 @@ function M.gv()
     vim.keymap.set('n', '<leader>glb', '<Cmd>:GV --first-parent<CR>', { desc = '[G]it [L]og current [B]ranch' })
 end
 
+function M.gitgutter()
+    vim.keymap.set('n', '<leader>gh', '<Plug>(GitGutterPreviewHunk)', { silent = true, desc = '[G]itGutter: Preview Hunk' })
+    vim.keymap.set('n', '<leader>ga', '<Plug>(GitGutterStageHunk)',   { silent = true, desc = '[G]itGutter: Stage Hunk' })
+    vim.keymap.set('n', '<leader>gu', '<Plug>(GitGutterUndoHunk)',    { silent = true, desc = '[G]itGutter: Undo Hunk' })
+end
+
 function M.gitsigns(bufnr)
 
     local function map(mode, l, r, opts)
@@ -295,6 +301,3 @@ function M.test()
 end
 
 return M
-
-return M
-
