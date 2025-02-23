@@ -1,4 +1,4 @@
-let g:phpactorActivateOverlapingMappings = v:true
+lt g:phpactorActivateOverlapingMappings = v:true
 
 augroup PhpactorMappings
     au!
