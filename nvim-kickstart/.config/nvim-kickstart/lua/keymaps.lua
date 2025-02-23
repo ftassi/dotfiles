@@ -7,8 +7,20 @@ function M.defaults()
     vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
     -- Diagnostic keymaps
-    vim.keymap.set('n', '((', vim.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
-    vim.keymap.set('n', '))', vim.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
+    vim.keymap.set('n', '((', vim.diagnostic.goto_prev, { desc = 'Go to previous Diagnostic message' })
+    vim.keymap.set('n', '))', vim.diagnostic.goto_next, { desc = 'Go to next Diagnostic message' })
+
+    -- Navigazione delle modifiche nel buffer (change list)
+    vim.keymap.set('n', '{{', function() vim.cmd('normal! g;') end, { desc = 'Go to Previous Change' })
+    vim.keymap.set('n', '}}', function() vim.cmd('normal! g,') end, { desc = 'Go to Next Change' })
+    -- Navigazione della jump list
+    vim.keymap.set('n', '@@', '<C-o>', { desc = 'Jump Back (Jump list)' })
+    vim.keymap.set('n', '\\\\', '<C-i>', { desc = 'Jump Forward (Jump list)' })
+
+    -- Navigazione nella quickfix list
+    vim.keymap.set('n', '[[', '<cmd>cprev<CR>', { desc = 'Go to Previous Quickfix Item' })
+    vim.keymap.set('n', ']]', '<cmd>cnext<CR>', { desc = 'Go to Next Quickfix Item' })
+
     vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
     vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
 
@@ -57,17 +69,20 @@ function M.gitsigns(bufnr)
     end
 
     -- Navigation
-    map('n', ']h', function()
+    vim.keymap.set('n', '~~', function() require('gitsigns').prev_hunk() end, { desc = 'Previous Git Hunk' })
+    vim.keymap.set('n', '^^', function() require('gitsigns').next_hunk() end, { desc = 'Next Git Hunk' })
+    
+    map('n', '~~', function()
         if vim.wo.diff then
-        vim.cmd.normal { ']h', bang = true }
+        vim.cmd.normal { '~~', bang = true }
         else
         gitsigns.nav_hunk 'next'
         end
     end, { desc = 'Go to Next [H]unk' })
 
-    map('n', '[h', function()
+    map('n', '^^', function()
         if vim.wo.diff then
-        vim.cmd.normal { '[h', bang = true }
+        vim.cmd.normal { '^^', bang = true }
         else
         gitsigns.nav_hunk 'prev'
         end
