@@ -188,24 +188,22 @@ function M.lsp(bufnr)
         vim.keymap.set('n', keys, func, opts)
     end
 
-    map('((', vim.lsp.diagnostic.goto_next, { desc = 'Go to next [D]iagnostic message' })
-    map('))', vim.lsp.diagnostic.goto_prev, { desc = 'Go to previous [D]iagnostic message' })
     map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
     map('<leader>sh', vim.lsp.buf.signature_help, '[S]ignature [H]elp', { silent = true })
     map('<leader>rr', vim.lsp.buf.rename, '[R]e[n]ame')
 
     map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Find [W]orkspace [S]ymbols')
-    map('<leader>ds', require('telescope.builtin').lsp_document_symbol, 'Find [D]ocument [S]ymbols')
+    map('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Find [D]ocument [S]ymbols')
 
     -- Nuovi mapping per navigare i riferimenti al codice (tutti in minuscolo)
     map('<leader>fd', require('telescope.builtin').lsp_definitions, '[F]ind [D]efinition')
-    map('<leader>fc', require('telescope.builtin').lsp_declarations, '[F]ind De[C]laration')
+    map('<leader>fc', vim.lsp.buf.declaration, '[F]ind De[C]laration')
     map('<leader>fi', require('telescope.builtin').lsp_implementations, '[F]ind [I]mplementation')
     map('<leader>fr', require('telescope.builtin').lsp_references, '[F]ind [R]eferences')
     map('<leader>ft', require('telescope.builtin').lsp_type_definitions, '[F]ind [T]ype definition')
-
-    -- Opens a popup that displays documentation about the word under your cursor
-    --  See `:help K` for why this keymap.
+    --
+    -- -- Opens a popup that displays documentation about the word under your cursor
+    -- --  See `:help K` for why this keymap.
     map('K', vim.lsp.buf.hover, 'Hover Documentation')
 end
 
