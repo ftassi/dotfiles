@@ -12,7 +12,6 @@ return {
     },
   },
   { 'zbirenbaum/copilot.lua' },
-  { 'alx741/vim-rustfmt' },
   { 'AndrewRadev/tagalong.vim' },
   { 'numToStr/Comment.nvim', opts = {} },
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
