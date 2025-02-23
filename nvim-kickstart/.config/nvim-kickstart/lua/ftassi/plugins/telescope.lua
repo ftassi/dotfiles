@@ -1,3 +1,28 @@
+local function file_only_entry_maker(entry)
+    local entry_display = require "telescope.pickers.entry_display"
+    local displayer = entry_display.create {
+        items = {
+            { remaining = true },
+        },
+    }
+
+    return {
+        valid = true,
+        display = function(entry)
+            local filename = entry.filename
+            return displayer {
+                filename..":"..entry.lnum,
+            }
+        end,
+        value = entry,
+        ordinal = entry.filename,
+        filename = entry.filename,
+        text = entry.text,
+        lnum = entry.lnum,
+        col = entry.col,
+    }
+end
+
 return { -- Fuzzy Finder (files, lsp, etc)
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
@@ -136,4 +161,5 @@ return { -- Fuzzy Finder (files, lsp, etc)
       builtin.find_files { cwd = vim.fn.stdpath 'config' }
     end, { desc = '[S]earch [N]eovim files' })
   end,
+  file_only_entry_maker = file_only_entry_maker,
 }

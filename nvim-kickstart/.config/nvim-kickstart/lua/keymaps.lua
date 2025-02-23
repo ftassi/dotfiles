@@ -188,20 +188,28 @@ function M.lsp(bufnr)
         vim.keymap.set('n', keys, func, opts)
     end
 
+    local function telescope_file_only(fn)
+        return function()
+            fn({entry_maker = require('ftassi.plugins.telescope').file_only_entry_maker})
+        end
+    end
+
+    local builtin = require('telescope.builtin')
+
     map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
     map('<leader>sh', vim.lsp.buf.signature_help, '[S]ignature [H]elp', { silent = true })
     map('<leader>rr', vim.lsp.buf.rename, '[R]e[n]ame')
 
-    map('<leader>ws', require('telescope.builtin').lsp_dynamic_workspace_symbols, 'Find [W]orkspace [S]ymbols')
-    map('<leader>ds', require('telescope.builtin').lsp_document_symbols, 'Find [D]ocument [S]ymbols')
+    map('<leader>ws', builtin.lsp_dynamic_workspace_symbols, 'Find [W]orkspace [S]ymbols')
+    map('<leader>ds', builtin.lsp_document_symbols, 'Find [D]ocument [S]ymbols')
 
     -- Nuovi mapping per navigare i riferimenti al codice (tutti in minuscolo)
-    map('<leader>fd', require('telescope.builtin').lsp_definitions, '[F]ind [D]efinition')
-    map('<leader>fc', vim.lsp.buf.declaration, '[F]ind De[C]laration')
-    map('<leader>fi', require('telescope.builtin').lsp_implementations, '[F]ind [I]mplementation')
-    map('<leader>fr', require('telescope.builtin').lsp_references, '[F]ind [R]eferences')
-    map('<leader>ft', require('telescope.builtin').lsp_type_definitions, '[F]ind [T]ype definition')
-    --
+    map('<leader>fd', telescope_file_only(builtin.lsp_definitions), '[F]ind [D]efinition')
+    map('<leader>fc', telescope_file_only(builtin.lsp_declarations), '[F]ind De[C]laration')
+    map('<leader>fi', telescope_file_only(builtin.lsp_implementations), '[F]ind [I]mplementation')
+    map('<leader>fr', telescope_file_only(builtin.lsp_references), '[F]ind [R]eferences')
+    map('<leader>ft', telescope_file_only(builtin.lsp_type_definitions), '[F]ind [T]ype definition')
+
     -- -- Opens a popup that displays documentation about the word under your cursor
     -- --  See `:help K` for why this keymap.
     map('K', vim.lsp.buf.hover, 'Hover Documentation')
