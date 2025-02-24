@@ -11,7 +11,14 @@ return {
       enable_check_bracket_line = true,
     },
   },
-  { 'zbirenbaum/copilot.lua' },
+  { 
+    'zbirenbaum/copilot.lua',
+    cmd = "Copilot",
+    event = "InsertEnter",
+    config = function()
+      require("copilot").setup({})
+    end,
+  },
   { 'AndrewRadev/tagalong.vim' },
   { 'numToStr/Comment.nvim', opts = {} },
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
