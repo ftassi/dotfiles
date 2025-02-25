@@ -74,3 +74,6 @@ export NVM_DIR="$HOME/.local/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
  
 for d in $HOME/.local/*; do PATH="$PATH:$d/bin"; done
+
+# Add an alias to test a new configuration from ~/config/nvim-kickstart
+# alias vim='NVIM_APPNAME="nvim-kickstart" nvim'
