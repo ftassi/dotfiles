@@ -11,12 +11,12 @@ return {
       enable_check_bracket_line = true,
     },
   },
-  { 
+  {
     'zbirenbaum/copilot.lua',
-    cmd = "Copilot",
-    event = "InsertEnter",
+    cmd = 'Copilot',
+    event = 'InsertEnter',
     config = function()
-      require("copilot").setup({})
+      require('copilot').setup {}
     end,
   },
   { 'AndrewRadev/tagalong.vim' },

@@ -15,11 +15,12 @@
 
 return { -- Useful plugin to show you pending keybinds.
   'folke/which-key.nvim',
-  event = 'VimEnter', -- Sets the loading event to 'VimEnter'
+  event = 'VeryLazy', -- Sets the loading event to 'VimEnter'
   config = function() -- This is the function that runs, AFTER loading
     require('which-key').setup()
 
     -- Document existing key chains
-    require('which-key').register(require('ftassi.keymaps').which_key())
+    local wk = require 'which-key'
+    wk.add(require('ftassi.keymaps').which_key())
   end,
 }
