@@ -53,7 +53,6 @@ timezsh() {
 
 eval "$(direnv hook zsh)"
 
-alias ll='exa -al'
 
 export PATH=~/.config/composer/vendor/bin:$PATH
 
@@ -75,6 +74,3 @@ export NVM_DIR="$HOME/.local/.nvm"
  
 for d in $HOME/.local/*; do PATH="$PATH:$d/bin"; done
 
-# Add an alias to test a new configuration from ~/config/nvim-kickstart
-# alias vim='NVIM_APPNAME="nvim-kickstart" nvim'
-alias vim-bak='NVIM_APPNAME="nvim-bak" nvim'
