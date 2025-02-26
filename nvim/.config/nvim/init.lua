@@ -33,7 +33,7 @@ vim.g.maplocalleader = ' '
 vim.g.have_nerd_font = true
 
 require 'ftassi.options'
-require 'ftassi.keymaps'.defaults()
+require('ftassi.keymaps').defaults()
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -83,14 +83,14 @@ require('lazy').setup({
         white = '#ffffff',
       },
       highlights = {
-        LineNr = { fg = '$white'},
+        LineNr = { fg = '$white' },
         CursorLineNr = { fg = '$yellow', fmt = 'bold' },
       },
     },
   },
 
   require 'kickstart.plugins.indent_line',
- 
+
   -- require 'kickstart.plugins.debug',
   -- require 'kickstart.plugins.lint',
 
