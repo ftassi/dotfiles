@@ -2,7 +2,7 @@ return {
   {
     'tpope/vim-fugitive',
     config = function()
-        require('ftassi.keymaps').fugitive()
+      require('ftassi.keymaps').fugitive()
     end,
   },
   -- TODO: This could be removed mapping fugitive git log with the right format
@@ -14,7 +14,7 @@ return {
       'tpope/vim-fugitive',
     },
     config = function()
-        require('ftassi.keymaps').gv()
+      require('ftassi.keymaps').gv()
     end,
   },
   {
@@ -36,24 +36,24 @@ return {
     },
   },
   {
-      'airblade/vim-gitgutter',
-      event = 'BufReadPre',
-      init = function()
-        vim.g.gitgutter_sign_added = ''
-        vim.g.gitgutter_sign_modified = ''
-        vim.g.gitgutter_sign_removed = ''
-        vim.g.gitgutter_sign_removed_first_line = ''
-        vim.g.gitgutter_sign_modified_removed = ''
-      end,
-      config = function()
-        vim.api.nvim_create_autocmd("User", {
-            pattern = "FugitiveChanged",
-            callback = function()
-                vim.cmd("call gitgutter#all(1)")
-            end,
-        })
+    'airblade/vim-gitgutter',
+    event = 'BufReadPre',
+    init = function()
+      vim.g.gitgutter_sign_added = ''
+      vim.g.gitgutter_sign_modified = ''
+      vim.g.gitgutter_sign_removed = ''
+      vim.g.gitgutter_sign_removed_first_line = ''
+      vim.g.gitgutter_sign_modified_removed = ''
+    end,
+    config = function()
+      vim.api.nvim_create_autocmd('User', {
+        pattern = 'FugitiveChanged',
+        callback = function()
+          vim.cmd 'call gitgutter#all(1)'
+        end,
+      })
 
-        require 'ftassi.keymaps'.gitgutter()
-      end
-  }
+      require('ftassi.keymaps').gitgutter()
+    end,
+  },
 }
