@@ -2,6 +2,23 @@ return {
   {
     'tpope/vim-fugitive',
     config = function()
+      -- Configura Fugitive per aprire la finestra di commit nella parte superiore dello schermo
+      vim.g.fugitive_split_modifier = 'topleft'
+
+      -- Configura l'autocmd per assicurarsi che le finestre di commit si aprano sempre in alto
+      -- Usa BufWinEnter che viene attivato dopo che la finestra è completamente creata
+      vim.api.nvim_create_autocmd('BufWinEnter', {
+        pattern = { 'fugitive://*', 'COMMIT_EDITMSG', 'MERGE_MSG' },
+        callback = function()
+          -- Usa un timer per ritardare leggermente l'esecuzione e evitare conflitti
+          vim.defer_fn(function()
+            if vim.api.nvim_get_current_buf() == vim.fn.bufnr() and vim.bo.buftype ~= 'terminal' then
+              vim.cmd 'silent! wincmd K'
+            end
+          end, 10) -- Ritardo di 10ms
+        end,
+      })
+
       require('ftassi.keymaps').fugitive()
     end,
   },
