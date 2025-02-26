@@ -6,14 +6,23 @@ return {
       vim.g.fugitive_split_modifier = 'topleft'
 
       -- Configura l'autocmd per assicurarsi che le finestre di commit si aprano sempre in alto
-      -- Usa BufWinEnter che viene attivato dopo che la finestra è completamente creata
+      -- e con un'altezza adeguata
       vim.api.nvim_create_autocmd('BufWinEnter', {
         pattern = { 'fugitive://*', 'COMMIT_EDITMSG', 'MERGE_MSG' },
         callback = function()
           -- Usa un timer per ritardare leggermente l'esecuzione e evitare conflitti
           vim.defer_fn(function()
             if vim.api.nvim_get_current_buf() == vim.fn.bufnr() and vim.bo.buftype ~= 'terminal' then
+              -- Sposta la finestra in alto
               vim.cmd 'silent! wincmd K'
+
+              -- Imposta un'altezza minima per la finestra (15 righe)
+              local min_height = 15
+              local current_height = vim.api.nvim_win_get_height(0)
+
+              if current_height < min_height then
+                vim.cmd('resize ' .. min_height)
+              end
             end
           end, 10) -- Ritardo di 10ms
         end,
