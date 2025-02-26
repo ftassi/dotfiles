@@ -77,8 +77,8 @@ require('lazy').setup({
       vim.cmd.colorscheme 'onedark'
       -- vim.cmd.hi 'Comment gui=none'
     end,
-    opts = { 
-      transparent = true,
+    opts = {
+      transparent = false,
       colors = {
         white = '#ffffff',
       },
