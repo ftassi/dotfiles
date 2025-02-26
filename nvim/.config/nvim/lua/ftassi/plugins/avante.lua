@@ -6,7 +6,7 @@ return {
   opts = {
     -- add any opts here
     -- for example
-    provider = 'openai',
+    provider = 'claude',
     openai = {
       endpoint = 'https://api.openai.com/v1',
       model = 'gpt-4-turbo', -- your desired model (or use gpt-4o, etc.)
@@ -22,7 +22,7 @@ return {
       max_tokens = 4096,
     },
     dual_boost = {
-      enabled = true,
+      enabled = false,
       first_provider = 'claude',
       second_provider = 'openai',
       prompt = 'Based on the two reference outputs below, generate a response that incorporates elements from both but reflects your own judgment and unique perspective. Do not provide any explanation, just give the response directly. Reference Output 1: [{{provider1_output}}], Reference Output 2: [{{provider2_output}}]',
