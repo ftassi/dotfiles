@@ -15,6 +15,8 @@ function M.defaults()
   -- Remove search highlighting with <Esc>
   vim.keymap.set('n', '<Esc>', '<cmd>nohlsearch<CR>')
 
+  -- alternate file
+  vim.keymap.set('n', '<C-;>', '<cmd>edit #<CR>', { desc = 'Open alternate file' })
   -- Symbols layout
   -- @{}\
   -- $()`
