@@ -6,6 +6,10 @@ return {
   opts = {
     -- add any opts here
     -- for example
+    debug = true,
+    rag_service = {
+      enabled = false,
+    },
     provider = 'claude',
     openai = {
       endpoint = 'https://api.openai.com/v1',
@@ -20,6 +24,7 @@ return {
       model = 'claude-3-7-sonnet-20250219',
       temperature = 0,
       max_tokens = 4096,
+      disable_tools = true,
     },
     dual_boost = {
       enabled = false,
@@ -46,19 +51,20 @@ return {
     {
       -- support for image pasting
       'HakonHarnes/img-clip.nvim',
-      event = 'VeryLazy',
-      opts = {
-        -- recommended settings
-        default = {
-          embed_image_as_base64 = false,
-          prompt_for_file_name = false,
-          drag_and_drop = {
-            insert_mode = true,
-          },
-          -- required for Windows users
-          use_absolute_path = true,
-        },
-      },
+      event = { 'InsertEnter', 'CmdlineEnter', 'BufReadPost' },
+      lazy = true,
+      -- opts = {
+      --   -- recommended settings
+      --   default = {
+      --     embed_image_as_base64 = false,
+      --     prompt_for_file_name = false,
+      --     drag_and_drop = {
+      --       insert_mode = true,
+      --     },
+      --     -- required for Windows users
+      --     use_absolute_path = true,
+      --   },
+      -- },
     },
     {
       -- Make sure to set this up properly if you have lazy=true
