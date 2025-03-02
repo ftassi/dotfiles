@@ -25,9 +25,9 @@ function M.defaults()
   -- Diagnostic keymaps
   vim.keymap.set('n', '((', vim.diagnostic.goto_prev, { silent = true })
   vim.keymap.set('n', '))', vim.diagnostic.goto_next, { silent = true })
-  -- Navigazione nella quickfix list
-  vim.keymap.set('n', '$$', '<cmd>cprev<CR>', { silent = true })
-  vim.keymap.set('n', '``', '<cmd>cnext<CR>', { silent = true })
+  -- Navigazione nella quickfix list --  devo disabilitarli perché il $  è non può essere impiegato per il movimenti
+  -- vim.keymap.set('n', '$$', '<cmd>cprev<CR>', { silent = true })
+  -- vim.keymap.set('n', '``', '<cmd>cnext<CR>', { silent = true })
 
   -- Navigazione delle modifiche nel buffer (change list)
   vim.keymap.set('n', '{{', function()
