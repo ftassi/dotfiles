@@ -15,6 +15,7 @@ return { -- Autocompletion
       completion = { completeopt = 'menu,menuone,noinsert' },
       mapping = cmp.mapping.preset.insert(mappings),
       sources = {
+        -- { name = 'copilot' },
         { name = 'nvim_lsp' },
         { name = 'path' },
       },
