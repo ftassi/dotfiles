@@ -57,4 +57,34 @@ return {
   { 'AndrewRadev/tagalong.vim' },
   { 'numToStr/Comment.nvim', opts = {} },
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
+  {
+    'rcarriga/nvim-notify',
+    event = 'VeryLazy',
+    config = function()
+      local notify = require 'notify'
+
+      -- Configura notify con le opzioni desiderate
+      notify.setup {
+        -- Opzioni di configurazione
+        background_colour = '#000000',
+        fps = 60,
+        icons = {
+          DEBUG = '',
+          ERROR = '',
+          INFO = '',
+          TRACE = '✎',
+          WARN = '',
+        },
+        level = 2,
+        minimum_width = 50,
+        render = 'default',
+        stages = 'fade',
+        timeout = 3000,
+        top_down = true,
+      }
+
+      -- Imposta nvim-notify come handler predefinito per vim.notify
+      vim.notify = notify
+    end,
+  },
 }

@@ -102,6 +102,8 @@ vim.opt.wrap = false
 -- Set default file encoding to UTF-8
 vim.opt.encoding = 'utf-8'
 
+vim.opt.termguicolors = true
+
 -- Configure ripgrep to use a vim friendly from
 -- Telescope will have its own ripgrep setting
 if vim.fn.exepath 'rg' == 1 then
