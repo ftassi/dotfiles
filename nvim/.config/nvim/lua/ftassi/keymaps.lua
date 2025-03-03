@@ -228,59 +228,17 @@ function M.gv()
 end
 
 function M.gitgutter()
-  vim.keymap.set('n', '<leader>gh', '<Plug>(GitGutterPreviewHunk)', { silent = true, desc = '[G]itGutter: Preview Hunk' })
-  vim.keymap.set('n', '<leader>ga', '<Plug>(GitGutterStageHunk)', { silent = true, desc = '[G]itGutter: Stage Hunk' })
-  vim.keymap.set('n', '<leader>gu', '<Plug>(GitGutterUndoHunk)', { silent = true, desc = '[G]itGutter: Undo Hunk' })
-end
+  -- Navigazione tra gli hunks
+  vim.keymap.set('n', '<leader>gn', '<Plug>(GitGutterNextHunk)', { silent = true, desc = '[G]it: Next Hunk' })
+  vim.keymap.set('n', '<leader>gp', '<Plug>(GitGutterPrevHunk)', { silent = true, desc = '[G]it: Previous Hunk' })
 
-function M.gitsigns(bufnr)
-  local function map(mode, l, r, opts)
-    opts = opts or {}
-    opts.buffer = bufnr
-    vim.keymap.set(mode, l, r, opts)
-  end
+  -- Operazioni sugli hunks
+  vim.keymap.set('n', '<leader>gh', '<Plug>(GitGutterPreviewHunk)', { silent = true, desc = '[G]it: Preview Hunk' })
+  vim.keymap.set('n', '<leader>ga', '<Plug>(GitGutterStageHunk)', { silent = true, desc = '[G]it: Stage Hunk' })
+  vim.keymap.set('n', '<leader>gu', '<Plug>(GitGutterUndoHunk)', { silent = true, desc = '[G]it: Undo Hunk' })
 
-  -- Navigation
-  map('n', '<leader>gn', function()
-    if vim.wo.diff then
-      vim.cmd.normal { '<leader>gn', bang = true }
-    else
-      require('gitsigns').nav_hunk 'next'
-    end
-  end, { desc = 'Go to Next Git Hunk' })
-
-  map('n', '<leader>gp', function()
-    if vim.wo.diff then
-      vim.cmd.normal { '<leader>gp', bang = true }
-    else
-      require('gitsigns').nav_hunk 'prev'
-    end
-  end, { desc = 'Go to Prev Git Hunk' })
-
-  map('n', '<leader>ga', gitsigns.stage_hunk, { desc = '[G]it [A]dd current hunk' })
-  map('v', '<leader>ga', function()
-    gitsigns.stage_hunk { vim.fn.line '.', vim.fn.line 'v' }
-  end, { desc = '[G]it [A]dd current hunk' })
-  map('n', '<leader>gA', gitsigns.undo_stage_hunk, { desc = '[G]it Undo [A]dd current hunk' })
-  map('n', '<leader>gco', gitsigns.reset_hunk, { desc = '[G]it Check[O]ut current hunk' })
-  map('v', '<leader>gco', function()
-    gitsigns.reset_hunk { vim.fn.line '.', vim.fn.line 'v' }
-  end, { desc = '[G]it Check[O]ut current hunk' })
-  map('n', '<leader>gp', gitsigns.preview_hunk, { desc = '[G]it [P]review current hunk' })
-  map('n', '<leader>gb', function()
-    gitsigns.blame_line { full = true }
-  end, { desc = '[G]it [B]lame current line' })
-  map('n', '<leader>tb', gitsigns.toggle_deleted, { desc = '[T]oggle [B]lame current line' })
-  -- This conflicts with Goto Definition which is much more used
-  -- TODO: I need to find another mapping for this
-  -- map('n', '<leader>gd', gitsigns.diffthis)
-  --
-  -- map('n', '<leader>gS', gitsigns.stage_buffer)
-  -- map('n', '<leader>gR', gitsigns.reset_buffer)
-  -- map('n', '<leader>gD', function()
-  --   gitsigns.diffthis '~'
-  -- end)
-  -- map('n', '<leader>td', gitsigns.toggle_deleted)
+  -- Operazioni aggiuntive
+  vim.keymap.set('n', '<leader>gf', '<Plug>(GitGutterFold)', { silent = true, desc = '[G]it: Fold Unchanged' })
 end
 
 function M.harpoon()
