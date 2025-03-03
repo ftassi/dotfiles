@@ -19,24 +19,123 @@ function M.defaults()
   vim.keymap.set('n', '<C-;>', '<cmd>edit #<CR>', { desc = 'Open alternate file' })
   --  gs
   -- Diagnostic keymaps (leader + dp/dn = diagnostic previous/next)
-  vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, { silent = true, desc = 'Previous diagnostic' })
-  vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { silent = true, desc = 'Next diagnostic' })
+  vim.keymap.set('n', '<leader>dp', function()
+    local diagnostics = vim.diagnostic.get(0)
+    if #diagnostics == 0 then
+      vim.notify('Nessuna diagnostica nel buffer corrente', vim.log.levels.INFO, {
+        title = 'Diagnostica',
+        icon = 'ℹ️',
+      })
+    else
+      vim.diagnostic.goto_prev()
+    end
+  end, { silent = true, desc = 'Previous diagnostic' })
+
+  vim.keymap.set('n', '<leader>dn', function()
+    local diagnostics = vim.diagnostic.get(0)
+    if #diagnostics == 0 then
+      vim.notify('Nessuna diagnostica nel buffer corrente', vim.log.levels.INFO, {
+        title = 'Diagnostica',
+        icon = 'ℹ️',
+      })
+    else
+      vim.diagnostic.goto_next()
+    end
+  end, { silent = true, desc = 'Next diagnostic' })
 
   -- Navigazione nella quickfix list (leader + qp/qn = quickfix previous/next)
-  vim.keymap.set('n', '<leader>qp', '<cmd>cprev<CR>', { silent = true, desc = 'Previous quickfix item' })
-  vim.keymap.set('n', '<leader>qn', '<cmd>cnext<CR>', { silent = true, desc = 'Next quickfix item' })
+  vim.keymap.set('n', '<leader>qp', function()
+    local qflist = vim.fn.getqflist()
+    if #qflist == 0 then
+      vim.notify('Quickfix list vuota', vim.log.levels.INFO, {
+        title = 'Quickfix',
+        icon = 'ℹ️',
+      })
+    else
+      local ok, err = pcall(function()
+        vim.cmd 'cprev'
+      end)
+      if not ok then
+        vim.notify('Inizio della quickfix list raggiunto', vim.log.levels.INFO, {
+          title = 'Quickfix',
+          icon = '⚠️',
+        })
+      end
+    end
+  end, { silent = true, desc = 'Previous quickfix item' })
+
+  vim.keymap.set('n', '<leader>qn', function()
+    local qflist = vim.fn.getqflist()
+    if #qflist == 0 then
+      vim.notify('Quickfix list vuota', vim.log.levels.INFO, {
+        title = 'Quickfix',
+        icon = 'ℹ️',
+      })
+    else
+      local ok, err = pcall(function()
+        vim.cmd 'cnext'
+      end)
+      if not ok then
+        vim.notify('Fine della quickfix list raggiunto', vim.log.levels.INFO, {
+          title = 'Quickfix',
+          icon = '⚠️',
+        })
+      end
+    end
+  end, { silent = true, desc = 'Next quickfix item' })
 
   -- Navigazione delle modifiche nel buffer (change list) (leader + cp/cn = change previous/next)
   vim.keymap.set('n', '<leader>cp', function()
-    vim.cmd 'normal! g;'
+    local ok, err = pcall(function()
+      vim.cmd 'normal! g;'
+    end)
+    if not ok then
+      vim.notify('Inizio della lista modifiche raggiunto', vim.log.levels.INFO, {
+        title = 'Navigazione modifiche',
+        icon = '⚠️',
+      })
+    end
   end, { silent = true, desc = 'Previous change' })
+
   vim.keymap.set('n', '<leader>cn', function()
-    vim.cmd 'normal! g,'
+    local ok, err = pcall(function()
+      vim.cmd 'normal! g,'
+    end)
+    if not ok then
+      vim.notify('Fine della lista modifiche raggiunto', vim.log.levels.INFO, {
+        title = 'Navigazione modifiche',
+        icon = '⚠️',
+      })
+    end
   end, { silent = true, desc = 'Next change' })
 
   -- Navigazione della jump list (leader + jp/jn = jump previous/next)
-  vim.keymap.set('n', '<leader>jp', '<C-o>', { silent = true, desc = 'Previous jump' })
-  vim.keymap.set('n', '<leader>jn', '<C-i>', { silent = true, desc = 'Next jump' })
+  vim.keymap.set('n', '<leader>jp', function()
+    local jumplist = vim.fn.getjumplist()
+    local current_pos = jumplist[2]
+    if current_pos == 0 then
+      vim.notify('Inizio della jump list raggiunto', vim.log.levels.INFO, {
+        title = 'Navigazione jump list',
+        icon = '⚠️',
+      })
+    else
+      vim.cmd 'normal! <C-o>'
+    end
+  end, { silent = true, desc = 'Previous jump' })
+
+  vim.keymap.set('n', '<leader>jn', function()
+    local jumplist = vim.fn.getjumplist()
+    local jumps = jumplist[1]
+    local current_pos = jumplist[2]
+    if current_pos >= #jumps then
+      vim.notify('Fine della jump list raggiunto', vim.log.levels.INFO, {
+        title = 'Navigazione jump list',
+        icon = '⚠️',
+      })
+    else
+      vim.cmd 'normal! <C-i>'
+    end
+  end, { silent = true, desc = 'Next jump' })
 
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
