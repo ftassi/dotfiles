@@ -17,28 +17,26 @@ function M.defaults()
 
   -- alternate file
   vim.keymap.set('n', '<C-;>', '<cmd>edit #<CR>', { desc = 'Open alternate file' })
-  -- Symbols layout
-  -- @{}\
-  -- $()`
-  -- ^[]~
-  --
-  -- Diagnostic keymaps
-  vim.keymap.set('n', '((', vim.diagnostic.goto_prev, { silent = true })
-  vim.keymap.set('n', '))', vim.diagnostic.goto_next, { silent = true })
-  -- Navigazione nella quickfix list --  devo disabilitarli perché il $  è non può essere impiegato per il movimenti
-  -- vim.keymap.set('n', '$$', '<cmd>cprev<CR>', { silent = true })
-  -- vim.keymap.set('n', '``', '<cmd>cnext<CR>', { silent = true })
+  --  gs
+  -- Diagnostic keymaps (leader + dp/dn = diagnostic previous/next)
+  vim.keymap.set('n', '<leader>dp', vim.diagnostic.goto_prev, { silent = true, desc = 'Previous diagnostic' })
+  vim.keymap.set('n', '<leader>dn', vim.diagnostic.goto_next, { silent = true, desc = 'Next diagnostic' })
 
-  -- Navigazione delle modifiche nel buffer (change list)
-  vim.keymap.set('n', '{{', function()
+  -- Navigazione nella quickfix list (leader + qp/qn = quickfix previous/next)
+  vim.keymap.set('n', '<leader>qp', '<cmd>cprev<CR>', { silent = true, desc = 'Previous quickfix item' })
+  vim.keymap.set('n', '<leader>qn', '<cmd>cnext<CR>', { silent = true, desc = 'Next quickfix item' })
+
+  -- Navigazione delle modifiche nel buffer (change list) (leader + cp/cn = change previous/next)
+  vim.keymap.set('n', '<leader>cp', function()
     vim.cmd 'normal! g;'
-  end, { silent = true })
-  vim.keymap.set('n', '}}', function()
+  end, { silent = true, desc = 'Previous change' })
+  vim.keymap.set('n', '<leader>cn', function()
     vim.cmd 'normal! g,'
-  end, { silent = true })
-  -- Navigazione della jump list
-  vim.keymap.set('n', '@@', '<C-o>', { silent = true })
-  vim.keymap.set('n', '\\\\', '<C-i>', { silent = true })
+  end, { silent = true, desc = 'Next change' })
+
+  -- Navigazione della jump list (leader + jp/jn = jump previous/next)
+  vim.keymap.set('n', '<leader>jp', '<C-o>', { silent = true, desc = 'Previous jump' })
+  vim.keymap.set('n', '<leader>jn', '<C-i>', { silent = true, desc = 'Next jump' })
 
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -144,21 +142,21 @@ function M.gitsigns(bufnr)
   end
 
   -- Navigation
-  -- map('n', '~~', function()
-  --   if vim.wo.diff then
-  --     vim.cmd.normal { '~~', bang = true }
-  --   else
-  --     require('gitsigns').nav_hunk 'next'
-  --   end
-  -- end, { desc = 'Go to Next [H]unk' })
-  --
-  -- map('n', '^^', function()
-  --   if vim.wo.diff then
-  --     vim.cmd.normal { '^^', bang = true }
-  --   else
-  --     require('gitsigns').nav_hunk 'prev'
-  --   end
-  -- end, { desc = 'Go to Prev [H]unk' })
+  map('n', '<leader>gn', function()
+    if vim.wo.diff then
+      vim.cmd.normal { '<leader>gn', bang = true }
+    else
+      require('gitsigns').nav_hunk 'next'
+    end
+  end, { desc = 'Go to Next Git Hunk' })
+
+  map('n', '<leader>gp', function()
+    if vim.wo.diff then
+      vim.cmd.normal { '<leader>gp', bang = true }
+    else
+      require('gitsigns').nav_hunk 'prev'
+    end
+  end, { desc = 'Go to Prev Git Hunk' })
 
   map('n', '<leader>ga', gitsigns.stage_hunk, { desc = '[G]it [A]dd current hunk' })
   map('v', '<leader>ga', function()
@@ -283,8 +281,8 @@ function M.lsp(bufnr)
 
   local lsp_saga_installed, lspsaga = pcall(require, 'lspsaga')
   if lsp_saga_installed then
-    map('((', cmd 'Lspsaga diagnostic_jump_prev', 'Go to previous Diagnostic message')
-    map('))', cmd 'Lspsaga diagnostic_jump_next', 'Go to next Diagnostic message')
+    map('<leader>dp', cmd 'Lspsaga diagnostic_jump_prev', 'Go to previous Diagnostic message')
+    map('<leader>dn', cmd 'Lspsaga diagnostic_jump_next', 'Go to next Diagnostic message')
     map('<leader>ld', cmd 'Lspsaga show_line_diagnostics', 'Show line diagnostics')
     map('<leader>wd', cmd 'Lspsaga show_workspace_diagnostics', 'Show workspace diagnostics')
 
