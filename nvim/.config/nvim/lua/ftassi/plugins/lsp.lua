@@ -5,19 +5,19 @@ return { -- LSP Configuration & Plugins
     'williamboman/mason.nvim',
     'williamboman/mason-lspconfig.nvim',
     'WhoIsSethDaniel/mason-tool-installer.nvim',
-    {  
-        'nvimdev/lspsaga.nvim',
-        opts = {},
-        dependencies = {
-            'nvim-treesitter/nvim-treesitter',
-            'nvim-tree/nvim-web-devicons',
-        },
-        ft = { 'rust', 'php', 'lua', 'go' },
+    {
+      'nvimdev/lspsaga.nvim',
+      opts = {},
+      dependencies = {
+        'nvim-treesitter/nvim-treesitter',
+        'nvim-tree/nvim-web-devicons',
+      },
+      ft = { 'rust', 'php', 'lua', 'go' },
     },
 
     -- Useful status updates for LSP.
     -- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-    { 'j-hui/fidget.nvim', opts = {notification = {window = { winblend = 0} } } },
+    { 'j-hui/fidget.nvim', opts = { notification = { window = { winblend = 0 } } } },
 
     -- `lazydev` configures Lua LSP for your Neovim config, runtime and plugins
     -- used for completion, annotations and signatures of Neovim apis
@@ -29,12 +29,12 @@ return { -- LSP Configuration & Plugins
     --    an lsp (for example, opening `main.rs` is associated with `rust_analyzer`) this
     --    function will be executed to configure the current buffer
     vim.api.nvim_create_autocmd('LspAttach', {
-      group =vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
+      group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
       callback = function(event)
         local map = function(keys, func, desc)
           vim.keymap.set('n', keys, func, { buffer = event.buf, desc = 'LSP: ' .. desc })
         end
-        require 'ftassi.keymaps'.lsp(event.buf)
+        require('ftassi.keymaps').lsp(event.buf)
 
         -- The following two autocommands are used to highlight references of the
         -- word under your cursor when your cursor rests there for a little while.
@@ -73,24 +73,85 @@ return { -- LSP Configuration & Plugins
     --  - settings (table): Override the default settings passed when initializing the server.
     --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
     local servers = {
-        emmet_language_server = {},
-        rust_analyzer = {},
-        terraformls = {},
-        ts_ls = {},
-        dockerls = {},
-        docker_compose_language_service = {},
-        intelephense = {
-            settings = {
-                intelephense = {
-                    files = {maxSize = 5000000},
-                    stubs = {
-                    "bcmath", "bz2", "calendar", "Core", "curl", "date", "dba", "dom", "enchant", "fileinfo", "filter", "ftp", "gd", "gettext", "hash", "iconv", "imap", "intl", "json", "ldap", "libxml", "mbstring", "mcrypt", "mysql", "mysqli", "mongo", "mongodb", "password", "pcntl", "pcre", "PDO", "pdo_mysql", "Phar", "readline", "recode", "Reflection", "regex", "session", "SimpleXML", "soap", "sockets", "sodium", "SPL", "standard", "superglobals", "sysvsem", "sysvshm", "tokenizer", "xml", "xdebug", "xmlreader", "xmlwriter", "yaml", "zip", "zlib", "wordpress", "woocommerce", "acf-pro", "wordpress-globals", "wp-cli", "genesis", "polylang",
-                    },
-                }
-            }
+      emmet_language_server = {},
+      rust_analyzer = {},
+      terraformls = {},
+      ts_ls = {},
+      dockerls = {},
+      docker_compose_language_service = {},
+      intelephense = {
+        settings = {
+          intelephense = {
+            files = { maxSize = 5000000 },
+            stubs = {
+              'bcmath',
+              'bz2',
+              'calendar',
+              'Core',
+              'curl',
+              'date',
+              'dba',
+              'dom',
+              'enchant',
+              'fileinfo',
+              'filter',
+              'ftp',
+              'gd',
+              'gettext',
+              'hash',
+              'iconv',
+              'imap',
+              'intl',
+              'json',
+              'ldap',
+              'libxml',
+              'mbstring',
+              'mcrypt',
+              'mysql',
+              'mysqli',
+              'mongo',
+              'mongodb',
+              'password',
+              'pcntl',
+              'pcre',
+              'PDO',
+              'pdo_mysql',
+              'Phar',
+              'readline',
+              'recode',
+              'Reflection',
+              'regex',
+              'session',
+              'SimpleXML',
+              'soap',
+              'sockets',
+              'sodium',
+              'SPL',
+              'standard',
+              'superglobals',
+              'sysvsem',
+              'sysvshm',
+              'tokenizer',
+              'xml',
+              'xdebug',
+              'xmlreader',
+              'xmlwriter',
+              'yaml',
+              'zip',
+              'zlib',
+              'wordpress',
+              'woocommerce',
+              'acf-pro',
+              'wordpress-globals',
+              'wp-cli',
+              'genesis',
+              'polylang',
+            },
+          },
         },
-        -- psalm = {},
-        elmls = {},
+      },
+      -- psalm = {},
+      elmls = {},
       -- clangd = {},
       -- gopls = {},
       -- pyright = {},
@@ -110,6 +171,17 @@ return { -- LSP Configuration & Plugins
         -- capabilities = {},
         settings = {
           Lua = {
+            runtime = {
+              version = 'LuaJIT',
+              special = { reload = 'require' },
+            },
+            workspace = {
+              library = {
+                vim.fn.expand '$VIMRUNTIME/lua',
+                vim.fn.expand '$VIMRUNTIME/lua/vim/lsp',
+                vim.fn.stdpath 'data' .. '/lazy/lazy.nvim/lua/lazy',
+              },
+            },
             completion = {
               callSnippet = 'Replace',
             },
