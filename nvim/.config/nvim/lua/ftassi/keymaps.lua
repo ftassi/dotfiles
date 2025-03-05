@@ -111,29 +111,26 @@ function M.defaults()
 
   -- Navigazione della jump list (leader + jp/jn = jump previous/next)
   vim.keymap.set('n', '<leader>jp', function()
-    local jumplist = vim.fn.getjumplist()
-    local current_pos = jumplist[2]
-    if current_pos == 0 then
+    local ok, err = pcall(function()
+      vim.cmd 'normal! <C-o>'
+    end)
+    if not ok then
       vim.notify('Inizio della jump list raggiunto', vim.log.levels.INFO, {
         title = 'Navigazione jump list',
         icon = '⚠️',
       })
-    else
-      vim.cmd 'normal! <C-o>'
     end
   end, { silent = true, desc = 'Previous jump' })
 
   vim.keymap.set('n', '<leader>jn', function()
-    local jumplist = vim.fn.getjumplist()
-    local jumps = jumplist[1]
-    local current_pos = jumplist[2]
-    if current_pos >= #jumps then
+    local ok, err = pcall(function()
+      vim.cmd 'normal! <C-i>'
+    end)
+    if not ok then
       vim.notify('Fine della jump list raggiunto', vim.log.levels.INFO, {
         title = 'Navigazione jump list',
         icon = '⚠️',
       })
-    else
-      vim.cmd 'normal! <C-i>'
     end
   end, { silent = true, desc = 'Next jump' })
 
