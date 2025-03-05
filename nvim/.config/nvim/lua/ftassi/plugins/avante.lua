@@ -11,13 +11,16 @@ return {
       enabled = false,
     },
     provider = 'claude',
+    disabled_tools = { 'python' },
     openai = {
       endpoint = 'https://api.openai.com/v1',
       model = 'gpt-4o', -- your desired model (or use gpt-4o, etc.)
       timeout = 30000, -- timeout in milliseconds
       temperature = 0, -- adjust if needed
       max_tokens = 4096,
+      disable_tools = false,
       -- reasoning_effort = "high" -- only supported for reasoning models (o1, etc.)
+      --
     },
     claude = {
       endpoint = 'https://api.anthropic.com',
