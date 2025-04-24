@@ -1,3 +1,4 @@
 .gitattributes !filter !diff
 intelephense/intelephense/* filter=git-crypt diff=git-crypt
 zsh/.secrets.zsh filter=git-crypt diff=git-crypt
+aws/.aws/credentials filter=git-crypt diff=git-crypt
