@@ -59,6 +59,15 @@ return { -- Highlight, edit, and navigate code
           ['ia'] = '@parameter.inner',
         },
       },
+      swap = {
+        enable = true,
+        swap_next = {
+          ['>a'] = '@parameter.inner',
+        },
+        swap_previous = {
+          ['<a'] = '@parameter.inner',
+        },
+      },
     },
   },
   config = function(_, opts)
