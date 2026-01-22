@@ -26,12 +26,19 @@ return {
       adapters = {
         require('neotest-rust') {
           args = { '--no-capture' },
+          -- Check for project-local cargo command (set in .nvim.lua)
+          cargo_test_cmd = function()
+            return vim.g.neotest_rust_cargo_cmd or 'cargo test'
+          end,
         },
         require('neotest-phpunit') {
-          -- Customize phpunit command if needed (e.g., for Docker)
-          -- phpunit_cmd = function()
-          --   return { 'docker', 'exec', '-it', 'php-container', 'vendor/bin/phpunit' }
-          -- end,
+          -- Check for project-local phpunit command (set in .nvim.lua)
+          phpunit_cmd = function()
+            if vim.g.neotest_phpunit_cmd then
+              return vim.g.neotest_phpunit_cmd
+            end
+            return 'vendor/bin/phpunit'
+          end,
         },
       },
       status = {
