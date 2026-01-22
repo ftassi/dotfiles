@@ -1,0 +1,18 @@
+# >>> AUTO-GENERATED (git-crypt) - DO NOT EDIT THIS SECTION <<<
+# Synced from .gitattributes - run scripts/sync-claudeignore.sh to update
+intelephense/intelephense/*
+zsh/.secrets.zsh
+aws/.aws/credentials
+# >>> END AUTO-GENERATED <<<
+
+# Manual entries below - these are preserved across syncs
+# Add patterns here for files you want to protect BEFORE adding to git-crypt
+
+# Common secret patterns (preventive protection)
+**/*.secret
+**/*.key
+**/*.pem
+**/.env
+**/.env.*
+**/credentials*
+**/secrets*
