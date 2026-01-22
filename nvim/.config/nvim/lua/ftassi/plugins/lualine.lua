@@ -1,7 +1,7 @@
 local function get_lsp_client_names()
   local clients = {}
 
-  for _, client in pairs(vim.lsp.get_active_clients { bufnr = 0 }) do
+  for _, client in pairs(vim.lsp.get_clients { bufnr = 0 }) do
     clients[#clients + 1] = client.name
   end
 
@@ -22,7 +22,7 @@ return {
         {
           get_lsp_client_names,
           cond = function()
-            return next(vim.lsp.get_active_clients { bufnr = 0 }) ~= nil
+            return next(vim.lsp.get_clients { bufnr = 0 }) ~= nil
           end,
         },
       },
