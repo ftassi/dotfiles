@@ -106,6 +106,6 @@ vim.opt.termguicolors = true
 
 -- Configure ripgrep to use a vim friendly from
 -- Telescope will have its own ripgrep setting
-if vim.fn.exepath 'rg' == 1 then
+if vim.fn.executable 'rg' == 1 then
   vim.opt.grepprg = 'rg --vimgrep'
 end
