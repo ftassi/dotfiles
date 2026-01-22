@@ -3,6 +3,14 @@ return { -- Highlight, edit, and navigate code
   build = ':TSUpdate',
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',
+    {
+      'nvim-treesitter/nvim-treesitter-context',
+      opts = {
+        enable = true,
+        max_lines = 3,
+        min_window_height = 20,
+      },
+    },
   },
   opts = {
     ensure_installed = { 'bash', 'c', 'html', 'lua', 'luadoc', 'markdown', 'vim', 'vimdoc' },
