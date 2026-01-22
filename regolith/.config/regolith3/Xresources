@@ -1,7 +1,3 @@
-!regolith.wallpaper.file: /usr/share/desktop-base/joy-inksplat-theme/wallpaper/gnome-background.xml
-!regolith.lockscreen.wallpaper.file: /usr/share/desktop-base/joy-inksplat-theme/wallpaper/gnome-background.xml
-regolith.wallpaper.file: /usr/share/desktop-base/joy-inksplat-theme/wallpaper/gnome-background.xml
-regolith.lockscreen.wallpaper.file: /usr/share/desktop-base/joy-inksplat-theme/wallpaper/gnome-background.xml
 !regolith.look.path: /usr/share/regolith-look/solarized-dark
 regolith.look.path: /usr/share/regolith-look/nord
 
@@ -11,3 +7,7 @@ wm.gaps.smart: 0
 wm.client.focused.color.border: #990033
 wm.client.focused.color.child_border: #990033
 wm.window.border.size: 3
+!regolith.wallpaper.file: /usr/share/backgrounds/Fuwafuwa_nanbatto_san_by_amaral-light.png
+!regolith.lockscreen.wallpaper.file: /usr/share/backgrounds/Fuwafuwa_nanbatto_san_by_amaral-light.png
+regolith.wallpaper.file: /usr/share/backgrounds/ubuntu-wallpaper-d.png
+regolith.lockscreen.wallpaper.file: /usr/share/backgrounds/ubuntu-wallpaper-d.png

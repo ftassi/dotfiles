@@ -1,2 +1,2 @@
 bindsym $mod+Shift+o exec /home/ftassi/.local/bin/move-next-monitor.sh
-bindsym $mod+c exec regolith-control-center
+# bindsym $mod+c exec regolith-control-center
