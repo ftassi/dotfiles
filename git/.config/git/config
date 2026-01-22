@@ -17,3 +17,6 @@
     latest-tag = describe --abbrev=0 --tags
 [push]
 	autoSetupRemote = true
+
+[includeIf "gitdir:~/workspace/madisoft/"]
+	path = ~/.config/git/config-madisoft
