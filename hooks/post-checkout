@@ -1,0 +1,5 @@
+#!/bin/bash
+# Post-checkout hook: sync .claudeignore when switching branches
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+"$REPO_ROOT/scripts/sync-claudeignore.sh" 2>/dev/null || true

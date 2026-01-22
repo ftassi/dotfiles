@@ -1,0 +1,5 @@
+#!/bin/bash
+# Post-merge hook: sync .claudeignore after pull/merge
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+"$REPO_ROOT/scripts/sync-claudeignore.sh" 2>/dev/null || true

@@ -20,6 +20,9 @@ sudo pacman -S stow git-crypt
 git clone <repo-url> ~/dotfiles
 cd ~/dotfiles
 
+# Enable versioned git hooks
+git config core.hooksPath hooks
+
 # Unlock encrypted secrets (requires GPG key)
 git-crypt unlock
 

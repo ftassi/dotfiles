@@ -1,0 +1,20 @@
+#!/bin/bash
+# Pre-commit hook: sync .claudeignore with git-crypt patterns
+# Stages .claudeignore if it changed
+
+REPO_ROOT="$(git rev-parse --show-toplevel)"
+CLAUDEIGNORE="$REPO_ROOT/.claudeignore"
+
+# Capture state before sync
+BEFORE=""
+if [[ -f "$CLAUDEIGNORE" ]]; then
+    BEFORE=$(cat "$CLAUDEIGNORE")
+fi
+
+"$REPO_ROOT/scripts/sync-claudeignore.sh"
+
+# Stage .claudeignore if it changed
+AFTER=$(cat "$CLAUDEIGNORE")
+if [[ "$BEFORE" != "$AFTER" ]]; then
+    git add "$CLAUDEIGNORE"
+fi
