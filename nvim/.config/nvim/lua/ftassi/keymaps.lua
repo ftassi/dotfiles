@@ -273,4 +273,12 @@ function M.lsp(bufnr)
   end
 end
 
+function M.test()
+  vim.keymap.set('n', '<leader>tt', ':TestNearest<CR>', { silent = true, desc = '[T]est nearest' })
+  vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', { silent = true, desc = '[T]est [F]ile' })
+  vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', { silent = true, desc = '[T]est [L]ast' })
+  vim.keymap.set('n', '<leader>ta', ':TestSuite<CR>', { silent = true, desc = '[T]est [A]ll' })
+  vim.keymap.set('n', '<leader>tg', ':TestVisit<CR>', { silent = true, desc = '[T]est and [G]oto test' })
+end
+
 return M
