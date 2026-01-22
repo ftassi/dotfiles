@@ -2,12 +2,11 @@ local M = {}
 
 function M.which_key()
   return {
-    { '<leader>c', group = '[C]ode/Changes' },
-    { '<leader>d', group = '[D]iagnostics' },
+    { '<leader>c', group = '[C]ode' },
+    { '<leader>d', group = '[D]ocument' },
     { '<leader>f', group = '[F]ind' },
     { '<leader>g', group = '[G]it' },
-    { '<leader>j', group = '[J]ump' },
-    { '<leader>q', group = '[Q]uickfix' },
+    { '<leader>l', group = '[L]SP' },
     { '<leader>r', group = '[R]ename' },
     { '<leader>s', group = '[S]earch' },
     { '<leader>t', group = '[T]est' },
@@ -21,122 +20,6 @@ function M.defaults()
 
   -- alternate file
   vim.keymap.set('n', '<C-;>', '<cmd>edit #<CR>', { desc = 'Open alternate file' })
-  --  gs
-  -- Diagnostic keymaps (leader + dp/dn = diagnostic previous/next)
-  vim.keymap.set('n', '<leader>dp', function()
-    local diagnostics = vim.diagnostic.get(0)
-    if #diagnostics == 0 then
-      vim.notify('Nessuna diagnostica nel buffer corrente', vim.log.levels.INFO, {
-        title = 'Diagnostica',
-        icon = 'ℹ️',
-      })
-    else
-      vim.diagnostic.goto_prev()
-    end
-  end, { silent = true, desc = 'Previous diagnostic' })
-
-  vim.keymap.set('n', '<leader>dn', function()
-    local diagnostics = vim.diagnostic.get(0)
-    if #diagnostics == 0 then
-      vim.notify('Nessuna diagnostica nel buffer corrente', vim.log.levels.INFO, {
-        title = 'Diagnostica',
-        icon = 'ℹ️',
-      })
-    else
-      vim.diagnostic.goto_next()
-    end
-  end, { silent = true, desc = 'Next diagnostic' })
-
-  -- Navigazione nella quickfix list (leader + qp/qn = quickfix previous/next)
-  vim.keymap.set('n', '<leader>qp', function()
-    local qflist = vim.fn.getqflist()
-    if #qflist == 0 then
-      vim.notify('Quickfix list vuota', vim.log.levels.INFO, {
-        title = 'Quickfix',
-        icon = 'ℹ️',
-      })
-    else
-      local ok, err = pcall(function()
-        vim.cmd 'cprev'
-      end)
-      if not ok then
-        vim.notify('Inizio della quickfix list raggiunto', vim.log.levels.INFO, {
-          title = 'Quickfix',
-          icon = '⚠️',
-        })
-      end
-    end
-  end, { silent = true, desc = 'Previous quickfix item' })
-
-  vim.keymap.set('n', '<leader>qn', function()
-    local qflist = vim.fn.getqflist()
-    if #qflist == 0 then
-      vim.notify('Quickfix list vuota', vim.log.levels.INFO, {
-        title = 'Quickfix',
-        icon = 'ℹ️',
-      })
-    else
-      local ok, err = pcall(function()
-        vim.cmd 'cnext'
-      end)
-      if not ok then
-        vim.notify('Fine della quickfix list raggiunto', vim.log.levels.INFO, {
-          title = 'Quickfix',
-          icon = '⚠️',
-        })
-      end
-    end
-  end, { silent = true, desc = 'Next quickfix item' })
-
-  -- Navigazione delle modifiche nel buffer (change list) (leader + cp/cn = change previous/next)
-  vim.keymap.set('n', '<leader>cp', function()
-    local ok, err = pcall(function()
-      vim.cmd 'normal! g;'
-    end)
-    if not ok then
-      vim.notify('Inizio della lista modifiche raggiunto', vim.log.levels.INFO, {
-        title = 'Navigazione modifiche',
-        icon = '⚠️',
-      })
-    end
-  end, { silent = true, desc = 'Previous change' })
-
-  vim.keymap.set('n', '<leader>cn', function()
-    local ok, err = pcall(function()
-      vim.cmd 'normal! g,'
-    end)
-    if not ok then
-      vim.notify('Fine della lista modifiche raggiunto', vim.log.levels.INFO, {
-        title = 'Navigazione modifiche',
-        icon = '⚠️',
-      })
-    end
-  end, { silent = true, desc = 'Next change' })
-
-  -- Navigazione della jump list (leader + jp/jn = jump previous/next)
-  vim.keymap.set('n', '<leader>jp', function()
-    local ok, err = pcall(function()
-      vim.cmd 'normal! <C-o>'
-    end)
-    if not ok then
-      vim.notify('Inizio della jump list raggiunto', vim.log.levels.INFO, {
-        title = 'Navigazione jump list',
-        icon = '⚠️',
-      })
-    end
-  end, { silent = true, desc = 'Previous jump' })
-
-  vim.keymap.set('n', '<leader>jn', function()
-    local ok, err = pcall(function()
-      vim.cmd 'normal! <C-i>'
-    end)
-    if not ok then
-      vim.notify('Fine della jump list raggiunto', vim.log.levels.INFO, {
-        title = 'Navigazione jump list',
-        icon = '⚠️',
-      })
-    end
-  end, { silent = true, desc = 'Next jump' })
 
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
   vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
@@ -229,17 +112,61 @@ function M.gv()
 end
 
 function M.gitgutter()
-  -- Navigazione tra gli hunks
-  vim.keymap.set('n', '<leader>gn', '<Plug>(GitGutterNextHunk)', { silent = true, desc = '[G]it: Next Hunk' })
-  vim.keymap.set('n', '<leader>gp', '<Plug>(GitGutterPrevHunk)', { silent = true, desc = '[G]it: Previous Hunk' })
-
   -- Operazioni sugli hunks
   vim.keymap.set('n', '<leader>gh', '<Plug>(GitGutterPreviewHunk)', { silent = true, desc = '[G]it: Preview Hunk' })
   vim.keymap.set('n', '<leader>ga', '<Plug>(GitGutterStageHunk)', { silent = true, desc = '[G]it: Stage Hunk' })
   vim.keymap.set('n', '<leader>gu', '<Plug>(GitGutterUndoHunk)', { silent = true, desc = '[G]it: Undo Hunk' })
-
-  -- Operazioni aggiuntive
   vim.keymap.set('n', '<leader>gf', '<Plug>(GitGutterFold)', { silent = true, desc = '[G]it: Fold Unchanged' })
+end
+
+function M.navigation()
+  -- Git hunks (most used) - }} / {{
+  vim.keymap.set('n', '}}', '<Plug>(GitGutterNextHunk)', { silent = true, desc = 'Next git hunk' })
+  vim.keymap.set('n', '{{', '<Plug>(GitGutterPrevHunk)', { silent = true, desc = 'Previous git hunk' })
+
+  -- Diagnostics - )) / ((
+  vim.keymap.set('n', '))', function()
+    local diagnostics = vim.diagnostic.get(0)
+    if #diagnostics == 0 then
+      vim.notify('No diagnostics in current buffer', vim.log.levels.INFO, { title = 'Diagnostics' })
+    else
+      vim.diagnostic.goto_next()
+    end
+  end, { silent = true, desc = 'Next diagnostic' })
+
+  vim.keymap.set('n', '((', function()
+    local diagnostics = vim.diagnostic.get(0)
+    if #diagnostics == 0 then
+      vim.notify('No diagnostics in current buffer', vim.log.levels.INFO, { title = 'Diagnostics' })
+    else
+      vim.diagnostic.goto_prev()
+    end
+  end, { silent = true, desc = 'Previous diagnostic' })
+
+  -- Quickfix - ]] / [[
+  vim.keymap.set('n', ']]', function()
+    local qflist = vim.fn.getqflist()
+    if #qflist == 0 then
+      vim.notify('Quickfix list is empty', vim.log.levels.INFO, { title = 'Quickfix' })
+    else
+      local ok, _ = pcall(vim.cmd, 'cnext')
+      if not ok then
+        vim.notify('End of quickfix list', vim.log.levels.INFO, { title = 'Quickfix' })
+      end
+    end
+  end, { silent = true, desc = 'Next quickfix item' })
+
+  vim.keymap.set('n', '[[', function()
+    local qflist = vim.fn.getqflist()
+    if #qflist == 0 then
+      vim.notify('Quickfix list is empty', vim.log.levels.INFO, { title = 'Quickfix' })
+    else
+      local ok, _ = pcall(vim.cmd, 'cprev')
+      if not ok then
+        vim.notify('Start of quickfix list', vim.log.levels.INFO, { title = 'Quickfix' })
+      end
+    end
+  end, { silent = true, desc = 'Previous quickfix item' })
 end
 
 function M.harpoon()
@@ -339,10 +266,7 @@ function M.lsp(bufnr)
 
   local lsp_saga_installed, _ = pcall(require, 'lspsaga')
   if lsp_saga_installed then
-    map('<leader>dp', cmd 'Lspsaga diagnostic_jump_prev', 'Go to previous Diagnostic message')
-    map('<leader>dn', cmd 'Lspsaga diagnostic_jump_next', 'Go to next Diagnostic message')
     map('<leader>ld', cmd 'Lspsaga show_line_diagnostics', 'Show line diagnostics')
-    map('<leader>wd', cmd 'Lspsaga show_workspace_diagnostics', 'Show workspace diagnostics')
     map('K', cmd 'Lspsaga hover_doc', 'Hover Documentation')
   else
     map('K', vim.lsp.buf.hover, 'Hover Documentation')

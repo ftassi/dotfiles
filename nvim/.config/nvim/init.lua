@@ -34,6 +34,7 @@ vim.g.have_nerd_font = true
 
 require 'ftassi.options'
 require('ftassi.keymaps').defaults()
+require('ftassi.keymaps').navigation()
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
