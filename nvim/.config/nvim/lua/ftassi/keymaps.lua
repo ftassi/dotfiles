@@ -273,10 +273,6 @@ function M.lsp(bufnr)
   end
 end
 
-function M.symbol_outlines()
-  vim.keymap.set('n', '<A-Tab>', '<cmd>SymbolsOutline<CR>', { desc = 'Open Symbols Outline' })
-end
-
 function M.test()
   vim.keymap.set('n', '<leader>tt', ':TestNearest<CR>', { silent = true, desc = '[T]est nearest test' })
   vim.keymap.set('n', '<leader>tf', ':TestFile<CR>', { silent = true, desc = '[T]est [F]ile' })
