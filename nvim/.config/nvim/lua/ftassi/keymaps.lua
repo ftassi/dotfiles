@@ -2,12 +2,16 @@ local M = {}
 
 function M.which_key()
   return {
-    { '', group = '[C]ode' },
-    { '', group = '[R]ename' },
-    { '', group = '[D]ocument' },
-    { '', group = '[W]orkspace' },
-    { '', group = '[S]earch' },
-    { '', desc = '', hidden = true, mode = { 'n', 'n', 'n', 'n', 'n' } },
+    { '<leader>c', group = '[C]ode/Changes' },
+    { '<leader>d', group = '[D]iagnostics' },
+    { '<leader>f', group = '[F]ind' },
+    { '<leader>g', group = '[G]it' },
+    { '<leader>j', group = '[J]ump' },
+    { '<leader>q', group = '[Q]uickfix' },
+    { '<leader>r', group = '[R]ename' },
+    { '<leader>s', group = '[S]earch' },
+    { '<leader>t', group = '[T]est' },
+    { '<leader>w', group = '[W]indow/Workspace' },
   }
 end
 
@@ -317,7 +321,7 @@ function M.lsp(bufnr)
   local builtin = require 'telescope.builtin'
 
   map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
-  map('<leader>sh', vim.lsp.buf.signature_help, '[S]ignature [H]elp', { silent = true })
+  map('<leader>cs', vim.lsp.buf.signature_help, '[C]ode [S]ignature help', { silent = true })
   map('<leader>rr', vim.lsp.buf.rename, '[R]e[n]ame')
 
   map('<leader>ws', builtin.lsp_dynamic_workspace_symbols, 'Find [W]orkspace [S]ymbols')
@@ -333,14 +337,15 @@ function M.lsp(bufnr)
   -- format code
   map('<leader>==', vim.lsp.buf.format, 'Format code')
 
-  local lsp_saga_installed, lspsaga = pcall(require, 'lspsaga')
+  local lsp_saga_installed, _ = pcall(require, 'lspsaga')
   if lsp_saga_installed then
     map('<leader>dp', cmd 'Lspsaga diagnostic_jump_prev', 'Go to previous Diagnostic message')
     map('<leader>dn', cmd 'Lspsaga diagnostic_jump_next', 'Go to next Diagnostic message')
     map('<leader>ld', cmd 'Lspsaga show_line_diagnostics', 'Show line diagnostics')
     map('<leader>wd', cmd 'Lspsaga show_workspace_diagnostics', 'Show workspace diagnostics')
-
     map('K', cmd 'Lspsaga hover_doc', 'Hover Documentation')
+  else
+    map('K', vim.lsp.buf.hover, 'Hover Documentation')
   end
 end
 
