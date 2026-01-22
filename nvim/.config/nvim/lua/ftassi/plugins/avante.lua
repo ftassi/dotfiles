@@ -4,30 +4,32 @@ return {
   lazy = false,
   version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
   opts = {
-    -- add any opts here
-    -- for example
-    debug = true,
+    debug = false,
     rag_service = {
       enabled = false,
     },
     provider = 'claude',
     disabled_tools = { 'python' },
-    openai = {
-      endpoint = 'https://api.openai.com/v1',
-      model = 'gpt-4o', -- your desired model (or use gpt-4o, etc.)
-      timeout = 30000, -- timeout in milliseconds
-      temperature = 0, -- adjust if needed
-      max_tokens = 4096,
-      disable_tools = false,
-      -- reasoning_effort = "high" -- only supported for reasoning models (o1, etc.)
-      --
-    },
-    claude = {
-      endpoint = 'https://api.anthropic.com',
-      model = 'claude-3-7-sonnet-20250219',
-      temperature = 0,
-      max_tokens = 4096,
-      disable_tools = true,
+    providers = {
+      openai = {
+        endpoint = 'https://api.openai.com/v1',
+        model = 'gpt-4o',
+        timeout = 30000,
+        disable_tools = false,
+        extra_request_body = {
+          temperature = 0,
+          max_tokens = 4096,
+        },
+      },
+      claude = {
+        endpoint = 'https://api.anthropic.com',
+        model = 'claude-sonnet-4-20250514',
+        disable_tools = true,
+        extra_request_body = {
+          temperature = 0,
+          max_tokens = 4096,
+        },
+      },
     },
     dual_boost = {
       enabled = false,
