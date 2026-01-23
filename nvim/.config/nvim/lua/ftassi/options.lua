@@ -3,6 +3,15 @@
 -- NOTE: You can change these options as you wish!
 --  For more options, you can see `:help option-list`
 
+-- Remove default LSP gr* mappings (Neovim 0.10+) to allow ReplaceWithRegister to use 'gr'
+vim.defer_fn(function()
+  pcall(vim.keymap.del, 'n', 'grn')
+  pcall(vim.keymap.del, 'n', 'gra')
+  pcall(vim.keymap.del, 'n', 'gri')
+  pcall(vim.keymap.del, 'n', 'grt')
+  pcall(vim.keymap.del, 'x', 'gra')
+end, 0)
+
 -- views can only be fully collapsed with the global statusline
 vim.opt.laststatus = 3
 -- Make line numbers default
