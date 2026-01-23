@@ -279,6 +279,7 @@ function M.test()
   vim.keymap.set('n', '<leader>tl', ':TestLast<CR>', { silent = true, desc = '[T]est [L]ast' })
   vim.keymap.set('n', '<leader>ta', ':TestSuite<CR>', { silent = true, desc = '[T]est [A]ll' })
   vim.keymap.set('n', '<leader>tg', ':TestVisit<CR>', { silent = true, desc = '[T]est and [G]oto test' })
+  vim.keymap.set('n', '<leader>ti', ':TestNearest -- --ignored<CR>', { silent = true, desc = '[T]est [I]gnored' })
 end
 
 return M
