@@ -53,3 +53,7 @@ gpt-persistent-session
 >>> AI chat 
 
 **/.claude/settings.local.json
+
+### Vagrant ###
+.vagrant/
+Vagrantfile
