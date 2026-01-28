@@ -12,6 +12,12 @@ vim.defer_fn(function()
   pcall(vim.keymap.del, 'x', 'gra')
 end, 0)
 
+-- Restore diagnostic display defaults changed in Neovim 0.11
+-- virtual_text was disabled by default in 0.11
+vim.diagnostic.config {
+  virtual_text = true,
+}
+
 -- views can only be fully collapsed with the global statusline
 vim.opt.laststatus = 3
 -- Make line numbers default
