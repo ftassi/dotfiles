@@ -143,7 +143,14 @@ function M.navigation()
     end
   end, { silent = true, desc = 'Previous diagnostic' })
 
-  -- Quickfix - ]] / [[
+  -- Quickfix ]] / [[ -> see M.quickfix_navigation()
+  -- Defined separately because ftplugins override [[ ]] with buffer-local mappings.
+  -- Called from init.lua via FileType autocmd with { buffer = true }.
+end
+
+function M.quickfix_navigation(opts)
+  opts = vim.tbl_extend('force', { silent = true }, opts or {})
+
   vim.keymap.set('n', ']]', function()
     local qflist = vim.fn.getqflist()
     if #qflist == 0 then
@@ -154,7 +161,7 @@ function M.navigation()
         vim.notify('End of quickfix list', vim.log.levels.INFO, { title = 'Quickfix' })
       end
     end
-  end, { silent = true, desc = 'Next quickfix item' })
+  end, vim.tbl_extend('force', opts, { desc = 'Next quickfix item' }))
 
   vim.keymap.set('n', '[[', function()
     local qflist = vim.fn.getqflist()
@@ -166,7 +173,7 @@ function M.navigation()
         vim.notify('Start of quickfix list', vim.log.levels.INFO, { title = 'Quickfix' })
       end
     end
-  end, { silent = true, desc = 'Previous quickfix item' })
+  end, vim.tbl_extend('force', opts, { desc = 'Previous quickfix item' }))
 end
 
 function M.harpoon()

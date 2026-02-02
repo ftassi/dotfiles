@@ -39,6 +39,15 @@ require('ftassi.keymaps').navigation()
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
 
+-- Override ftplugin [[ ]] mappings (many ftplugins set buffer-local mappings for these)
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Apply quickfix navigation mappings (buffer-local to override ftplugins)',
+  group = vim.api.nvim_create_augroup('ftassi-navigation-override', { clear = true }),
+  callback = function()
+    require('ftassi.keymaps').quickfix_navigation { buffer = true }
+  end,
+})
+
 -- Highlight when yanking (copying) text
 --  Try it with `yap` in normal mode
 --  See `:help vim.highlight.on_yank()`
