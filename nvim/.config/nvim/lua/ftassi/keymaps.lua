@@ -289,20 +289,4 @@ function M.test()
   vim.keymap.set('n', '<leader>ti', ':TestNearest -- --ignored<CR>', { silent = true, desc = '[T]est [I]gnored' })
 end
 
-function M.toggleterm()
-  -- Toggle last used terminal
-  vim.keymap.set('n', '<leader><Space>', '<cmd>ToggleTerm<CR>', { desc = 'Toggle last terminal' })
-
-  -- Numbered terminals
-  vim.keymap.set('n', '<leader>1', '<cmd>1ToggleTerm<CR>', { desc = 'Toggle terminal #1' })
-  vim.keymap.set('n', '<leader>2', '<cmd>2ToggleTerm<CR>', { desc = 'Toggle terminal #2' })
-  vim.keymap.set('n', '<leader>3', '<cmd>3ToggleTerm<CR>', { desc = 'Toggle terminal #3' })
-
-  -- Navigation in terminal mode (move between splits)
-  vim.keymap.set('t', '<C-h>', [[<C-\><C-n><C-w>h]], { desc = 'Move to left split' })
-  vim.keymap.set('t', '<C-j>', [[<C-\><C-n><C-w>j]], { desc = 'Move to lower split' })
-  vim.keymap.set('t', '<C-k>', [[<C-\><C-n><C-w>k]], { desc = 'Move to upper split' })
-  vim.keymap.set('t', '<C-l>', [[<C-\><C-n><C-w>l]], { desc = 'Move to right split' })
-end
-
 return M
