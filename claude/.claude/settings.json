@@ -1,0 +1,44 @@
+{
+  "permissions": {
+    "deny": [
+      "Read(**/.env)",
+      "Read(**/.env.*)",
+      "Read(**/.envrc)",
+      "Read(**/secrets/**)",
+      "Read(**/config/credentials.json)",
+      "Read(**/build)",
+      "Edit(**/.env)",
+      "Edit(**/.env.*)",
+      "Edit(**/.envrc)",
+      "Edit(**/secrets/**)",
+      "Edit(**/config/credentials.json)",
+      "Write(**/.env)",
+      "Write(**/.env.*)",
+      "Write(**/.envrc)",
+      "Write(**/secrets/**)",
+      "Write(**/config/credentials.json)",
+      "MultiEdit(**/.env)",
+      "MultiEdit(**/.env.*)",
+      "MultiEdit(**/.envrc)",
+      "MultiEdit(**/secrets/**)",
+      "MultiEdit(**/config/credentials.json)"
+    ]
+  },
+  "model": "opus",
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Read|Edit|MultiEdit|Write",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "~/.claude/hooks/protect-sensitive.py"
+          }
+        ]
+      }
+    ]
+  }
+}
