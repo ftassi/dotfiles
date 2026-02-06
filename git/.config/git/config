@@ -1,8 +1,5 @@
 [core]
 	editor = vim
-[user]
-	name = Francesco Tassi
-	email = tassi.francesco@gmail.com
 [rerere]
 	enabled = true
 [commit]
@@ -19,5 +16,11 @@
 [push]
 	autoSetupRemote = true
 
-[includeIf "gitdir:~/workspace/madisoft/"]
-	path = ~/.config/git/config-madisoft
+[safe]
+	directory = /home/madisoft/workspace
+
+[includeIf "gitdir:/home/ftassi/"]
+	path = ~/.config/git/identity-ftassi
+
+[includeIf "gitdir:/home/madisoft/"]
+	path = ~/.config/git/identity-madisoft
