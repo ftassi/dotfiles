@@ -15,6 +15,7 @@
     a = add -p
     last = log -1 HEAD --stat
     latest-tag = describe --abbrev=0 --tags
+    fd = "!bash -c \"git commit -t <(echo '[fast-deploy][no-build] ')\""
 [push]
 	autoSetupRemote = true
 
