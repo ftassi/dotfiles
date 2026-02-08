@@ -43,6 +43,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
       end,
     },
     { 'nvim-telescope/telescope-ui-select.nvim' },
+    { 'ftassi/telescope-live-grep-args.nvim', branch = 'feat/toggle-quote-prompt' },
 
     -- Useful for getting pretty icons, but requires a Nerd Font.
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
@@ -98,12 +99,20 @@ return { -- Fuzzy Finder (files, lsp, etc)
         ['ui-select'] = {
           require('telescope.themes').get_dropdown(),
         },
+        live_grep_args = {
+          mappings = {
+            i = {
+              ['<C-k>'] = require('telescope-live-grep-args.actions').toggle_quote_prompt(),
+            },
+          },
+        },
       },
     }
     require('telescope').setup(opts)
     -- Enable Telescope extensions if they are installed
     pcall(require('telescope').load_extension, 'fzf')
     pcall(require('telescope').load_extension, 'ui-select')
+    pcall(require('telescope').load_extension, 'live_grep_args')
 
     require('ftassi.keymaps').telescope()
   end,

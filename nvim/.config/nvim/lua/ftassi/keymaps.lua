@@ -69,12 +69,10 @@ function M.telescope()
   vim.keymap.set('n', '<leader>fh', function()
     builtin.find_files { find_command = { 'rg', '--files', '--hidden', '-g!.git', '--no-ignore-vcs' } }
   end, { desc = '[F]ind [H]idden files even vcs ignored' })
-  vim.keymap.set('n', '<leader>fw', builtin.grep_string, { desc = '[F]ind current [W]ord' })
-  vim.keymap.set('v', '<leader>fg', function()
-    vim.cmd 'normal! "gy'
-    require('telescope.builtin').grep_string { search = vim.fn.getreg 'g' }
-  end, { desc = '[F]ind by [G]rep' })
-  vim.keymap.set('n', '<leader>fg', builtin.live_grep, { desc = '[F]ind by [G]rep' })
+  local lga_shortcuts = require 'telescope-live-grep-args.shortcuts'
+  vim.keymap.set('n', '<leader>fw', lga_shortcuts.grep_word_under_cursor, { desc = '[F]ind current [W]ord' })
+  vim.keymap.set('v', '<leader>fg', lga_shortcuts.grep_visual_selection, { desc = '[F]ind by [G]rep' })
+  vim.keymap.set('n', '<leader>fg', require('telescope').extensions.live_grep_args.live_grep_args, { desc = '[F]ind by [G]rep' })
   vim.keymap.set('n', '<leader>//', builtin.resume, { desc = '[F]ind [R]esume' })
 
   vim.keymap.set('n', '<Tab>', builtin.buffers, { desc = '[ ] Find existing buffers' })
