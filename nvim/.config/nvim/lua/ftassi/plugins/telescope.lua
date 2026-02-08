@@ -103,6 +103,7 @@ return { -- Fuzzy Finder (files, lsp, etc)
           mappings = {
             i = {
               ['<C-k>'] = require('telescope-live-grep-args.actions').toggle_quote_prompt(),
+              ['<C-f>'] = require('telescope.actions').to_fuzzy_refine,
             },
           },
         },
