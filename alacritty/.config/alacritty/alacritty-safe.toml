@@ -1,0 +1,4 @@
+import = ["~/.config/alacritty/alacritty.toml"]
+
+[terminal]
+osc52 = "OnlyCopy"
