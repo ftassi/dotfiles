@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+EMAIL="${1:?Usage: chrome-profile <email> [chrome_args...]}"
+shift || true
+
+BIN="${CHROME_BIN:-google-chrome}"
+USER_DATA_DIR="${CHROME_USER_DATA_DIR:-$HOME/.config/google-chrome}"
+
+# Collect candidate profile dirs
+mapfile -t PROFILES < <(
+  { echo "Default"; ls -1 "$USER_DATA_DIR" | grep -E '^Profile '; } 2>/dev/null
+)
+
+if [[ ${#PROFILES[@]} -eq 0 ]]; then
+  echo "No Chrome profiles found under: $USER_DATA_DIR" >&2
+  exit 2
+fi
+
+# Find matching profile by reading Preferences
+FOUND=""
+for p in "${PROFILES[@]}"; do
+  pref="$USER_DATA_DIR/$p/Preferences"
+  [[ -f "$pref" ]] || continue
+
+  if command -v jq >/dev/null 2>&1; then
+    mail="$(jq -r '.account_info[0].email // empty' "$pref" 2>/dev/null || true)"
+  else
+    mail="$(python3 - "$pref" <<'PY'
+import json,sys
+try:
+  with open(sys.argv[1], 'r', encoding='utf-8') as f:
+    d=json.load(f)
+  print((d.get("account_info") or [{}])[0].get("email",""))
+except Exception:
+  print("")
+PY
+)"
+  fi
+
+  if [[ "$mail" == "$EMAIL" ]]; then
+    FOUND="$p"
+    break
+  fi
+done
+
+if [[ -z "$FOUND" ]]; then
+  echo "No profile matched email: $EMAIL" >&2
+  echo "Checked under: $USER_DATA_DIR" >&2
+  exit 3
+fi
+
+exec "$BIN" --user-data-dir="$USER_DATA_DIR" --profile-directory="$FOUND" "$@"

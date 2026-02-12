@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Chrome (madisoft)
+Exec=sh -lc 'exec "$HOME/.local/bin/chrome-profile" "francesco.tassi@madisoft.it" %U'
+Icon=google-chrome
+Terminal=false
+Categories=Network;WebBrowser;
+StartupNotify=true

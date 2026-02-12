@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=Chrome (ftassi)
+Exec=sh -lc 'exec "$HOME/.local/bin/chrome-profile" "tassi.francesco@gmail.com" %U'
+Icon=google-chrome
+Terminal=false
+Categories=Network;WebBrowser;
+StartupNotify=true
