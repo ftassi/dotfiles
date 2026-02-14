@@ -75,3 +75,40 @@ Code is a liability, not an asset. Every line has cognitive and maintenance cost
 - Prefer patterns that can evolve over premature abstractions
 - Duplication is cheaper than the wrong abstraction
 - Extract when you see the pattern, not when you imagine it
+
+## Activity Context (agent.md)
+
+Each project can have a `.claude/AGENT.md` file that tracks the current
+activity in progress. This enables resuming work across sessions.
+
+### At session start
+- If `.claude/AGENT.md` exists, read it and use the context to understand
+  where the previous session left off
+- Briefly acknowledge the resumed context to the user
+
+### At session end
+- When the user asks to save context (e.g. "salva il contesto",
+  "save context", "aggiorna agent.md"), write or update `.claude/AGENT.md`
+- Do NOT update it automatically — only when explicitly asked
+
+### Format
+```markdown
+# Activity Context
+
+## Current Task
+What is being worked on and why.
+
+## State
+Where things stand right now — what's done, what's in progress.
+
+## Next Steps
+Concrete actions to resume from.
+
+## Decisions
+Key choices made during the session that future sessions should know about.
+```
+
+### Rules
+- Keep it concise — this is a working note, not documentation
+- Overwrite the file each time (it's a snapshot, not a log)
+- The file is gitignored globally — never commit it
