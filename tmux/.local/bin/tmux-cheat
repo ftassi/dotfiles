@@ -1,0 +1,42 @@
+#!/usr/bin/env bash
+cat <<'EOF'
+tmux cheatsheet (custom config)
+═══════════════════════════════
+prefix = Ctrl-b
+
+SESSIONI
+  tmux new -s nome     Nuova sessione
+  tmux a -t nome       Attach
+  tmux ls              Lista sessioni
+  prefix d             Detach
+  prefix s             Lista sessioni (dentro tmux)
+  prefix $             Rinomina sessione
+
+FINESTRE (tab)
+  prefix c             Nuova finestra
+  prefix ,             Rinomina finestra
+  prefix 1-9           Vai a finestra N
+  prefix n / p         Finestra succ / prec
+  prefix .             Sposta finestra (digita posizione)
+  prefix &             Chiudi finestra
+
+PANE
+  prefix |             Split verticale
+  prefix -             Split orizzontale
+  Ctrl-hjkl            Naviga tra pane (no prefix!)
+  prefix x             Chiudi pane
+  prefix z             Zoom toggle (fullscreen)
+  prefix space         Cicla layout
+  prefix Ctrl-frecce   Resize di 1
+  prefix Alt-frecce    Resize di 5
+  :swap-window -t N    Scambia finestra con N
+
+COPY MODE
+  prefix [             Entra in copy mode
+  scroll mouse         Entra in copy mode
+  / ?                  Cerca avanti / indietro
+  v                    Inizia selezione
+  y                    Copia (→ clipboard sistema)
+  q                    Esci
+  Ctrl-Shift-v         Incolla (paste Alacritty)
+EOF
