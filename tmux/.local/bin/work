@@ -14,17 +14,29 @@ if ! tmux has-session -t "$name" 2>/dev/null; then
   tmux select-window -t "$name:code"
 fi
 
-# Find a unique name for the linked session
-view="${name}"
-n=0
-while tmux has-session -t "$view" 2>/dev/null; do
-  n=$((n + 1))
-  view="${name}-${n}"
+# Find a detached linked view to reuse, or create a new one
+view=""
+for s in $(tmux list-sessions -F '#{session_name}:#{session_attached}' 2>/dev/null); do
+  s_name="${s%:*}"
+  s_attached="${s##*:}"
+  if [[ "$s_name" == "$name" || "$s_name" == "$name"-* ]] && [[ "$s_attached" == "0" ]]; then
+    view="$s_name"
+    break
+  fi
 done
 
-if [ -n "${TMUX:-}" ]; then
+if [ -z "$view" ]; then
+  n=0
+  view="$name"
+  while tmux has-session -t "$view" 2>/dev/null; do
+    n=$((n + 1))
+    view="${name}-${n}"
+  done
   tmux new-session -d -s "$view" -t "$name"
+fi
+
+if [ -n "${TMUX:-}" ]; then
   tmux switch-client -t "$view:code"
 else
-  tmux new-session -s "$view" -t "$name" \; select-window -t code
+  tmux attach -t "$view:code"
 fi
