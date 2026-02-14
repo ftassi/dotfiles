@@ -34,7 +34,12 @@ key = "Return"
 mods = "Shift"
 chars = "\u001b\r"
 
-# C-; as explicit CSI u — needed because tmux doesn't support kitty keyboard protocol
+# Ctrl+punctuation needs explicit CSI u sequences for tmux.
+# Ctrl+letter (a-z) maps to ASCII control codes (C-j=10, C-h=8, etc.) and works
+# everywhere. Ctrl+punctuation (; , . /) has no ASCII equivalent — it requires
+# the kitty keyboard protocol, which tmux 3.4 doesn't support.
+# Workaround: Alacritty sends the CSI u sequence directly (\e[<keycode>;5u),
+# tmux forwards it via `extended-keys always` + `terminal-features extkeys`.
 [[keyboard.bindings]]
 key = "Semicolon"
 mods = "Control"
