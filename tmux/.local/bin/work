@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+dir="${1:-$PWD}"
+dir="$(realpath "$dir")"
+name="$(basename "$dir")"
+
+if ! tmux has-session -t "$name" 2>/dev/null; then
+  tmux new-session -d -s "$name" -c "$dir" -n cli
+  tmux new-window -t "$name" -c "$dir" -n claude
+  tmux send-keys -t "$name:claude" "claude" Enter
+  tmux new-window -t "$name" -c "$dir" -n code
+  tmux send-keys -t "$name:code" "nvim" Enter
+  tmux select-window -t "$name:code"
+fi
+
+# Find a unique name for the linked session
+view="${name}"
+n=0
+while tmux has-session -t "$view" 2>/dev/null; do
+  n=$((n + 1))
+  view="${name}-${n}"
+done
+
+if [ -n "${TMUX:-}" ]; then
+  tmux new-session -d -s "$view" -t "$name"
+  tmux switch-client -t "$view:code"
+else
+  tmux new-session -s "$view" -t "$name" \; select-window -t code
+fi
