@@ -33,3 +33,9 @@ osc52 = "CopyPaste"
 key = "Return"
 mods = "Shift"
 chars = "\u001b\r"
+
+# C-; as explicit CSI u — needed because tmux doesn't support kitty keyboard protocol
+[[keyboard.bindings]]
+key = "Semicolon"
+mods = "Control"
+chars = "\u001b[59;5u"
