@@ -2,11 +2,12 @@
 cat <<'EOF'
 tmux cheatsheet (custom config)
 ═══════════════════════════════
-prefix = Ctrl-b
+prefix = Ctrl-Space
 
 SESSIONI
   tmux new -s nome     Nuova sessione
   tmux a -t nome       Attach
+  tmux new -s vis -t nome  Sessione collegata (vista indipendente)
   tmux ls              Lista sessioni
   prefix d             Detach
   prefix s             Lista sessioni (dentro tmux)
@@ -39,4 +40,8 @@ COPY MODE
   y                    Copia (→ clipboard sistema)
   q                    Esci
   Ctrl-Shift-v         Incolla (paste Alacritty)
+
+ALTRO
+  prefix Ctrl-l        Clear screen
+  prefix h             Questo cheatsheet
 EOF
