@@ -12,6 +12,8 @@ SESSIONI
   prefix d             Detach
   prefix s             Lista sessioni (dentro tmux)
   prefix $             Rinomina sessione
+  tmux kill-session -t nome  Chiudi sessione (e viste collegate)
+  tmux kill-server     Chiudi tutto
 
 FINESTRE (tab)
   prefix c             Nuova finestra

@@ -43,7 +43,7 @@ export PATH=$HOME/.cargo/bin:$HOME/opt/bin:$HOME/bin:$HOME/.local/bin:/usr/local
 
 export PROMPT_COMMAND="pwd > /tmp/whereami-$USER"
 precmd() {eval "$PROMPT_COMMAND"}
-[[ -f /tmp/whereami-$USER ]] && cd "$(< /tmp/whereami-$USER)"
+[[ -z "$TMUX" && -f /tmp/whereami-$USER ]] && cd "$(< /tmp/whereami-$USER)"
 
 antigen use oh-my-zsh
 antigen bundle git
