@@ -55,6 +55,10 @@ function M.defaults()
   vim.keymap.set('n', '<A-l>', ':vertical resize +5<CR>', { silent = true })
   --
   -- nnoremap <silent> <C-a> <C-^>
+
+  -- System clipboard: <leader>y as operator, <leader>Y for whole line
+  vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { desc = '[Y]ank to system clipboard' })
+  vim.keymap.set('n', '<leader>Y', '"+yy', { desc = '[Y]ank line to system clipboard' })
 end
 
 function M.telescope()

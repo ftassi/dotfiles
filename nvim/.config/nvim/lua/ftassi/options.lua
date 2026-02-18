@@ -44,7 +44,9 @@ vim.g.clipboard = {
     ['*'] = require('vim.ui.clipboard.osc52').paste '*',
   },
 }
-vim.opt.clipboard = 'unnamedplus'
+-- System clipboard is on the "+ register (use <leader>y to yank to it).
+-- Ctrl+Shift+V to paste from system clipboard.
+-- Deliberately NOT using 'unnamedplus' to keep vim registers separate.
 
 -- Enable break indent
 vim.opt.breakindent = true
