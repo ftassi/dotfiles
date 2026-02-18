@@ -9,5 +9,7 @@ wm.client.focused.color.child_border: #990033
 wm.window.border.size: 3
 !regolith.wallpaper.file: /usr/share/backgrounds/Fuwafuwa_nanbatto_san_by_amaral-light.png
 !regolith.lockscreen.wallpaper.file: /usr/share/backgrounds/Fuwafuwa_nanbatto_san_by_amaral-light.png
+wm.binding.lock: Shift+Escape
+
 regolith.wallpaper.file: /usr/share/backgrounds/ubuntu-wallpaper-d.png
 regolith.lockscreen.wallpaper.file: /usr/share/backgrounds/ubuntu-wallpaper-d.png
