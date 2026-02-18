@@ -19,6 +19,7 @@ FINESTRE (tab)
   prefix c             Nuova finestra
   prefix ,             Rinomina finestra
   prefix 1-9           Vai a finestra N
+  Alt-Shift-H/L        Finestra prec / succ (no prefix!)
   prefix n / p         Finestra succ / prec
   prefix .             Sposta finestra (digita posizione)
   prefix &             Chiudi finestra
