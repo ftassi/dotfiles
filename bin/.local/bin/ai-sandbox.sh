@@ -190,10 +190,14 @@ collect_clean_env() {
     done
 }
 
-# ── Docker socket proxy ────────────────────────────────────────────────────
-# TODO: start tecnativa/docker-socket-proxy with only CONTAINERS + EXEC
-#       exposed so the agent can run docker exec without accessing the full
-#       socket. Skipped for now — implement when firejail layer is stable.
+# ── Docker socket ──────────────────────────────────────────────────────────
+# The Docker socket is intentionally left unrestricted.
+#
+# Threat model: accidental exfiltration by trusted tools (Claude Code, Codex),
+# not a malicious agent. A docker-socket-proxy would add complexity without
+# meaningful protection against distraction-driven leaks. An agent that
+# deliberately mounts sensitive paths via Docker is already outside the
+# threat model this sandbox addresses.
 
 # ── Linux strategy: firejail ───────────────────────────────────────────────
 
