@@ -105,16 +105,18 @@ Il sandbox costruisce la blacklist esplicitamente per avere
 controllo totale su cosa viene bloccato. I profili di sistema
 (es. `default.profile`) non vengono caricati.
 
-Nota: firejail non può bloccare singoli **file** dentro `$HOME`,
-solo directory. Questa è una limitazione nota della versione
-attuale (0.9.72). I test usano `should_warn` per i casi ambigui.
+Nota: firejail blocca sia file che directory via bind mount. Per i file,
+`--blacklist` rende il contenuto inaccessibile (`cat` fallisce con
+"Permission denied"), ma `ls file` usa `stat` e rimane accessibile.
+I test usano `cat` per i file e `ls` per le directory per verificare
+l'accesso al contenuto, non la sola presenza del path.
 
 ## Compromessi accettati
 
 | Gap | Motivazione |
 |-----|-------------|
 | Docker socket non protetto | Complessità sproporzionata al rischio nel threat model |
-| File singoli in `$HOME` non blacklistabili | Limitazione firejail; bloccare le directory parent è sufficiente per i secrets noti |
+| `ls file` passa anche su file blacklistati | Firejail blocca la lettura del contenuto; `ls` usa solo `stat`. Per i secrets il contenuto è protetto, non la presenza del path |
 | `~/.config` non bloccata | Troppo ampia; i secrets reali sotto `~/.config` (gcloud, ecc.) vanno aggiunti esplicitamente |
 | macOS non implementato | Stub documentato; richiede un'immagine Docker con i tool pre-installati |
 | Rete non ristretta | L'esfiltrazione via rete è fuori dal threat model dichiarato |

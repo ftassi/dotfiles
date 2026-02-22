@@ -40,6 +40,17 @@ GLOBAL_BLACKLIST=(
     "$HOME/.composer"
 )
 
+# ── Global project-level blacklist (patterns) ─────────────────────────────
+# Relative patterns blocked in every project, even if the file is tracked.
+# Matched against `git ls-files` output (committed files only).
+# Can be overridden by AI_SANDBOX_ALLOW_PATHS in .ai-sandbox.
+GLOBAL_PROJECT_BLACKLIST=(
+    ".envrc"      # direnv — often tracked but may contain secrets
+    "**/.envrc"
+    ".env"        # fallback env file — frequently contains secrets
+    "**/.env"
+)
+
 # ── Global tool directory allowlist ────────────────────────────────────────
 # Project-level directories that AI tools need to function correctly, even
 # when gitignored. These override the dynamic blacklist (gitignored files).
@@ -119,18 +130,24 @@ load_project_config() {
 #   2. AI_SANDBOX_ALLOW_PATHS — project-level config (.ai-sandbox)
 # Patterns are relative to git_root; glob syntax is supported.
 # A directory pattern (e.g. target/) also allows everything beneath it.
+#
+# project_dir (optional, defaults to git_root): also checked as base for
+# GLOBAL_TOOL_ALLOWLIST, so tool dirs in a subdirectory project are rescued.
 is_path_allowed() {
-    local path="$1" git_root="$2"
-    local allow abs_allow
+    local path="$1" git_root="$2" project_dir="${3:-$2}"
+    local allow abs_allow base
 
     shopt -s globstar 2>/dev/null || true
 
-    # Global tool allowlist (checked first, no project config needed)
+    # Global tool allowlist — checked against both git_root and project_dir
+    # so that tool dirs in a monorepo subdirectory are correctly rescued.
     for allow in "${GLOBAL_TOOL_ALLOWLIST[@]}"; do
-        [[ "$allow" == /* ]] \
-            && abs_allow="${allow%/}" \
-            || abs_allow="$git_root/${allow%/}"
-        [[ "$path" == $abs_allow || "$path" == "$abs_allow/"* ]] && return 0
+        for base in "$git_root" "$project_dir"; do
+            [[ "$allow" == /* ]] \
+                && abs_allow="${allow%/}" \
+                || abs_allow="$base/${allow%/}"
+            [[ "$path" == $abs_allow || "$path" == "$abs_allow/"* ]] && return 0
+        done
     done
 
     # Project-level allowlist from .ai-sandbox
@@ -149,9 +166,10 @@ is_path_allowed() {
 }
 
 # ── Project blacklist (dynamic) ────────────────────────────────────────────
-# Combines two sources:
+# Combines three sources:
 #   a) gitignored untracked files/dirs  (git ls-files --ignored)
 #   b) git-crypt encrypted files        (git crypt status)
+#   c) GLOBAL_PROJECT_BLACKLIST patterns (matched against tracked files)
 #
 # Prints absolute paths, one per line.
 build_project_blacklist() {
@@ -162,12 +180,13 @@ build_project_blacklist() {
     local git_root
     git_root="$(git -C "$project_dir" rev-parse --show-toplevel)"
 
-    # a) gitignored files/directories
+    # a) gitignored files/directories — run from git_root so relative paths
+    #    are always rooted there, even when project_dir is a subdirectory.
     while IFS= read -r rel; do
         [[ -n "$rel" ]] || continue
         echo "$git_root/${rel%/}"   # strip trailing / git adds for dirs
     done < <(
-        git -C "$project_dir" \
+        git -C "$git_root" \
             ls-files --ignored --exclude-standard -o --directory \
             2>/dev/null
     )
@@ -178,10 +197,21 @@ build_project_blacklist() {
             [[ -n "$rel" ]] || continue
             echo "$git_root/$rel"
         done < <(
-            git -C "$project_dir" crypt status 2>/dev/null \
+            git -C "$git_root" crypt status 2>/dev/null \
                 | awk '/^ *encrypted: / { print $2 }'
         )
     fi
+
+    # c) Global project-level patterns — blocked even if tracked
+    local pattern
+    for pattern in "${GLOBAL_PROJECT_BLACKLIST[@]}"; do
+        while IFS= read -r rel; do
+            [[ -n "$rel" ]] || continue
+            echo "$git_root/$rel"
+        done < <(
+            git -C "$git_root" ls-files -- "$pattern" 2>/dev/null
+        )
+    done
 }
 
 # ── Environment ────────────────────────────────────────────────────────────
@@ -242,7 +272,7 @@ run_firejail() {
     local allowed_count=0 blocked_count=0
     while IFS= read -r path; do
         [[ -n "$path" ]] || continue
-        if [[ -n "$git_root" ]] && is_path_allowed "$path" "$git_root"; then
+        if [[ -n "$git_root" ]] && is_path_allowed "$path" "$git_root" "$project_dir"; then
             (( allowed_count++ )) || true
         else
             blacklist_args+=("--blacklist=$path")
@@ -258,6 +288,7 @@ run_firejail() {
     done
 
     log "Blacklist: ${#GLOBAL_BLACKLIST[@]} global" \
+        "+ ${#GLOBAL_PROJECT_BLACKLIST[@]} pattern(s)" \
         "+ ${blocked_count} project" \
         "(${allowed_count} skipped: ${#GLOBAL_TOOL_ALLOWLIST[@]} tool dirs + project config)"
 
@@ -269,19 +300,21 @@ run_firejail() {
 
     log "Launching: ${cmd[*]}"
 
-    # env -i clears the environment; firejail then applies filesystem sandbox.
+    # firejail runs with the full environment so it can set up bind mounts
+    # and blacklists correctly. env -i runs INSIDE firejail to clear the
+    # environment for the AI tool only, after the sandbox is fully set up.
     # --noprofile: start from scratch, no default seccomp/caps profiles.
     # Hardware flags: restrict unnecessary device access.
-    "${env_cmd[@]}" \
-        firejail \
-            --noprofile \
-            --no3d \
-            --nodvd \
-            --nosound \
-            --noautopulse \
-            "${blacklist_args[@]}" \
-            -- \
-            "${cmd[@]}"
+    firejail \
+        --noprofile \
+        --no3d \
+        --nodvd \
+        --nosound \
+        --noautopulse \
+        "${blacklist_args[@]}" \
+        -- \
+        "${env_cmd[@]}" \
+        "${cmd[@]}"
 }
 
 # ── macOS strategy: docker run ─────────────────────────────────────────────
@@ -313,6 +346,54 @@ run_docker() {
         "${env_flags[@]}" \
         "$image" \
         "${cmd[@]}"
+}
+
+# ── Debug: print the resolved blacklist ───────────────────────────────────
+
+cmd_debug() {
+    local project_dir="${1:-.}"
+    project_dir="$(realpath "$project_dir")"
+
+    [[ -d "$project_dir" ]] || die "Not a directory: $project_dir"
+
+    load_project_config "$project_dir"
+
+    local git_root=""
+    git -C "$project_dir" rev-parse --git-dir >/dev/null 2>&1 \
+        && git_root="$(git -C "$project_dir" rev-parse --show-toplevel)"
+
+    echo "=== Global blacklist (static) ==="
+    local path
+    for path in "${GLOBAL_BLACKLIST[@]}"; do
+        echo "  BLOCKED  $path"
+    done
+
+    echo ""
+    echo "=== Project dynamic blacklist ==="
+    if [[ -z "$git_root" ]]; then
+        echo "  (not a git repo)"
+    else
+        while IFS= read -r path; do
+            [[ -n "$path" ]] || continue
+            if is_path_allowed "$path" "$git_root" "$project_dir"; then
+                echo "  ALLOWED  $path"
+            else
+                echo "  BLOCKED  $path"
+            fi
+        done < <(build_project_blacklist "$project_dir")
+    fi
+
+    echo ""
+    echo "=== Explicit extra blocks (AI_SANDBOX_BLOCK_PATHS) ==="
+    if [[ "${#AI_SANDBOX_BLOCK_PATHS[@]}" -eq 0 ]]; then
+        echo "  (none)"
+    else
+        local rel
+        for rel in "${AI_SANDBOX_BLOCK_PATHS[@]+${AI_SANDBOX_BLOCK_PATHS[@]}}"; do
+            [[ "$rel" == /* ]] && path="$rel" || path="${git_root:-$project_dir}/$rel"
+            echo "  BLOCKED  $path"
+        done
+    fi
 }
 
 # ── Init: generate .ai-sandbox template ───────────────────────────────────
@@ -391,10 +472,14 @@ usage() {
     cat >&2 <<EOF
 Usage:
   $(basename "$0") <project-dir> <command> [args...]
-  $(basename "$0") init [project-dir]
+  $(basename "$0") init  [project-dir]
+  $(basename "$0") debug [project-dir]
 
 Commands:
   init   Generate a commented .ai-sandbox config in the project git root.
+         Defaults to current directory if project-dir is omitted.
+  debug  Print the resolved blacklist for a project directory without
+         launching a sandbox. Useful to verify what would be blocked.
          Defaults to current directory if project-dir is omitted.
 
 Sandboxes an AI tool with filesystem blacklisting and a clean environment.
@@ -404,6 +489,7 @@ Examples:
   $(basename "$0") ~/myproject claude
   $(basename "$0") . codex --model gpt-4o
   $(basename "$0") init ~/myproject
+  $(basename "$0") debug ~/myproject
 
 Environment:
   AI_SANDBOX_IMAGE   Docker image to use on macOS (default: ai-sandbox)
@@ -414,9 +500,14 @@ EOF
 main() {
     [[ $# -ge 1 ]] || usage
 
-    # Subcommand: init
+    # Subcommands: init, debug
     if [[ "$1" == "init" ]]; then
         cmd_init "${2:-}"
+        return
+    fi
+
+    if [[ "$1" == "debug" ]]; then
+        cmd_debug "${2:-}"
         return
     fi
 
