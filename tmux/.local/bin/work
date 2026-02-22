@@ -8,7 +8,7 @@ name="$(basename "$dir")"
 if ! tmux has-session -t "$name" 2>/dev/null; then
   tmux new-session -d -s "$name" -c "$dir" -n cli
   tmux new-window -t "$name" -c "$dir" -n claude
-  tmux send-keys -t "$name:claude" "claude" Enter
+  tmux send-keys -t "$name:claude" "ai-sandbox.sh '$dir' claude" Enter
   tmux new-window -t "$name" -c "$dir" -n code
   tmux send-keys -t "$name:code" "nvim" Enter
   tmux select-window -t "$name:code"
