@@ -29,17 +29,26 @@ set -euo pipefail
 
 # ── Global blacklist (static) ──────────────────────────────────────────────
 # Always blocked regardless of project. Cannot be overridden by .ai-sandbox.
-# NOTE: ~/.config is intentionally broad — it may break some tool configs.
-#       If an AI tool fails to start, comment ~/.config and add targeted
-#       entries instead (e.g. ~/.config/gcloud, ~/.config/github-copilot).
-#       "Matures over time" — adjust as you learn what actually breaks.
+# ~/.config is intentionally NOT listed here: most entries are tool configs
+# with no secrets (gh, codex, nvim, …). Add targeted entries if needed,
+# e.g. "$HOME/.config/gcloud" or "$HOME/.config/github-copilot".
 GLOBAL_BLACKLIST=(
     "$HOME/.aws"
     "$HOME/.ssh"
     "$HOME/.gnupg"
     "$HOME/.docker"
     "$HOME/.composer"
-    "$HOME/.config"
+)
+
+# ── Global tool directory allowlist ────────────────────────────────────────
+# Project-level directories that AI tools need to function correctly, even
+# when gitignored. These override the dynamic blacklist (gitignored files).
+# Paths are relative to the project git root.
+GLOBAL_TOOL_ALLOWLIST=(
+    ".claude"    # Claude Code — project settings, AGENT.md
+    ".codex"     # OpenAI Codex CLI — project config
+    ".aider"     # Aider — conversation history, config
+    ".continue"  # Continue.dev — context, config
 )
 
 # ── Environment whitelist ──────────────────────────────────────────────────
@@ -105,18 +114,27 @@ load_project_config() {
     source "$config"
 }
 
-# Returns 0 if the absolute path matches any entry in AI_SANDBOX_ALLOW_PATHS.
-# Patterns in ALLOW_PATHS are relative to git_root; glob syntax is supported.
+# Returns 0 if the absolute path is allowed by either:
+#   1. GLOBAL_TOOL_ALLOWLIST — hardcoded AI tool dirs (always allowed)
+#   2. AI_SANDBOX_ALLOW_PATHS — project-level config (.ai-sandbox)
+# Patterns are relative to git_root; glob syntax is supported.
 # A directory pattern (e.g. target/) also allows everything beneath it.
 is_path_allowed() {
     local path="$1" git_root="$2"
     local allow abs_allow
 
-    [[ ${#AI_SANDBOX_ALLOW_PATHS[@]} -eq 0 ]] && return 1
-
     shopt -s globstar 2>/dev/null || true
 
-    for allow in "${AI_SANDBOX_ALLOW_PATHS[@]}"; do
+    # Global tool allowlist (checked first, no project config needed)
+    for allow in "${GLOBAL_TOOL_ALLOWLIST[@]}"; do
+        [[ "$allow" == /* ]] \
+            && abs_allow="${allow%/}" \
+            || abs_allow="$git_root/${allow%/}"
+        [[ "$path" == $abs_allow || "$path" == "$abs_allow/"* ]] && return 0
+    done
+
+    # Project-level allowlist from .ai-sandbox
+    for allow in "${AI_SANDBOX_ALLOW_PATHS[@]+${AI_SANDBOX_ALLOW_PATHS[@]}}"; do
         [[ "$allow" == /* ]] \
             && abs_allow="${allow%/}" \
             || abs_allow="$git_root/${allow%/}"
@@ -240,7 +258,8 @@ run_firejail() {
     done
 
     log "Blacklist: ${#GLOBAL_BLACKLIST[@]} global" \
-        "+ ${blocked_count} project (${allowed_count} allowed by config)"
+        "+ ${blocked_count} project" \
+        "(${allowed_count} skipped: ${#GLOBAL_TOOL_ALLOWLIST[@]} tool dirs + project config)"
 
     # ── Build clean environment ──────────────────────────────────────────
     local -a env_cmd=("env" "-i")
