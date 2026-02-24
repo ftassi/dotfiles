@@ -216,33 +216,63 @@ run_firejail() {
     git -C "$project_dir" rev-parse --git-dir >/dev/null 2>&1 \
         && git_root="$(git -C "$project_dir" rev-parse --show-toplevel)"
 
-    # ── Build blacklist ──────────────────────────────────────────────────
-    local -a blacklist_args=()
-    local path
+    # ── Build firejail profile file ──────────────────────────────────────
+    # Writing to a profile file avoids ARG_MAX and firejail's own limit on
+    # the number of --blacklist= command-line arguments (hit on projects with
+    # many gitignored files such as PHP vendor/ trees).
+    # --profile=file also suppresses the default profile, like --noprofile.
+    local tmp_profile
+    tmp_profile="$(mktemp /tmp/ai-sandbox-XXXXXX.profile)"
+    # shellcheck disable=SC2064
+    trap "rm -f '$tmp_profile'" EXIT
 
-    # Global layer (never filtered by ALLOW_PATHS)
-    for path in "${GLOBAL_BLACKLIST[@]}"; do
-        blacklist_args+=("--blacklist=$path")
-    done
+    {
+        # Hardware restrictions
+        echo "no3d"
+        echo "nodvd"
+        echo "nosound"
+        echo "noautopulse"
 
-    # Project dynamic layer (gitignored + git-crypt), filtered by ALLOW_PATHS
-    local allowed_count=0 blocked_count=0
-    while IFS= read -r path; do
-        [[ -n "$path" ]] || continue
-        if [[ -n "$git_root" ]] && is_path_allowed "$path" "$git_root" "$project_dir"; then
-            (( allowed_count++ )) || true
-        else
-            blacklist_args+=("--blacklist=$path")
-            (( blocked_count++ )) || true
-        fi
-    done < <(build_project_blacklist "$project_dir")
+        # Global layer (never filtered by ALLOW_PATHS)
+        local path
+        for path in "${GLOBAL_BLACKLIST[@]}"; do
+            echo "blacklist $path"
+        done
 
-    # Project explicit extra blocks
-    local rel
-    for rel in "${AI_SANDBOX_BLOCK_PATHS[@]+"${AI_SANDBOX_BLOCK_PATHS[@]}"}"; do
-        [[ "$rel" == /* ]] && path="$rel" || path="$git_root/$rel"
-        blacklist_args+=("--blacklist=$path")
-    done
+        # Project dynamic layer (gitignored + git-crypt), filtered by
+        # ALLOW_PATHS, then sorted and prefix-deduplicated.
+        # Sorting + prefix-dedup collapses children of already-blocked
+        # parent dirs (firejail blacklists recursively), reducing the total
+        # number of profile entries on projects with many scattered files.
+        local allowed_count=0 blocked_count=0
+        local -a pending=()
+        while IFS= read -r path; do
+            [[ -n "$path" ]] || continue
+            if [[ -n "$git_root" ]] && is_path_allowed "$path" "$git_root" "$project_dir"; then
+                (( allowed_count++ )) || true
+            else
+                pending+=("$path")
+                (( blocked_count++ )) || true
+            fi
+        done < <(build_project_blacklist "$project_dir")
+
+        # Project explicit extra blocks
+        local rel
+        for rel in "${AI_SANDBOX_BLOCK_PATHS[@]+"${AI_SANDBOX_BLOCK_PATHS[@]}"}"; do
+            [[ "$rel" == /* ]] && path="$rel" || path="$git_root/$rel"
+            pending+=("$path")
+        done
+
+        # Sort and emit, skipping paths already covered by a parent entry.
+        local prev=""
+        while IFS= read -r path; do
+            if [[ -z "$prev" || "$path" != "$prev/"* ]]; then
+                echo "blacklist $path"
+                prev="$path"
+            fi
+        done < <(printf '%s\n' "${pending[@]+"${pending[@]}"}" | sort)
+
+    } > "$tmp_profile"
 
     log "Blacklist: ${#GLOBAL_BLACKLIST[@]} global" \
         "+ ${#GLOBAL_PROJECT_BLACKLIST[@]} pattern(s)" \
@@ -253,15 +283,8 @@ run_firejail() {
 
     # The full shell environment is inherited unchanged — the agent must
     # be able to impersonate the user (SSH, AWS CLI, direnv vars, etc.).
-    # --noprofile: start from scratch, no default seccomp/caps profiles.
-    # Hardware flags: restrict unnecessary device access.
     firejail \
-        --noprofile \
-        --no3d \
-        --nodvd \
-        --nosound \
-        --noautopulse \
-        "${blacklist_args[@]}" \
+        --profile="$tmp_profile" \
         -- \
         "${cmd[@]}"
 }
