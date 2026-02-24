@@ -41,15 +41,54 @@ set -euo pipefail
 # "$HOME/.config/gcloud" or "$HOME/.config/github-copilot".
 GLOBAL_BLACKLIST=()
 
-# ── Global project-level blacklist (patterns) ─────────────────────────────
-# Relative patterns blocked in every project, even if the file is tracked.
-# Matched against `git ls-files` output (committed files only).
+# ── Global project-level blacklist (secret file patterns) ──────────────────
+# Secret-file name patterns blocked in every project.
+# Matched against both tracked files (accidentally committed) and
+# untracked gitignored files (properly gitignored secrets).
+#
+# Intentionally NOT "all gitignored files": vendor/, node_modules/, logs,
+# and other build artifacts remain accessible to the agent.
+#
+# Both root-level and **/ variants are listed for git pathspec compatibility.
 # Can be overridden by AI_SANDBOX_ALLOW_PATHS in .ai-sandbox.
 GLOBAL_PROJECT_BLACKLIST=(
-    ".envrc"      # direnv — often tracked but may contain secrets
-    "**/.envrc"
-    ".env"        # fallback env file — frequently contains secrets
-    "**/.env"
+    # ── Environment / direnv ────────────────────────────────────────────────
+    ".env"                  "**/.env"
+    ".env.local"            "**/.env.local"
+    ".env.production"       "**/.env.production"
+    ".env.staging"          "**/.env.staging"
+    ".env.*.local"          "**/.env.*.local"
+    ".envrc"                "**/.envrc"
+
+    # ── Private keys and certificates ───────────────────────────────────────
+    "*.pem"                 "**/*.pem"
+    "*.key"                 "**/*.key"
+    "*.p12"                 "**/*.p12"
+    "*.pfx"                 "**/*.pfx"
+    "*.der"                 "**/*.der"
+    "*.jks"                 "**/*.jks"         # Java keystores
+
+    # ── Cloud / infrastructure ───────────────────────────────────────────────
+    "credentials.json"      "**/credentials.json"
+    "service-account.json"  "**/service-account.json"
+    "terraform.tfvars"      "**/terraform.tfvars"
+    "*.tfvars"              "**/*.tfvars"
+
+    # ── Generic secret file names ────────────────────────────────────────────
+    "secrets.yml"           "**/secrets.yml"
+    "secrets.json"          "**/secrets.json"
+    ".secrets"              "**/.secrets"
+    "*.vault"               "**/*.vault"       # Ansible Vault encrypted files
+
+    # ── Framework-specific ───────────────────────────────────────────────────
+    "config/master.key"                        # Rails 5.2+ credentials key
+    "config/secrets.yml"                       # Rails 4.x secrets
+    "parameters.yml"        "**/parameters.yml" # Symfony 2/3 local parameters
+    "parameters.php"        "**/parameters.php" # Symfony 2/3 alt format
+    "auth.json"             "**/auth.json"     # Composer / npm token store
+    ".netrc"                "**/.netrc"        # curl / git credential helper
+    ".htpasswd"             "**/.htpasswd"     # HTTP basic auth
+    "wp-config.php"         "**/wp-config.php" # WordPress DB credentials
 )
 
 # ── Global tool directory allowlist ────────────────────────────────────────
@@ -147,10 +186,14 @@ is_path_allowed() {
 }
 
 # ── Project blacklist (dynamic) ────────────────────────────────────────────
-# Combines three sources:
-#   a) gitignored untracked files/dirs  (git ls-files --ignored)
-#   b) git-crypt encrypted files        (git crypt status)
-#   c) GLOBAL_PROJECT_BLACKLIST patterns (matched against tracked files)
+# Combines two sources:
+#   a) git-crypt encrypted files  (git crypt status)
+#   b) GLOBAL_PROJECT_BLACKLIST   (secret file-name patterns, see above)
+#
+# Gitignored files are NOT blocked wholesale. Only files whose names match
+# known secret-file patterns are blocked — whether tracked (accidentally
+# committed) or untracked gitignored (properly gitignored secrets).
+# Build artifacts, dependencies, and logs remain accessible.
 #
 # Prints absolute paths, one per line.
 build_project_blacklist() {
@@ -161,19 +204,11 @@ build_project_blacklist() {
     local git_root
     git_root="$(git -C "$project_dir" rev-parse --show-toplevel)"
 
-    # a) gitignored files/directories — run from git_root so relative paths
-    #    are always rooted there, even when project_dir is a subdirectory.
-    while IFS= read -r rel; do
-        [[ -n "$rel" ]] || continue
-        echo "$git_root/${rel%/}"   # strip trailing / git adds for dirs
-    done < <(
-        git -C "$git_root" \
-            ls-files --ignored --exclude-standard -o --directory \
-            2>/dev/null
-    )
-
-    # b) git-crypt encrypted files
-    if command -v git-crypt >/dev/null 2>&1; then
+    # a) git-crypt encrypted files.
+    #    git crypt status is O(tracked files) and very slow on large repos.
+    #    Guard with .git-crypt/ presence: git crypt init creates this directory,
+    #    so its absence means the repo does not use git-crypt.
+    if command -v git-crypt >/dev/null 2>&1 && [[ -d "$git_root/.git-crypt" ]]; then
         while IFS= read -r rel; do
             [[ -n "$rel" ]] || continue
             echo "$git_root/$rel"
@@ -183,16 +218,45 @@ build_project_blacklist() {
         )
     fi
 
-    # c) Global project-level patterns — blocked even if tracked
-    local pattern
-    for pattern in "${GLOBAL_PROJECT_BLACKLIST[@]}"; do
-        while IFS= read -r rel; do
-            [[ -n "$rel" ]] || continue
-            echo "$git_root/$rel"
-        done < <(
-            git -C "$git_root" ls-files -- "$pattern" 2>/dev/null
-        )
-    done
+    # b) Tracked files matching secret patterns — fast index lookup.
+    while IFS= read -r rel; do
+        [[ -n "$rel" ]] || continue
+        echo "$git_root/$rel"
+    done < <(
+        git -C "$git_root" ls-files \
+            -- "${GLOBAL_PROJECT_BLACKLIST[@]}" 2>/dev/null
+    )
+
+    # c) Untracked gitignored secret files.
+    #    --directory prevents git from recursing into entirely-gitignored dirs
+    #    (vendor/, node_modules/ → single entry, not traversed).
+    #    NOTE: git ls-files --ignored -o does NOT honour pathspec as a filter
+    #    for individual files — it returns all gitignored content regardless.
+    #    We post-filter by basename in bash instead.
+    while IFS= read -r rel; do
+        [[ -n "$rel" ]] || continue
+        local base="${rel##*/}"
+        case "$base" in
+            # Environment / direnv
+            .env|.env.local|.env.production|.env.staging|.envrc) ;;
+            .env.*.local) ;;
+            # Keys and certificates
+            *.pem|*.key|*.p12|*.pfx|*.der|*.jks) ;;
+            # Cloud / infrastructure
+            credentials.json|service-account.json) ;;
+            terraform.tfvars|*.tfvars) ;;
+            # Generic secret names
+            secrets.yml|secrets.json|.secrets|*.vault) ;;
+            # Framework-specific
+            master.key|auth.json|.netrc|.htpasswd|wp-config.php) ;;
+            # No match — skip (UUID files, .phpunit.cache, etc.)
+            *) continue ;;
+        esac
+        echo "$git_root/${rel%/}"
+    done < <(
+        git -C "$git_root" ls-files --ignored --exclude-standard -o --directory \
+            2>/dev/null
+    )
 }
 
 # ── Docker socket ──────────────────────────────────────────────────────────
