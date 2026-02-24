@@ -310,15 +310,9 @@ should_allow() {
     fi
 }
 
-echo "=== Global blacklist ==="
-should_block "~/.ssh/"              "\$HOME/.ssh"
-should_block "~/.aws/"              "\$HOME/.aws"
-should_block "~/.gnupg/"            "\$HOME/.gnupg"
-should_block "~/.docker/"           "\$HOME/.docker"
-should_block "~/.composer/"         "\$HOME/.composer"
-
-echo ""
-echo "=== Accessible (~/.config — not in blacklist) ==="
+echo "=== Credential dirs (not blocked — agent must impersonate user) ==="
+should_allow "~/.ssh/"              "\$HOME/.ssh"
+should_allow "~/.aws/"              "\$HOME/.aws"
 should_allow "~/.config/"           "\$HOME/.config"
 
 echo ""

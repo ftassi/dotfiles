@@ -29,16 +29,17 @@ set -euo pipefail
 
 # ── Global blacklist (static) ──────────────────────────────────────────────
 # Always blocked regardless of project. Cannot be overridden by .ai-sandbox.
-# ~/.config is intentionally NOT listed here: most entries are tool configs
-# with no secrets (gh, codex, nvim, …). Add targeted entries if needed,
-# e.g. "$HOME/.config/gcloud" or "$HOME/.config/github-copilot".
-GLOBAL_BLACKLIST=(
-    "$HOME/.aws"
-    "$HOME/.ssh"
-    "$HOME/.gnupg"
-    "$HOME/.docker"
-    "$HOME/.composer"
-)
+#
+# Credential directories (~/.ssh, ~/.aws, ~/.docker, …) are intentionally NOT
+# listed here: the agent needs to operate with the user's identity (git push,
+# gh CLI, AWS CLI, docker pull). Blocking them prevents the agent from doing
+# useful work without meaningfully reducing accidental-exfiltration risk for
+# trusted tools.
+#
+# ~/.config is also excluded: most entries are tool configs with no secrets
+# (gh, codex, nvim, …). Add targeted entries if needed, e.g.
+# "$HOME/.config/gcloud" or "$HOME/.config/github-copilot".
+GLOBAL_BLACKLIST=()
 
 # ── Global project-level blacklist (patterns) ─────────────────────────────
 # Relative patterns blocked in every project, even if the file is tracked.
@@ -62,30 +63,10 @@ GLOBAL_TOOL_ALLOWLIST=(
     ".continue"  # Continue.dev — context, config
 )
 
-# ── Environment whitelist ──────────────────────────────────────────────────
-# Only these variables survive into the sandboxed process.
-# AWS_*, GITHUB_TOKEN, DATABASE_URL and similar are stripped by design.
-ENV_WHITELIST=(
-    PATH
-    HOME
-    LANG
-    LC_ALL
-    TERM
-    TERM_PROGRAM
-    COLORTERM
-    USER
-    LOGNAME
-    SHELL
-    XDG_RUNTIME_DIR
-    TMPDIR
-)
-
 # ── Project config defaults ────────────────────────────────────────────────
 # Overridden by .ai-sandbox in the project git root.
 AI_SANDBOX_ALLOW_PATHS=()
 AI_SANDBOX_BLOCK_PATHS=()
-AI_SANDBOX_ALLOW_ENV=()
-AI_SANDBOX_BLOCK_ENV=()
 
 # ── Helpers ────────────────────────────────────────────────────────────────
 
@@ -108,7 +89,7 @@ require_cmd() {
 # ── Project config (.ai-sandbox) ──────────────────────────────────────────
 
 # Loads .ai-sandbox from the git root of project_dir, if present.
-# Sets AI_SANDBOX_{ALLOW,BLOCK}_{PATHS,ENV} globals.
+# Sets AI_SANDBOX_{ALLOW,BLOCK}_PATHS globals.
 load_project_config() {
     local project_dir="$1"
 
@@ -214,30 +195,6 @@ build_project_blacklist() {
     done
 }
 
-# ── Environment ────────────────────────────────────────────────────────────
-# Prints "KEY=VALUE" lines applying whitelist + project overrides.
-collect_clean_env() {
-    local var
-
-    # Global whitelist
-    for var in "${ENV_WHITELIST[@]}"; do
-        # Skip if explicitly blocked by project config
-        local blocked=false
-        local b
-        for b in "${AI_SANDBOX_BLOCK_ENV[@]+"${AI_SANDBOX_BLOCK_ENV[@]}"}"; do
-            [[ "$var" == "$b" ]] && { blocked=true; break; }
-        done
-        $blocked && continue
-
-        [[ -n "${!var+x}" ]] && printf '%s=%s\n' "$var" "${!var}"
-    done
-
-    # Project-level additions
-    for var in "${AI_SANDBOX_ALLOW_ENV[@]+"${AI_SANDBOX_ALLOW_ENV[@]}"}"; do
-        [[ -n "${!var+x}" ]] && printf '%s=%s\n' "$var" "${!var}"
-    done
-}
-
 # ── Docker socket ──────────────────────────────────────────────────────────
 # The Docker socket is intentionally left unrestricted.
 #
@@ -292,17 +249,10 @@ run_firejail() {
         "+ ${blocked_count} project" \
         "(${allowed_count} skipped: ${#GLOBAL_TOOL_ALLOWLIST[@]} tool dirs + project config)"
 
-    # ── Build clean environment ──────────────────────────────────────────
-    local -a env_cmd=("env" "-i")
-    while IFS= read -r pair; do
-        [[ -n "$pair" ]] && env_cmd+=("$pair")
-    done < <(collect_clean_env)
-
     log "Launching: ${cmd[*]}"
 
-    # firejail runs with the full environment so it can set up bind mounts
-    # and blacklists correctly. env -i runs INSIDE firejail to clear the
-    # environment for the AI tool only, after the sandbox is fully set up.
+    # The full shell environment is inherited unchanged — the agent must
+    # be able to impersonate the user (SSH, AWS CLI, direnv vars, etc.).
     # --noprofile: start from scratch, no default seccomp/caps profiles.
     # Hardware flags: restrict unnecessary device access.
     firejail \
@@ -313,7 +263,6 @@ run_firejail() {
         --noautopulse \
         "${blacklist_args[@]}" \
         -- \
-        "${env_cmd[@]}" \
         "${cmd[@]}"
 }
 
@@ -333,17 +282,13 @@ run_docker() {
 
     local image="${AI_SANDBOX_IMAGE:-ai-sandbox}"
 
-    local -a env_flags=()
-    while IFS= read -r pair; do
-        [[ -n "$pair" ]] && env_flags+=("-e" "$pair")
-    done < <(collect_clean_env)
-
     log "Launching in docker image '$image'"
 
+    # Pass the full current environment so the agent can impersonate the user.
     docker run --rm -it \
         -v "$project_dir:$project_dir:rw" \
         -w "$project_dir" \
-        "${env_flags[@]}" \
+        --env-file <(env) \
         "$image" \
         "${cmd[@]}"
 }
@@ -446,20 +391,6 @@ cmd_init() {
 #    "**/*.pem"
 #)
 
-# ── Extra env vars to pass through to the agent ───────────────────────────
-# Extend the global whitelist for project-specific variables that are safe.
-#
-#AI_SANDBOX_ALLOW_ENV=(
-#    NODE_ENV
-#    RAILS_ENV
-#    APP_ENV
-#)
-
-# ── Env vars to strip even if in the global whitelist ─────────────────────
-#
-#AI_SANDBOX_BLOCK_ENV=(
-#    SOME_INTERNAL_VAR
-#)
 EOF
 
     log "Created: $config"
@@ -482,7 +413,8 @@ Commands:
          launching a sandbox. Useful to verify what would be blocked.
          Defaults to current directory if project-dir is omitted.
 
-Sandboxes an AI tool with filesystem blacklisting and a clean environment.
+Sandboxes an AI tool with filesystem blacklisting. The full shell
+environment is inherited so the agent can impersonate the user.
 Project-level overrides are read from .ai-sandbox in the git root.
 
 Examples:

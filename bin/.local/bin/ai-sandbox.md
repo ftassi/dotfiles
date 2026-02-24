@@ -22,9 +22,11 @@ Lo script avvolge il comando dell'agente in due layer di protezione:
 
 Costruita in tre strati sovrapposti:
 
-**Globale (statica)** — directory sempre bloccate, indipendentemente
-dal progetto: `~/.ssh`, `~/.aws`, `~/.gnupg`, `~/.docker`,
-`~/.composer`. Non sovrascrivibile da config di progetto.
+**Globale (statica)** — attualmente vuota. Le directory di credenziali
+(`~/.ssh`, `~/.aws`, `~/.docker`, …) non sono bloccate: l'agente deve
+operare con l'identità dell'utente (git push, gh CLI, AWS CLI). Il
+valore del layer globale è come punto di estensione per path che non
+hanno mai senso esporre (es. `~/.config/gcloud` se non si lavora su GCP).
 
 **Dinamica (per progetto)** — calcolata al momento del lancio da:
 - file/directory gitignored (`git ls-files --ignored`)
@@ -38,15 +40,16 @@ git-crypt è esplicitamente sensibile.
 `AI_SANDBOX_BLOCK_PATHS` per bloccare file tracked che contengono
 secrets (legacy config, tfvars, ecc.).
 
-### 2. Environment clearenv + whitelist
+### 2. Ambiente ereditato integralmente
 
-Il processo viene lanciato con `env -i` (ambiente pulito) e
-riceve solo le variabili in `ENV_WHITELIST`: PATH, HOME, LANG,
-TERM e poche altre. `AWS_*`, `GITHUB_TOKEN`, `DATABASE_URL` e
-simili vengono strippati.
+Il processo riceve l'intero ambiente della shell corrente, senza
+filtri. L'agente deve poter impersonare l'utente: SSH, AWS CLI,
+direnv vars, token — tutto deve funzionare esattamente come in
+una shell normale.
 
-Il progetto può estendere la whitelist via `AI_SANDBOX_ALLOW_ENV`
-o bloccare variabili globali via `AI_SANDBOX_BLOCK_ENV`.
+Il file `.envrc` rimane bloccato in lettura (vedi blacklist di
+progetto), ma le variabili che imposterebbe sono già nell'env
+grazie all'hook direnv della shell che ha lanciato il sandbox.
 
 ### Strategia per OS
 
@@ -60,8 +63,6 @@ File bash sorgibile nella git root del progetto. Controlla:
 ```bash
 AI_SANDBOX_ALLOW_PATHS=()   # path gitignored che l'agente può leggere
 AI_SANDBOX_BLOCK_PATHS=()   # path tracked da bloccare comunque
-AI_SANDBOX_ALLOW_ENV=()     # variabili extra da passare
-AI_SANDBOX_BLOCK_ENV=()     # variabili globali da strippare
 ```
 
 Generare un template commentato con: `ai-sandbox.sh init [dir]`
@@ -117,6 +118,7 @@ l'accesso al contenuto, non la sola presenza del path.
 |-----|-------------|
 | Docker socket non protetto | Complessità sproporzionata al rischio nel threat model |
 | `ls file` passa anche su file blacklistati | Firejail blocca la lettura del contenuto; `ls` usa solo `stat`. Per i secrets il contenuto è protetto, non la presenza del path |
-| `~/.config` non bloccata | Troppo ampia; i secrets reali sotto `~/.config` (gcloud, ecc.) vanno aggiunti esplicitamente |
+| Ambiente shell non filtrato | L'agente deve impersonare l'utente; filtrare l'env spezza SSH, AWS CLI, direnv vars senza proteggere da exfiltrazione via filesystem (credenziali già accessibili tramite file) |
+| `~/.config` non bloccata | Troppo ampia; i secrets reali sotto `~/.config` (gcloud, ecc.) vanno aggiunti esplicitamente a `GLOBAL_BLACKLIST` |
 | macOS non implementato | Stub documentato; richiede un'immagine Docker con i tool pre-installati |
 | Rete non ristretta | L'esfiltrazione via rete è fuori dal threat model dichiarato |
