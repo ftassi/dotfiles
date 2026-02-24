@@ -27,20 +27,6 @@
 
 set -euo pipefail
 
-# ── Global blacklist (static) ──────────────────────────────────────────────
-# Always blocked regardless of project. Cannot be overridden by .ai-sandbox.
-#
-# Credential directories (~/.ssh, ~/.aws, ~/.docker, …) are intentionally NOT
-# listed here: the agent needs to operate with the user's identity (git push,
-# gh CLI, AWS CLI, docker pull). Blocking them prevents the agent from doing
-# useful work without meaningfully reducing accidental-exfiltration risk for
-# trusted tools.
-#
-# ~/.config is also excluded: most entries are tool configs with no secrets
-# (gh, codex, nvim, …). Add targeted entries if needed, e.g.
-# "$HOME/.config/gcloud" or "$HOME/.config/github-copilot".
-GLOBAL_BLACKLIST=()
-
 # ── Global project-level blacklist (secret file patterns) ──────────────────
 # Secret-file name patterns blocked in every project.
 # Matched against both tracked files (accidentally committed) and
@@ -297,18 +283,12 @@ run_firejail() {
         echo "nosound"
         echo "noautopulse"
 
-        # Global layer (never filtered by ALLOW_PATHS)
-        local path
-        for path in "${GLOBAL_BLACKLIST[@]}"; do
-            echo "blacklist $path"
-        done
-
         # Project dynamic layer (gitignored + git-crypt), filtered by
         # ALLOW_PATHS, then sorted and prefix-deduplicated.
         # Sorting + prefix-dedup collapses children of already-blocked
         # parent dirs (firejail blacklists recursively), reducing the total
         # number of profile entries on projects with many scattered files.
-        local allowed_count=0 blocked_count=0
+        local path allowed_count=0 blocked_count=0
         local -a pending=()
         while IFS= read -r path; do
             [[ -n "$path" ]] || continue
@@ -338,8 +318,7 @@ run_firejail() {
 
     } > "$tmp_profile"
 
-    log "Blacklist: ${#GLOBAL_BLACKLIST[@]} global" \
-        "+ ${#GLOBAL_PROJECT_BLACKLIST[@]} pattern(s)" \
+    log "Blacklist: ${#GLOBAL_PROJECT_BLACKLIST[@]} pattern(s)" \
         "+ ${blocked_count} project" \
         "(${allowed_count} skipped: ${#GLOBAL_TOOL_ALLOWLIST[@]} tool dirs + project config)"
 
@@ -390,17 +369,10 @@ cmd_debug() {
 
     load_project_config "$project_dir"
 
-    local git_root=""
+    local git_root="" path
     git -C "$project_dir" rev-parse --git-dir >/dev/null 2>&1 \
         && git_root="$(git -C "$project_dir" rev-parse --show-toplevel)"
 
-    echo "=== Global blacklist (static) ==="
-    local path
-    for path in "${GLOBAL_BLACKLIST[@]}"; do
-        echo "  BLOCKED  $path"
-    done
-
-    echo ""
     echo "=== Project dynamic blacklist ==="
     if [[ -z "$git_root" ]]; then
         echo "  (not a git repo)"
