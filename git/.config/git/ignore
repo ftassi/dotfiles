@@ -50,10 +50,11 @@ Thumbs.db
 # AI related stuff
 gpt-persistent-session
 *.aichat
->>> AI chat 
+>>> AI chat
 
 **/.claude/settings.local.json
 **/.claude/AGENT.md
+.ai-sandbox
 
 ### Vagrant ###
 .vagrant/
