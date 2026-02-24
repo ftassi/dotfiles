@@ -56,22 +56,29 @@ if git -C "$PROJECT_DIR" rev-parse --git-dir >/dev/null 2>&1; then
     GIT_ROOT="$(git -C "$PROJECT_DIR" rev-parse --show-toplevel)"
 fi
 
-# First gitignored path (file or dir) — excluding tool dirs that should stay
-# accessible. Both files and directories are tested: firejail --blacklist
-# works for both inside $HOME.
+# First gitignored path whose basename matches a secret-file pattern.
+# (Non-secret gitignored files like vendor/, node_modules/ are intentionally
+# NOT blocked — only secret-named files are.)
 GITIGNORED_SAMPLE=""
 if [[ -n "$GIT_ROOT" ]]; then
-    GITIGNORED_SAMPLE="$(
+    while IFS= read -r _line; do
+        _base="${_line%/}"; _base="${_base##*/}"
+        case "$_base" in
+            .env|.env.*|.envrc|*.pem|*.key|*.p12|*.pfx|*.der|*.jks|\
+            credentials.json|service-account.json|\
+            terraform.tfvars|*.tfvars|\
+            secrets.yml|secrets.json|.secrets|*.vault|\
+            master.key|auth.json|.netrc|.htpasswd|wp-config.php|\
+            parameters.yml|parameters.php)
+                GITIGNORED_SAMPLE="$GIT_ROOT/${_line%/}"
+                break
+                ;;
+        esac
+    done < <(
         git -C "$PROJECT_DIR" \
             ls-files --ignored --exclude-standard -o --directory \
-            2>/dev/null \
-        | grep -v '^\.\(claude\|codex\|aider\|continue\)/' \
-        | head -1 \
-        || true
-    )"
-    GITIGNORED_SAMPLE="${GITIGNORED_SAMPLE%/}"   # strip trailing /
-    [[ -n "$GITIGNORED_SAMPLE" ]] \
-        && GITIGNORED_SAMPLE="$GIT_ROOT/$GITIGNORED_SAMPLE"
+            2>/dev/null
+    )
 fi
 
 # First git-crypt encrypted path (if any)
@@ -98,13 +105,13 @@ fi
 
 # ── Tool allowlist fixture ─────────────────────────────────────────────────
 # Creates a controlled git project inside $HOME with known files:
-#   - secret_cache/ : gitignored dir            → must be blocked
-#   - .env          : gitignored file           → must be blocked
-#   - .claude/      : gitignored tool dir       → must be accessible
-#   - .envrc        : tracked file              → must be blocked (GLOBAL_PROJECT_BLACKLIST)
+#   - build/        : gitignored dir (non-secret name)  → must be accessible
+#   - .env          : gitignored file (secret name)     → must be blocked
+#   - .claude/      : gitignored tool dir               → must be accessible
+#   - .envrc        : tracked file                      → must be blocked (GLOBAL_PROJECT_BLACKLIST)
 #   - subproject/   : monorepo subdirectory
-#     - .envrc      : gitignored in subproject  → must be blocked
-#     - .claude/    : gitignored in subproject  → must be accessible
+#     - .envrc      : gitignored in subproject          → must be blocked
+#     - .claude/    : gitignored in subproject          → must be accessible
 #
 # Baseline: all files are verified accessible BEFORE running the sandbox.
 # This prevents false positives where a "protected" result is just a missing file.
@@ -118,10 +125,10 @@ setup_tool_fixture() {
     git -C "$FIXTURE_DIR" config user.email "test@test.com"
     git -C "$FIXTURE_DIR" config user.name "Test"
 
-    # Gitignored dir — must be blocked inside sandbox
-    echo "secret_cache/" >> "$FIXTURE_DIR/.gitignore"
-    mkdir "$FIXTURE_DIR/secret_cache"
-    echo "sensitive" > "$FIXTURE_DIR/secret_cache/data.txt"
+    # Gitignored dir with non-secret name — must remain accessible
+    echo "build/" >> "$FIXTURE_DIR/.gitignore"
+    mkdir "$FIXTURE_DIR/build"
+    echo "artifact" > "$FIXTURE_DIR/build/output.bin"
 
     # Gitignored individual file — must also be blocked (not just directories)
     echo ".env" >> "$FIXTURE_DIR/.gitignore"
@@ -192,8 +199,8 @@ should_allow() {
 }
 
 echo "=== Dynamic blacklist (fixture) ==="
-should_block "gitignored dir"            "${fixture_dir}/secret_cache"
-should_block "gitignored file"           "${fixture_dir}/.env"
+should_allow "non-secret gitignored dir" "${fixture_dir}/build"
+should_block "gitignored file (.env)"    "${fixture_dir}/.env"
 
 echo ""
 echo "=== GLOBAL_TOOL_ALLOWLIST (fixture) ==="
@@ -317,8 +324,8 @@ should_allow "~/.config/"           "\$HOME/.config"
 
 echo ""
 echo "=== Project dynamic ==="
-should_block "gitignored sample"  "${GITIGNORED_SAMPLE}"
-should_block "git-crypt sample"   "${GITCRYPT_SAMPLE}"
+should_block "gitignored secret-name sample" "${GITIGNORED_SAMPLE}"
+should_block "git-crypt sample"              "${GITCRYPT_SAMPLE}"
 
 echo ""
 echo "=== Accessible (tracked files) ==="
@@ -359,7 +366,7 @@ echo "── Fixture pre-flight (outside sandbox) ──────────
 setup_tool_fixture
 echo "Fixture : $FIXTURE_DIR"
 echo ""
-expect_accessible_outside "secret_cache/ (gitignored dir)"              "$FIXTURE_DIR/secret_cache"
+expect_accessible_outside "build/ (non-secret gitignored dir)"           "$FIXTURE_DIR/build"
 expect_accessible_outside ".env (gitignored file)"                       "$FIXTURE_DIR/.env"
 expect_accessible_outside ".claude/ (tool dir)"                          "$FIXTURE_DIR/.claude"
 expect_accessible_outside ".envrc (tracked)"                             "$FIXTURE_DIR/.envrc"
