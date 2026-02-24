@@ -21,7 +21,7 @@ set -euo pipefail
 PROJECT_DIR="${1:-.}"
 PROJECT_DIR="$(realpath "$PROJECT_DIR")"
 
-SANDBOX="ai-sandbox.sh"
+SANDBOX="ai-sandbox"
 command -v "$SANDBOX" >/dev/null 2>&1 \
     || { echo "ERROR: $SANDBOX not found in PATH"; exit 1; }
 

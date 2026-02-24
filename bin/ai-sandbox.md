@@ -65,7 +65,7 @@ AI_SANDBOX_ALLOW_PATHS=()   # path gitignored che l'agente può leggere
 AI_SANDBOX_BLOCK_PATHS=()   # path tracked da bloccare comunque
 ```
 
-Generare un template commentato con: `ai-sandbox.sh init [dir]`
+Generare un template commentato con: `ai-sandbox init [dir]`
 
 ## Decisioni di design
 
