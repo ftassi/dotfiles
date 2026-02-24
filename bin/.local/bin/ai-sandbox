@@ -5,12 +5,12 @@
 # and includes it in context without the user noticing.
 #
 # Protection layers:
-#   1. Filesystem blacklist (global static + project dynamic)
+#   1. Filesystem blacklist (project dynamic)
 #   2. Environment clearenv + explicit whitelist
 #   3. Docker socket mediation via docker-socket-proxy (TODO)
 #
 # Strategies:
-#   Linux  → firejail (--noprofile + --blacklist per path)
+#   Linux  → firejail (profile file with blacklist directives)
 #   macOS  → docker run with selective volume mounts (stub, see TODO)
 #
 # Usage:
@@ -80,8 +80,8 @@ GLOBAL_PROJECT_BLACKLIST=(
 )
 
 # ── Global tool directory allowlist ────────────────────────────────────────
-# Project-level directories that AI tools need to function correctly, even
-# when gitignored. These override the dynamic blacklist (gitignored files).
+# AI tool config directories that must always be accessible to the agent,
+# even if encrypted with git-crypt. Override the dynamic blacklist.
 # Paths are relative to the project git root.
 GLOBAL_TOOL_ALLOWLIST=(
     ".claude"    # Claude Code — project settings, AGENT.md
@@ -144,8 +144,6 @@ load_project_config() {
 is_path_allowed() {
     local path="$1" git_root="$2" project_dir="${3:-$2}"
     local allow abs_allow base
-
-    shopt -s globstar 2>/dev/null || true
 
     # Global tool allowlist — checked against both git_root and project_dir
     # so that tool dirs in a monorepo subdirectory are correctly rescued.
@@ -281,7 +279,7 @@ run_firejail() {
         echo "nosound"
         echo "noautopulse"
 
-        # Project dynamic layer (gitignored + git-crypt), filtered by
+        # Project dynamic layer (git-crypt + secret-pattern matches), filtered by
         # ALLOW_PATHS, then sorted and prefix-deduplicated.
         # Sorting + prefix-dedup collapses children of already-blocked
         # parent dirs (firejail blacklists recursively), reducing the total
@@ -424,21 +422,16 @@ cmd_init() {
 # Paths are relative to the project git root (or absolute).
 # See: https://github.com/ftassi/dotfiles
 
-# ── Paths to ALLOW even if gitignored or git-crypt encrypted ──────────────
-# Build artifacts, generated files, vendored deps — things the agent needs
-# to read/execute but that aren't secrets.
+# ── Paths to ALLOW even if blocked by secret-file patterns or git-crypt ───
+# Use when a file matches a blocked pattern but is not a secret in this
+# project, or when a git-crypt encrypted file must be readable by the agent.
 #
 #AI_SANDBOX_ALLOW_PATHS=(
-#    target/           # Rust build artifacts
-#    dist/             # JS/TS build output
-#    .next/            # Next.js build cache
-#    node_modules/     # npm packages
-#    vendor/           # PHP/Go vendored deps
-#    "**/*.log"        # log files anywhere in the tree
-#    ".cache/"         # generic cache dirs
+#    "**/.env.test"          # test env vars, not secret in this project
+#    config/credentials.json # non-secret credentials (e.g. OAuth app scopes)
 #)
 
-# ── Paths to BLOCK in addition to the global + gitignored blacklist ────────
+# ── Paths to BLOCK in addition to the dynamic blacklist ───────────────────
 # Use this for tracked files that contain secrets (that shouldn't be there,
 # but are — e.g. legacy config committed in plain text).
 #
