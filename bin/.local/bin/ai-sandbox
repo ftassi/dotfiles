@@ -35,7 +35,9 @@ set -euo pipefail
 # Intentionally NOT "all gitignored files": vendor/, node_modules/, logs,
 # and other build artifacts remain accessible to the agent.
 #
-# Both root-level and **/ variants are listed for git pathspec compatibility.
+# Both root-level and **/ variants are listed for git ls-files pathspec
+# compatibility. Basenames are derived dynamically for the gitignored
+# post-filter, so adding a pattern here is sufficient.
 # Can be overridden by AI_SANDBOX_ALLOW_PATHS in .ai-sandbox.
 GLOBAL_PROJECT_BLACKLIST=(
     # ── Environment / direnv ────────────────────────────────────────────────
@@ -218,26 +220,22 @@ build_project_blacklist() {
     #    (vendor/, node_modules/ → single entry, not traversed).
     #    NOTE: git ls-files --ignored -o does NOT honour pathspec as a filter
     #    for individual files — it returns all gitignored content regardless.
-    #    We post-filter by basename in bash instead.
+    #    We post-filter by basename using GLOBAL_PROJECT_BLACKLIST patterns
+    #    so the two lists stay in sync automatically.
+    local -a _bp=()
+    local _pat
+    for _pat in "${GLOBAL_PROJECT_BLACKLIST[@]}"; do
+        _bp+=("${_pat##*/}")
+    done
+
     while IFS= read -r rel; do
         [[ -n "$rel" ]] || continue
-        local base="${rel##*/}"
-        case "$base" in
-            # Environment / direnv
-            .env|.env.local|.env.production|.env.staging|.envrc) ;;
-            .env.*.local) ;;
-            # Keys and certificates
-            *.pem|*.key|*.p12|*.pfx|*.der|*.jks) ;;
-            # Cloud / infrastructure
-            credentials.json|service-account.json) ;;
-            terraform.tfvars|*.tfvars) ;;
-            # Generic secret names
-            secrets.yml|secrets.json|.secrets|*.vault) ;;
-            # Framework-specific
-            master.key|auth.json|.netrc|.htpasswd|wp-config.php) ;;
-            # No match — skip (UUID files, .phpunit.cache, etc.)
-            *) continue ;;
-        esac
+        local base="${rel##*/}" _matched=false _p
+        for _p in "${_bp[@]}"; do
+            # shellcheck disable=SC2254
+            [[ "$base" == $_p ]] && { _matched=true; break; }
+        done
+        [[ "$_matched" == true ]] || continue
         echo "$git_root/${rel%/}"
     done < <(
         git -C "$git_root" ls-files --ignored --exclude-standard -o --directory \
