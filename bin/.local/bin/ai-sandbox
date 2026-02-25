@@ -192,9 +192,12 @@ build_project_blacklist() {
 
     # a) git-crypt encrypted files.
     #    git crypt status is O(tracked files) and very slow on large repos.
-    #    Guard with .git-crypt/ presence: git crypt init creates this directory,
-    #    so its absence means the repo does not use git-crypt.
-    if command -v git-crypt >/dev/null 2>&1 && [[ -d "$git_root/.git-crypt" ]]; then
+    #    Guard with .git/git-crypt/ presence: git crypt init creates this
+    #    directory inside the git dir, so its absence means no git-crypt.
+    #    (.git-crypt/ in the working tree is unreliable: it can be gitignored.)
+    local git_dir
+    git_dir="$(git -C "$git_root" rev-parse --absolute-git-dir 2>/dev/null)"
+    if command -v git-crypt >/dev/null 2>&1 && [[ -d "$git_dir/git-crypt" ]]; then
         while IFS= read -r rel; do
             [[ -n "$rel" ]] || continue
             echo "$git_root/$rel"
@@ -306,6 +309,7 @@ run_firejail() {
         # Sort and emit, skipping paths already covered by a parent entry.
         local prev=""
         while IFS= read -r path; do
+            [[ -n "$path" ]] || continue
             if [[ -z "$prev" || "$path" != "$prev/"* ]]; then
                 echo "blacklist $path"
                 prev="$path"
