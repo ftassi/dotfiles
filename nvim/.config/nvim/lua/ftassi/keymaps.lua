@@ -9,6 +9,7 @@ function M.which_key()
     { '<leader>g', group = '[G]it' },
     { '<leader>l', group = '[L]SP' },
     { '<leader>o', group = '[O]ptions' },
+    { '<leader>q', group = '[Q]uickfix' },
     { '<leader>r', group = '[R]ename' },
     { '<leader>s', group = '[S]earch' },
     { '<leader>t', group = '[T]est' },
@@ -24,7 +25,7 @@ function M.defaults()
   vim.keymap.set('n', '<C-;>', '<cmd>edit #<CR>', { desc = 'Open alternate file' })
 
   vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagnostic [Q]uickfix list' })
+  vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, { desc = '[L]SP diagnostic [Q]uickfix list' })
 
   -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
   -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -286,6 +287,25 @@ function M.lsp(bufnr)
   else
     map('K', vim.lsp.buf.hover, 'Hover Documentation')
   end
+end
+
+function M.quickfix()
+  vim.keymap.set('n', '<leader>qo', '<cmd>copen<CR>', { desc = '[Q]uickfix [O]pen' })
+  vim.keymap.set('n', '<leader>qx', function()
+    vim.fn.setqflist({}, 'r', { items = {} })
+    vim.notify('Quickfix list cleared', vim.log.levels.INFO, { title = 'Quickfix' })
+  end, { desc = '[Q]uickfix clear (e[X]punge)' })
+  vim.keymap.set('n', '<leader>qa', function()
+    vim.fn.setqflist({}, 'a', {
+      items = {{
+        bufnr = vim.fn.bufnr(),
+        lnum  = vim.fn.line('.'),
+        col   = vim.fn.col('.'),
+        text  = vim.fn.getline('.'),
+      }},
+    })
+    vim.notify('Added to quickfix', vim.log.levels.INFO, { title = 'Quickfix' })
+  end, { desc = '[Q]uickfix [A]dd current position' })
 end
 
 function M.saved_searches()
