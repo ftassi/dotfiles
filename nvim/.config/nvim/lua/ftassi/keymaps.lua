@@ -291,6 +291,8 @@ function M.diagnostic()
 end
 
 function M.quickfix()
+  local ss = require 'ftassi.saved_searches'
+
   vim.keymap.set('n', '<leader>qo', '<cmd>copen<CR>', { desc = '[Q]uickfix [O]pen' })
   vim.keymap.set('n', '<leader>qx', function()
     vim.fn.setqflist({}, 'r', { items = {} })
@@ -307,12 +309,8 @@ function M.quickfix()
     })
     vim.notify('Added to quickfix', vim.log.levels.INFO, { title = 'Quickfix' })
   end, { desc = '[Q]uickfix [A]dd current position' })
-end
-
-function M.saved_searches()
-  local ss = require 'ftassi.saved_searches'
-  vim.keymap.set('n', '<leader>ss', ss.save, { desc = '[S]earch [S]ave to named search' })
-  vim.keymap.set('n', '<leader>fs', ss.find, { desc = '[F]ind [S]aved searches' })
+  vim.keymap.set('n', '<leader>qs', ss.save, { desc = '[Q]uickfix [S]ave as named search' })
+  vim.keymap.set('n', '<leader>qf', ss.find, { desc = '[Q]uickfix [F]ind saved searches' })
 end
 
 function M.test()
