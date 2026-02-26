@@ -34,6 +34,8 @@ vim.g.have_nerd_font = true
 
 require 'ftassi.options'
 require('ftassi.keymaps').defaults()
+require('ftassi.keymaps').options()
+require('ftassi.keymaps').saved_searches()
 require('ftassi.keymaps').navigation()
 
 -- [[ Basic Autocommands ]]

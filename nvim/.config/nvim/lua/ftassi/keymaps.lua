@@ -2,15 +2,17 @@ local M = {}
 
 function M.which_key()
   return {
+    { '<leader>b', group = '[B]uffer' },
     { '<leader>c', group = '[C]ode' },
     { '<leader>d', group = '[D]ocument' },
     { '<leader>f', group = '[F]ind' },
     { '<leader>g', group = '[G]it' },
     { '<leader>l', group = '[L]SP' },
+    { '<leader>o', group = '[O]ptions' },
     { '<leader>r', group = '[R]ename' },
     { '<leader>s', group = '[S]earch' },
     { '<leader>t', group = '[T]est' },
-    { '<leader>w', group = '[W]indow/Workspace' },
+    { '<leader>w', group = '[W]orkspace' },
   }
 end
 
@@ -43,10 +45,10 @@ function M.defaults()
   vim.keymap.set('n', 'Q', ':q<CR>')
 
   -- Mappature per Bdelete (gestione dei buffer)
-  vim.keymap.set('n', '<leader>wo', ':Bdelete other<CR>', { desc = 'Close all other buffers' })
-  vim.keymap.set('n', '<leader>wa', ':Bdelete all<CR>', { desc = 'Close all buffers' })
-  vim.keymap.set('n', '<leader>wh', ':Bdelete hidden<CR>', { desc = 'Close all hidden buffers' })
-  vim.keymap.set('n', '<leader>w', ':Bdelete menu<CR>', { desc = 'Close buffer menu' })
+  vim.keymap.set('n', '<leader>bo', ':Bdelete other<CR>', { desc = '[B]uffer close all [O]ther' })
+  vim.keymap.set('n', '<leader>ba', ':Bdelete all<CR>', { desc = '[B]uffer close [A]ll' })
+  vim.keymap.set('n', '<leader>bh', ':Bdelete hidden<CR>', { desc = '[B]uffer close [H]idden' })
+  vim.keymap.set('n', '<leader>bm', ':Bdelete menu<CR>', { desc = '[B]uffer [M]enu' })
 
   -- Ridimensionamento delle finestre
   vim.keymap.set('n', '<A-k>', ':res +5<CR>', { silent = true })
@@ -59,6 +61,12 @@ function M.defaults()
   -- System clipboard: <leader>y as operator, <leader>Y for whole line
   vim.keymap.set({ 'n', 'v' }, '<leader>y', '"+y', { desc = '[Y]ank to system clipboard' })
   vim.keymap.set('n', '<leader>Y', '"+yy', { desc = '[Y]ank line to system clipboard' })
+end
+
+function M.options()
+  vim.keymap.set('n', '<leader>ow', function()
+    vim.opt.wrap = not vim.opt.wrap:get()
+  end, { desc = 'Toggle [W]rap' })
 end
 
 function M.telescope()
@@ -278,6 +286,12 @@ function M.lsp(bufnr)
   else
     map('K', vim.lsp.buf.hover, 'Hover Documentation')
   end
+end
+
+function M.saved_searches()
+  local ss = require 'ftassi.saved_searches'
+  vim.keymap.set('n', '<leader>ss', ss.save, { desc = '[S]earch [S]ave to named search' })
+  vim.keymap.set('n', '<leader>fs', ss.find, { desc = '[F]ind [S]aved searches' })
 end
 
 function M.test()

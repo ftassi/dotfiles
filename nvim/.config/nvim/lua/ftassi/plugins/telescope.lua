@@ -50,14 +50,31 @@ return { -- Fuzzy Finder (files, lsp, etc)
   },
   config = function()
     local action_layout = require 'telescope.actions.layout'
+    local actions = require 'telescope.actions'
     local opts = {
       defaults = {
         mappings = {
           n = {
             ['<M-p>'] = action_layout.toggle_preview,
+            ['<C-a>'] = function(bufnr)
+              actions.add_to_qflist(bufnr)
+              actions.open_qflist(bufnr)
+            end,
+            ['<M-a>'] = function(bufnr)
+              actions.add_selected_to_qflist(bufnr)
+              actions.open_qflist(bufnr)
+            end,
           },
           i = {
             ['<M-p>'] = action_layout.toggle_preview,
+            ['<C-a>'] = function(bufnr)
+              actions.add_to_qflist(bufnr)
+              actions.open_qflist(bufnr)
+            end,
+            ['<M-a>'] = function(bufnr)
+              actions.add_selected_to_qflist(bufnr)
+              actions.open_qflist(bufnr)
+            end,
           },
         },
         vimgrep_arguments = {
