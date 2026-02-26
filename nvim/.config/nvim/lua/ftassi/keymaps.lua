@@ -4,7 +4,7 @@ function M.which_key()
   return {
     { '<leader>b', group = '[B]uffer' },
     { '<leader>c', group = '[C]ode' },
-    { '<leader>d', group = '[D]ocument' },
+    { '<leader>d', group = '[D]iagnostic' },
     { '<leader>f', group = '[F]ind' },
     { '<leader>g', group = '[G]it' },
     { '<leader>l', group = '[L]SP' },
@@ -23,9 +23,6 @@ function M.defaults()
 
   -- alternate file
   vim.keymap.set('n', '<C-;>', '<cmd>edit #<CR>', { desc = 'Open alternate file' })
-
-  vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, { desc = 'Show diagnostic [E]rror messages' })
-  vim.keymap.set('n', '<leader>lq', vim.diagnostic.setloclist, { desc = '[L]SP diagnostic [Q]uickfix list' })
 
   -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
   -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -97,10 +94,6 @@ function M.telescope()
     }
   end, { desc = '[S]earch [/] in Open Files' })
 
-  -- Shortcut for searching your Neovim configuration files
-  vim.keymap.set('n', '<leader>df', function()
-    builtin.git_files { prompt_tile = '< Dotfiles >', cwd = '/home/ftassi/dotfiles', hidden = true }
-  end, { desc = '[S]earch [D]otfiles' })
 end
 
 function M.neo_tree()
@@ -268,7 +261,6 @@ function M.lsp(bufnr)
   map('<leader>rr', vim.lsp.buf.rename, '[R]e[n]ame')
 
   map('<leader>ws', builtin.lsp_dynamic_workspace_symbols, 'Find [W]orkspace [S]ymbols')
-  map('<leader>ds', builtin.lsp_document_symbols, 'Find [D]ocument [S]ymbols')
 
   -- Nuovi mapping per navigare i riferimenti al codice (tutti in minuscolo)
   map('<leader>fd', telescope_file_only(builtin.lsp_definitions), '[F]ind [D]efinition')
@@ -282,11 +274,20 @@ function M.lsp(bufnr)
 
   local lsp_saga_installed, _ = pcall(require, 'lspsaga')
   if lsp_saga_installed then
-    map('<leader>ld', cmd 'Lspsaga show_line_diagnostics', 'Show line diagnostics')
     map('K', cmd 'Lspsaga hover_doc', 'Hover Documentation')
   else
     map('K', vim.lsp.buf.hover, 'Hover Documentation')
   end
+end
+
+function M.diagnostic()
+  local lsp_saga_installed, _ = pcall(require, 'lspsaga')
+  if lsp_saga_installed then
+    vim.keymap.set('n', '<leader>dd', '<cmd>Lspsaga show_line_diagnostics<CR>', { desc = '[D]iagnostic [D]etails' })
+  else
+    vim.keymap.set('n', '<leader>dd', vim.diagnostic.open_float, { desc = '[D]iagnostic [D]etails' })
+  end
+  vim.keymap.set('n', '<leader>dl', vim.diagnostic.setloclist, { desc = '[D]iagnostic [L]ist' })
 end
 
 function M.quickfix()
