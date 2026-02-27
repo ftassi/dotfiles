@@ -184,6 +184,17 @@ return {
             },
           },
         },
+        phpactor = {
+          filetypes = { 'php' },
+          on_init = function(client)
+            -- Intelephense handles hover better; avoid duplicate popups
+            client.server_capabilities.hoverProvider = false
+          end,
+          init_options = {
+            ['language_server_phpstan.enabled'] = false,
+            ['language_server_psalm.enabled'] = false,
+          },
+        },
         -- psalm = {},
         elmls = {},
         -- clangd = {},
