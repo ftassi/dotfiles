@@ -35,8 +35,14 @@ if [ -z "$view" ]; then
   tmux new-session -d -s "$view" -t "$name"
 fi
 
-if [ -n "${TMUX:-}" ]; then
-  tmux switch-client -t "$view:code"
+if tmux list-windows -t "$name" -F '#{window_name}' 2>/dev/null | grep -qx 'code'; then
+  target="$view:code"
 else
-  tmux attach -t "$view:code"
+  target="$view:1"
+fi
+
+if [ -n "${TMUX:-}" ]; then
+  tmux switch-client -t "$target"
+else
+  tmux attach -t "$target"
 fi
