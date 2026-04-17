@@ -116,10 +116,12 @@ fi
 # Baseline: all files are verified accessible BEFORE running the sandbox.
 # This prevents false positives where a "protected" result is just a missing file.
 FIXTURE_DIR=""
+SUB_REPO_DIR=""
 
 setup_tool_fixture() {
     FIXTURE_DIR="$(mktemp -d "$HOME/.sandbox-fixture-XXXXX")"
-    trap 'rm -rf "$FIXTURE_DIR"' EXIT
+    SUB_REPO_DIR="$(mktemp -d "$HOME/.sandbox-sub-XXXXX")"
+    trap 'rm -rf "$FIXTURE_DIR" "$SUB_REPO_DIR"' EXIT
 
     git -C "$FIXTURE_DIR" init -q
     git -C "$FIXTURE_DIR" config user.email "test@test.com"
@@ -154,6 +156,22 @@ setup_tool_fixture() {
     echo "# AGENT" > "$FIXTURE_DIR/subproject/.claude/AGENT.md"
     git -C "$FIXTURE_DIR" add subproject/.gitignore
     git -C "$FIXTURE_DIR" commit -q -m "add subproject"
+
+    # Submodule — separate git repo with a tracked .envrc and a nested gitignored .envrc
+    git -C "$SUB_REPO_DIR" init -q
+    git -C "$SUB_REPO_DIR" config user.email "test@test.com"
+    git -C "$SUB_REPO_DIR" config user.name "Test"
+    echo "export SUB_SECRET=submodule_secret" > "$SUB_REPO_DIR/.envrc"
+    git -C "$SUB_REPO_DIR" add -f .envrc
+    mkdir "$SUB_REPO_DIR/subdir"
+    echo ".envrc" >> "$SUB_REPO_DIR/subdir/.gitignore"
+    echo "export NESTED_SECRET=nested" > "$SUB_REPO_DIR/subdir/.envrc"
+    git -C "$SUB_REPO_DIR" add subdir/.gitignore
+    git -C "$SUB_REPO_DIR" commit -q -m "init"
+    git -C "$FIXTURE_DIR" -c protocol.file.allow=always submodule add -q "$SUB_REPO_DIR" submodule
+    git -C "$FIXTURE_DIR" commit -q -m "add submodule"
+    # Gitignored file in submodule subdir — not cloned, must be created manually
+    echo "export NESTED_SECRET=nested" > "$FIXTURE_DIR/submodule/subdir/.envrc"
 }
 
 build_fixture_test_script() {
@@ -259,6 +277,38 @@ should_allow() {
 echo "=== Monorepo subdir (sandbox launched from subproject) ==="
 should_block ".envrc in subdir (gitignored)"             "${fixture_dir}/subproject/.envrc"
 should_allow ".claude/ in subdir (rescued by allowlist)" "${fixture_dir}/subproject/.claude"
+
+echo ""
+echo "--- \$pass passed, \$fail failed ---"
+exit \$fail
+TESTEOF
+}
+
+build_submodule_fixture_test_script() {
+    local fixture_dir="$1"
+    cat <<TESTEOF
+pass=0; fail=0
+
+should_block() {
+    local label="\$1" path="\$2"
+    local ok=false
+    if [[ -d "\$path" ]]; then
+        ls "\$path" >/dev/null 2>&1 && ok=true
+    else
+        cat "\$path" >/dev/null 2>&1 && ok=true
+    fi
+    if \$ok; then
+        echo "FAIL  [EXPOSED]    \$label"
+        (( fail++ )) || true
+    else
+        echo "PASS  [protected]  \$label"
+        (( pass++ )) || true
+    fi
+}
+
+echo "=== Git submodule ==="
+should_block ".envrc in submodule (tracked in submodule)"               "${fixture_dir}/submodule/.envrc"
+should_block ".envrc in submodule subdir (gitignored in submodule)"     "${fixture_dir}/submodule/subdir/.envrc"
 
 echo ""
 echo "--- \$pass passed, \$fail failed ---"
@@ -372,6 +422,8 @@ expect_accessible_outside ".claude/ (tool dir)"                          "$FIXTU
 expect_accessible_outside ".envrc (tracked)"                             "$FIXTURE_DIR/.envrc"
 expect_accessible_outside "subproject/.envrc (gitignored in subdir)"     "$FIXTURE_DIR/subproject/.envrc"
 expect_accessible_outside "subproject/.claude/ (tool dir in subdir)"     "$FIXTURE_DIR/subproject/.claude"
+expect_accessible_outside "submodule/.envrc (tracked in submodule)"             "$FIXTURE_DIR/submodule/.envrc"
+expect_accessible_outside "submodule/subdir/.envrc (gitignored in submodule)"   "$FIXTURE_DIR/submodule/subdir/.envrc"
 echo ""
 
 echo "── Fixture inside sandbox ────────────────────────────────────────────────"
@@ -382,6 +434,12 @@ echo "── Fixture inside sandbox ──────────────�
 echo ""
 echo "── Monorepo subdir fixture (sandbox launched from subproject) ────────────"
 "$SANDBOX" "$FIXTURE_DIR/subproject" bash -c "$(build_subdir_fixture_test_script "$FIXTURE_DIR")" 2>&1 \
+    | grep -v "^Warning:\|remounting\|^Parent\|^Child\|initialized" \
+    || (( total_fail++ )) || true
+
+echo ""
+echo "── Submodule fixture (sandbox launched from root) ────────────────────────"
+"$SANDBOX" "$FIXTURE_DIR" bash -c "$(build_submodule_fixture_test_script "$FIXTURE_DIR")" 2>&1 \
     | grep -v "^Warning:\|remounting\|^Parent\|^Child\|initialized" \
     || (( total_fail++ )) || true
 

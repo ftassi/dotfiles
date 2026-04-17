@@ -242,6 +242,17 @@ build_project_blacklist() {
         git -C "$git_root" ls-files --ignored --exclude-standard -o --directory \
             2>/dev/null
     )
+
+    # d) Submodules — recurse into each registered submodule.
+    #    git ls-files does not recurse into submodules (they appear as gitlinks),
+    #    so we must process each submodule's git root independently.
+    while IFS= read -r rel_sub; do
+        [[ -n "$rel_sub" ]] || continue
+        build_project_blacklist "$git_root/$rel_sub"
+    done < <(
+        git -C "$git_root" submodule foreach --quiet --recursive 'echo $displaypath' \
+            2>/dev/null
+    )
 }
 
 # ── Docker socket ──────────────────────────────────────────────────────────
