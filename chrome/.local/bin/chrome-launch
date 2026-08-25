@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BIN="${CHROME_BIN:-google-chrome}"
+FLAGS=()
+
+# VA-API is only forced on the NVIDIA driver; other GPUs use Chrome defaults
+if [[ -e /dev/nvidia0 ]]; then
+  export LIBVA_DRIVER_NAME=nvidia
+  FLAGS+=(--enable-features=VaapiVideoDecodeLinuxGL,VaapiVideoEncoder)
+fi
+
+# 1.5 is the compromise scale when a 4k-class monitor is connected
+if command -v xrandr >/dev/null 2>&1 \
+  && xrandr --listmonitors 2>/dev/null \
+    | awk 'NR > 1 { split($3, geo, "/"); if (geo[1] + 0 >= 3000) found = 1 } END { exit !found }'; then
+  FLAGS+=(--force-device-scale-factor=1.5)
+fi
+
+exec "$BIN" "${FLAGS[@]}" "$@"
