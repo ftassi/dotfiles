@@ -44,6 +44,13 @@ collect() {
   ls -ld /opt/nvm 2>&1
   ls /opt/nvm/versions/node 2>&1
 
+  echo "--- git-crypt"
+  if head -c 10 "$repo_dir/zsh/.secrets.zsh" 2>/dev/null | grep -q GITCRYPT; then
+    echo "BLOCCATO: i segreti sono ancora cifrati"
+  else
+    echo "sbloccato"
+  fi
+
   echo "--- avvio zsh interattivo"
   # stdin chiuso: i plugin non devono poter aprire prompt interattivi;
   # KILL perche' una zsh interattiva ignora il TERM di default di timeout
@@ -58,6 +65,17 @@ repair() {
   fi
   cd "$repo_dir"
   for pkg in "${stow_packages[@]}"; do
+    # file reali preesistenti: backup in .pre-dotfiles e poi link dal repo.
+    # aws escluso: le credenziali locali vanno confrontate a mano prima
+    # di sostituirle con quelle (cifrate) del repo
+    if [[ $pkg != aws ]]; then
+      stow -n -R "$pkg" 2>&1 \
+        | sed -n 's/.*existing target is neither a link nor a directory: //p' \
+        | sort -u \
+        | while IFS= read -r f; do
+            mv -v "$HOME/$f" "$HOME/$f.pre-dotfiles"
+          done
+    fi
     stow -R "$pkg" 2>&1 || echo "CONFLITTO: $pkg"
   done
 
