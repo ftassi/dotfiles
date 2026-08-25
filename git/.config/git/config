@@ -26,3 +26,5 @@
 
 [includeIf "gitdir:/home/madisoft/"]
 	path = ~/.config/git/identity-madisoft
+[submodule]
+	recurse = true
