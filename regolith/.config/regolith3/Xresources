@@ -1,15 +1,22 @@
-!regolith.look.path: /usr/share/regolith-look/solarized-dark
 regolith.look.path: /usr/share/regolith-look/nord
+regolith.compositor.picom.config: /home/ftassi/.config/regolith3/picom.conf
 
-wm.gaps.inner.size: 10
-wm.gaps.outer.size: 0
+wm.gaps.inner.size: 4
+wm.gaps.outer.size: 4
 wm.gaps.smart: 0
-wm.client.focused.color.border: #990033
-wm.client.focused.color.child_border: #990033
-wm.window.border.size: 3
-!regolith.wallpaper.file: /usr/share/backgrounds/Fuwafuwa_nanbatto_san_by_amaral-light.png
-!regolith.lockscreen.wallpaper.file: /usr/share/backgrounds/Fuwafuwa_nanbatto_san_by_amaral-light.png
+wm.client.focused.color.border: #88C0D0
+wm.client.focused.color.child_border: #88C0D0
+wm.client.focused_inactive.color.border: #4C566A
+wm.client.focused_inactive.color.child_border: #4C566A
+wm.client.unfocused.color.border: #3B4252
+wm.client.unfocused.color.child_border: #3B4252
+wm.window.border.size: 1
+wm.hide.edge.borders: none
 wm.binding.lock: Shift+Escape
+wm.bar.mode: invisible
+wm.bar.trayoutput: none
+wm.binding.bar_toggle: XF86Launch5
 
-regolith.wallpaper.file: /usr/share/backgrounds/ubuntu-wallpaper-d.png
-regolith.lockscreen.wallpaper.file: /usr/share/backgrounds/ubuntu-wallpaper-d.png
+regolith.wallpaper.file: /home/ftassi/wallpapers/aurora.jpg
+regolith.wallpaper.options: zoom
+regolith.lockscreen.wallpaper.file: /home/ftassi/wallpapers/aurora.jpg
