@@ -24,6 +24,7 @@
       "MultiEdit(**/config/credentials.json)"
     ]
   },
+  "model": "claude-opus-4-8",
   "hooks": {
     "PreToolUse": [
       {
@@ -38,6 +39,20 @@
     ]
   },
   "enabledPlugins": {
-    "rust-analyzer-lsp@claude-plugins-official": true
-  }
+    "rust-analyzer-lsp@claude-plugins-official": true,
+    "claude-md-management@claude-plugins-official": true,
+    "superpowers@claude-plugins-official": true
+  },
+  "language": "Italian",
+  "effortLevel": "medium",
+  "tui": "default",
+  "voice": {
+    "enabled": false,
+    "mode": "hold"
+  },
+  "theme": "dark-ansi",
+  "editorMode": "vim",
+  "autoScrollEnabled": true,
+  "agentPushNotifEnabled": true,
+  "voiceEnabled": false
 }
