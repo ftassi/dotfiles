@@ -21,6 +21,8 @@
 
 [includeIf "gitdir:/home/ftassi/"]
 	path = ~/.config/git/identity-ftassi
+[includeIf "gitdir:/tmp/"]
+	path = ~/.config/git/identity-ftassi
 
 [includeIf "gitdir:/home/madisoft/"]
 	path = ~/.config/git/identity-madisoft
