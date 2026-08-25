@@ -76,6 +76,38 @@ Code is a liability, not an asset. Every line has cognitive and maintenance cost
 - Duplication is cheaper than the wrong abstraction
 - Extract when you see the pattern, not when you imagine it
 
+## Working Preferences
+
+### Generated artifacts
+- Never add AI attribution, signatures, co-author lines, or similar traces to
+  commits, code, documentation, plans, or other generated artifacts
+- Keep generated plans and specifications uncommitted unless explicitly asked
+  to commit them
+- Put temporary project plans at the current working-copy root, not in
+  `/tmp`, so they remain easy to inspect during the activity
+
+### Change discipline
+- Preserve intentional choices made by coworkers; inspect code and history
+  before widening or reversing an existing scope
+- Prefer one explicit source of truth and fail clearly when it is unavailable;
+  do not add heuristic fallbacks that can silently select the wrong input
+- Never create, update, or delete AWS Secrets Manager values unless explicitly
+  requested
+
+### Verification and review
+- For CI failures, inspect the exact run and failing gate instead of inferring
+  from the workflow's overall color; do not claim causation without evidence
+  from the run or history
+- Review YAML structure and embedded shell as separate layers
+- Write runbook commands as literal copy-and-paste commands; avoid variables,
+  functions, and loops unless the user asks for a reusable script
+
+### Sensitive and example data
+- Use fictitious names and neutral identifiers in tests and examples; never
+  reuse customer, project, or production identities
+- Handle authentication output silently or as structured data; never print
+  access tokens or secret values
+
 ## Activity Context (agent.md)
 
 Each project can have a `.claude/AGENT.md` file that tracks the current
