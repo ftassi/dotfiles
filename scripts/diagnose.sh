@@ -45,7 +45,9 @@ collect() {
   ls /opt/nvm/versions/node 2>&1
 
   echo "--- avvio zsh interattivo"
-  timeout 60 zsh -ic exit 2>&1 | head -n 20
+  # stdin chiuso: i plugin non devono poter aprire prompt interattivi;
+  # KILL perche' una zsh interattiva ignora il TERM di default di timeout
+  timeout -s KILL 30 zsh -ic exit </dev/null 2>&1 | head -n 20
 }
 
 repair() {
