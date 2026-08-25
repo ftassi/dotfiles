@@ -17,6 +17,10 @@ for h in /sys/class/hwmon/hwmon*; do
 done
 export HWMON_CPU HWMON_NVME
 
+# Show the interface actually carrying traffic (wired on desktop, wifi on laptop)
+NET_IFACE=$(ip route show default 2>/dev/null | awk '{ print $5; exit }')
+export NET_IFACE
+
 monitors=$(polybar --list-monitors)
 primary_monitor=$(printf "%s\n" "$monitors" | awk -F"[:x]" "BEGIN { max = -1 } { width = \$2 + 0; if (width > max) { max = width; monitor = \$1 } } END { print monitor }")
 
