@@ -1,0 +1,154 @@
+=== ftassi-XPS-15-9530 - 2026-08-25T23:54:23+02:00
+===== STATO PRIMA
+--- git
+534ae3f Auto-resolve stow conflicts by backing up pre-existing files
+?? diagnostics.txt
+--- sessione
+XDG_SESSION_TYPE=x11 DESKTOP_SESSION=regolith-x11
+--- link config
+ls: impossibile accedere a '/home/ftassi/.config/regolith3/picom.conf': File o directory non esistente
+ls: impossibile accedere a '/home/ftassi/.config/polybar': File o directory non esistente
+ls: impossibile accedere a '/home/ftassi/.config/gtk-3.0': File o directory non esistente
+drwxrwxr-x 3 ftassi ftassi 4096 mar 11  2025 /home/ftassi/.config/regolith3
+-rw-rw-r-- 1 ftassi ftassi   56 ago 25 23:31 /home/ftassi/.config/regolith3/i3/config.d/40_polybar
+-rw-rw-r-- 1 ftassi ftassi  687 mar 11  2025 /home/ftassi/.config/regolith3/Xresources
+--- xrdb
+gnome.terminal.scrollbar:	never
+regolith.compositor.picom.config:	/usr/share/regolith-look/nord/picom.conf
+regolith.lockscreen.wallpaper.color.primary:	
+regolith.lockscreen.wallpaper.color.secondary:	
+regolith.lockscreen.wallpaper.color.shading.type:	
+regolith.lockscreen.wallpaper.file:	/usr/share/backgrounds/Rainbow_lightbulb_by_Daniel_Micallef.png
+regolith.lockscreen.wallpaper.options:	zoom
+regolith.wallpaper.color.primary:	
+regolith.wallpaper.color.secondary:	
+regolith.wallpaper.color.shading.type:	
+regolith.wallpaper.file:	/usr/share/backgrounds/Rainbow_lightbulb_by_Daniel_Micallef.png
+regolith.wallpaper.options:	zoom
+wm.bar.background.color:	#2E3440
+wm.bar.font:	RobotoMono Nerd Font 12
+wm.bar.position:	bottom
+wm.bar.separator.color:	#5E81AC
+wm.bar.statusline.color:	#E5E9F0
+wm.bar.workspace.active.background.color:	#3B4252
+wm.bar.workspace.active.border.color:	#3B4252
+wm.bar.workspace.active.text.color:	#7B8394
+wm.bar.workspace.focused.background.color:	#3B4252
+wm.bar.workspace.focused.border.color:	#3B4252
+wm.bar.workspace.focused.text.color:	#ECEFF4
+wm.bar.workspace.inactive.background.color:	#2E3440
+wm.bar.workspace.inactive.border.color:	#2E3440
+wm.bar.workspace.inactive.text.color:	#7B8394
+wm.bar.workspace.urgent.background.color:	#BF616A
+wm.bar.workspace.urgent.border.color:	#BF616A
+wm.bar.workspace.urgent.text.color:	#ECEFF4
+wm.client.focused.color.border:	#990033
+wm.client.focused.color.child_border:	#990033
+wm.client.focused_inactive.color.border:	#434C5E
+wm.client.focused_inactive.color.child_border:	#2E3440
+wm.client.unfocused.color.border:	#434C5E
+wm.client.unfocused.color.child_border:	#2E3440
+wm.client.urgent.color.border:	#2E3440
+wm.client.urgent.color.child_border:	#2E3440
+wm.floatingwindow.border.size:	3
+wm.floatingwindow.border.style:	pixel
+wm.window.border.size:	3
+wm.window.border.style:	pixel
+--- processi
+13877 /usr/bin/picom --config /usr/share/regolith-look/nord/picom.conf --daemon
+--- log polybar
+tail: impossibile aprire '/home/ftassi/.local/state/polybar/*.log' per la lettura: File o directory non esistente
+--- nvm
+drwxr-xr-x 8 ftassi ftassi 4096 ago 25 23:49 /opt/nvm
+v24.19.0
+--- git-crypt
+sbloccato
+--- avvio zsh interattivo
+===== RIPARAZIONE
+--- riparazione: stow
+WARNING! unstowing aws would cause conflicts:
+  * existing target is neither a link nor a directory: .aws/config
+  * existing target is neither a link nor a directory: .aws/credentials
+WARNING! stowing aws would cause conflicts:
+  * existing target is neither a link nor a directory: .aws/config
+  * existing target is neither a link nor a directory: .aws/credentials
+All operations aborted.
+CONFLITTO: aws
+rinominato '/home/ftassi/.local/bin/move-next-monitor.sh' -> '/home/ftassi/.local/bin/move-next-monitor.sh.pre-dotfiles'
+rinominato '/home/ftassi/.config/regolith3/flags/show-shortcuts' -> '/home/ftassi/.config/regolith3/flags/show-shortcuts.pre-dotfiles'
+rinominato '/home/ftassi/.config/regolith3/flags/term-profile' -> '/home/ftassi/.config/regolith3/flags/term-profile.pre-dotfiles'
+rinominato '/home/ftassi/.config/regolith3/Xresources' -> '/home/ftassi/.config/regolith3/Xresources.pre-dotfiles'
+--- riparazione: /opt/nvm
+nvm: ok
+--- riparazione: sessione regolith
+[1;37m> [0;37mUpdating already existing 'Regolith' profile[0m
+[1;32m[SUCCESS] [0;37mReinstalled Regolith GNOME Terminal version 0.1.0 for the 'Regolith' profile![0m
+[{"success":true}]
+===== STATO DOPO
+--- git
+534ae3f Auto-resolve stow conflicts by backing up pre-existing files
+?? diagnostics.txt
+--- sessione
+XDG_SESSION_TYPE=x11 DESKTOP_SESSION=regolith-x11
+--- link config
+lrwxrwxrwx 1 ftassi ftassi   36 ago 25 23:54 /home/ftassi/.config/gtk-3.0 -> ../dotfiles/regolith/.config/gtk-3.0
+lrwxrwxrwx 1 ftassi ftassi   36 ago 25 23:54 /home/ftassi/.config/polybar -> ../dotfiles/regolith/.config/polybar
+drwxrwxr-x 3 ftassi ftassi 4096 ago 25 23:54 /home/ftassi/.config/regolith3
+-rw-rw-r-- 1 ftassi ftassi   56 ago 25 23:31 /home/ftassi/.config/regolith3/i3/config.d/40_polybar
+lrwxrwxrwx 1 ftassi ftassi   52 ago 25 23:54 /home/ftassi/.config/regolith3/picom.conf -> ../../dotfiles/regolith/.config/regolith3/picom.conf
+lrwxrwxrwx 1 ftassi ftassi   52 ago 25 23:54 /home/ftassi/.config/regolith3/Xresources -> ../../dotfiles/regolith/.config/regolith3/Xresources
+--- xrdb
+gnome.terminal.scrollbar:	never
+regolith.compositor.picom.config:	/home/ftassi/.config/regolith3/picom.conf
+regolith.lockscreen.wallpaper.color.primary:	
+regolith.lockscreen.wallpaper.color.secondary:	
+regolith.lockscreen.wallpaper.color.shading.type:	
+regolith.lockscreen.wallpaper.file:	/home/ftassi/wallpapers/aurora.jpg
+regolith.lockscreen.wallpaper.options:	zoom
+regolith.wallpaper.color.primary:	
+regolith.wallpaper.color.secondary:	
+regolith.wallpaper.color.shading.type:	
+regolith.wallpaper.file:	/home/ftassi/wallpapers/aurora.jpg
+regolith.wallpaper.options:	zoom
+wm.bar.background.color:	#2E3440
+wm.bar.font:	RobotoMono Nerd Font 12
+wm.bar.mode:	invisible
+wm.bar.position:	bottom
+wm.bar.separator.color:	#5E81AC
+wm.bar.statusline.color:	#E5E9F0
+wm.bar.trayoutput:	none
+wm.bar.workspace.active.background.color:	#3B4252
+wm.bar.workspace.active.border.color:	#3B4252
+wm.bar.workspace.active.text.color:	#7B8394
+wm.bar.workspace.focused.background.color:	#3B4252
+wm.bar.workspace.focused.border.color:	#3B4252
+wm.bar.workspace.focused.text.color:	#ECEFF4
+wm.bar.workspace.inactive.background.color:	#2E3440
+wm.bar.workspace.inactive.border.color:	#2E3440
+wm.bar.workspace.inactive.text.color:	#7B8394
+wm.bar.workspace.urgent.background.color:	#BF616A
+wm.bar.workspace.urgent.border.color:	#BF616A
+wm.bar.workspace.urgent.text.color:	#ECEFF4
+wm.binding.bar_toggle:	XF86Launch5
+wm.client.focused.color.border:	#88C0D0
+wm.client.focused.color.child_border:	#88C0D0
+wm.client.focused_inactive.color.border:	#4C566A
+wm.client.focused_inactive.color.child_border:	#4C566A
+wm.client.unfocused.color.border:	#3B4252
+wm.client.unfocused.color.child_border:	#3B4252
+wm.client.urgent.color.border:	#2E3440
+wm.client.urgent.color.child_border:	#2E3440
+wm.floatingwindow.border.size:	3
+wm.floatingwindow.border.style:	pixel
+wm.hide.edge.borders:	none
+wm.window.border.size:	1
+wm.window.border.style:	pixel
+--- processi
+--- log polybar
+tail: impossibile aprire '/home/ftassi/.local/state/polybar/*.log' per la lettura: File o directory non esistente
+--- nvm
+drwxr-xr-x 8 ftassi ftassi 4096 ago 25 23:49 /opt/nvm
+v24.19.0
+--- git-crypt
+sbloccato
+--- avvio zsh interattivo
