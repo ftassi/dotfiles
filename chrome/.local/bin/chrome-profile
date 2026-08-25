@@ -5,6 +5,7 @@ EMAIL="${1:?Usage: chrome-profile <email> [chrome_args...]}"
 shift || true
 
 BIN="${CHROME_BIN:-google-chrome}"
+export LIBVA_DRIVER_NAME=nvidia
 USER_DATA_DIR="${CHROME_USER_DATA_DIR:-$HOME/.config/google-chrome}"
 
 # Collect candidate profile dirs
@@ -50,4 +51,9 @@ if [[ -z "$FOUND" ]]; then
   exit 3
 fi
 
-exec "$BIN" --user-data-dir="$USER_DATA_DIR" --profile-directory="$FOUND" "$@"
+exec "$BIN" \
+  --user-data-dir="$USER_DATA_DIR" \
+  --profile-directory="$FOUND" \
+  --force-device-scale-factor=1.5 \
+  --enable-features=VaapiVideoDecodeLinuxGL,VaapiVideoEncoder \
+  "$@"
