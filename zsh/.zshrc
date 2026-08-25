@@ -84,3 +84,4 @@ fi
  
 for d in $HOME/.local/*; do PATH="$PATH:$d/bin"; done
 
+export PATH=~/cli/sf/bin:$PATH
