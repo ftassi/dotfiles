@@ -103,6 +103,7 @@ end
 
 function M.fugitive()
   vim.keymap.set('n', '<leader>gs', '<Cmd>:G<CR>', { desc = '[G]it [S]atus' })
+  vim.keymap.set('n', '<leader>gb', '<Cmd>:Telescope git_branches<CR>', { desc = '[G]it [B]ranches' })
   vim.keymap.set('n', '<leader>Gp', '<Cmd>:Git push<CR>', { desc = '[G]it [P]ush' })
   vim.keymap.set('n', '<leader>Gc', '<Cmd>:Git commit<CR>', { desc = '[G]it [C]ommit' })
 end
