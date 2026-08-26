@@ -18,6 +18,7 @@ packages=(
   git-crypt
   nordic
   arc-icon-theme
+  regolith-control-center
   fonts-nerd-font-jetbrainsmono
   fonts-nerd-font-robotomono
 )
